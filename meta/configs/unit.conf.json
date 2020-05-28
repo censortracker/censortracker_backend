@@ -1,0 +1,26 @@
+{
+  "listeners": {
+    "*:80": {
+      "application": "app"
+    }
+  },
+  "applications": {
+    "app": {
+      "type": "python 3",
+      "processes": {
+        "max":  50,
+        "spare":  5
+      },
+      "working_directory": "/app/public",
+      "user": "nobody",
+      "group": "nobody",
+      "path": "/app",
+      "home": "/usr",
+      "environment": {
+        "ts": "0"
+      },
+      "module": "server.wsgi"
+    }
+  },
+  "access_log": "/dev/stdout"
+}
