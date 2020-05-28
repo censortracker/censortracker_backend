@@ -1,7 +1,4 @@
-![](https://raw.githubusercontent.com/roskomsvoboda/censortracker/master/.github/readme-logo.png)
-
-[![Build Status](https://github.com/roskomsvoboda/censortracker/workflows/Node.js%20CI/badge.svg?branch=master&event=push)](https://github.com/roskomsvoboda/censortracker/actions)
-
+[![Logo](https://raw.githubusercontent.com/roskomsvoboda/censortracker/master/.github/readme-logo.png)](https://github.com/roskomsvoboda/censortracker_backend)
 
 This Django project provides extremely simple API for writing and reading domains reported by [Censor Tracker](https://git.io/JfoBg). 
 This is a part of the mechanism which will help us to detect DPI locks initiated by the government services.
