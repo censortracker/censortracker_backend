@@ -18,6 +18,8 @@ x-defaults: &defaults
     DB_HOST: %STACK%-db
     DJANGO_ENV: %DJANGO_ENV%
     DB_PASSWD_SECRET_NAME: pg.%DJANGO_ENV%.passwd
+    RABBIT_HOST: %PROJECT%-rbt
+    RABBIT_APP: %PROJECT%
   networks:
     default:
     int:
@@ -32,6 +34,8 @@ x-app: &app
     - %PROJECT%.pg.%DJANGO_ENV%.passwd.secret
     - %PROJECT%.django.key.secret
     - %PROJECT%.sentry.%DJANGO_ENV%.dsn.secret
+    - rbt.user.secret
+    - rbt.passwd.secret
   environment:
     PROJECT: %PROJECT%
     DJANGO_ENV: %DJANGO_ENV%
@@ -53,6 +57,18 @@ services:
     command: start
     volumes:
       - "db:/var/lib/postgresql"
+  %STACK%-celery-beat:
+    <<: *defaults
+    <<: *app
+    image: %IMAGE_APP%
+    hostname: %STACK%-celery-beat
+    command: start.celery.beat
+  %STACK%-celery-workers:
+    <<: *defaults
+    <<: *app
+    image: %IMAGE_APP%
+    hostname: %STACK%-celery-workers
+    command: start.celery.workers
 
 volumes:
   db:
@@ -71,4 +87,8 @@ secrets:
   %PROJECT%.sentry.%DJANGO_ENV%.dsn.secret:
     external: true
   %PROJECT%.pg.%DJANGO_ENV%.passwd.secret:
+    external: true
+  rbt.user.secret:
+    external: true
+  rbt.passwd.secret:
     external: true

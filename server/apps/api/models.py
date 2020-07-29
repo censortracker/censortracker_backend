@@ -15,6 +15,24 @@ class Domain(models.Model):
         null=True,
         blank=True,
     )
+    client_hash = models.CharField(
+        verbose_name='Client Hash',
+        max_length=64,
+        blank=True,
+        default=''
+    )
+    client_region = models.CharField(
+        verbose_name='Client region',
+        max_length=64,
+        blank=True,
+        default=''
+    )
+    client_provider = models.CharField(
+        verbose_name='Client provider',
+        max_length=64,
+        blank=True,
+        default=''
+    )
 
     class Meta:
         verbose_name = 'Domain'
