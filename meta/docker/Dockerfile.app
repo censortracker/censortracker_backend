@@ -36,7 +36,8 @@ RUN sed -e '/community/{p;s@v[^/]*/@edge/@;s@community@testing@}' -i /etc/apk/re
 	chown 65534:65534 /app && \
 	curl https://bootstrap.pypa.io/get-pip.py -LSso get-pip.py && \
 	python3 get-pip.py && \
-	pip install "poetry==$POETRY_VERSION" && poetry --version
+	pip install "poetry==$POETRY_VERSION" && poetry --version && \
+    pip install celery==4.3.0
 
 COPY /meta/configs/unit.conf.json /var/lib/unit/conf.json
 COPY --chown=65534:65534 /poetry.lock /pyproject.toml /app/
