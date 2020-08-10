@@ -34,6 +34,7 @@ x-app: &app
     - %PROJECT%.pg.%DJANGO_ENV%.passwd.secret
     - %PROJECT%.django.key.secret
     - %PROJECT%.sentry.%DJANGO_ENV%.dsn.secret
+    - %PROJECT%.slack.dsn.secret
     - rbt.user.secret
     - rbt.passwd.secret
   environment:
@@ -91,4 +92,6 @@ secrets:
   rbt.user.secret:
     external: true
   rbt.passwd.secret:
+    external: true
+  %PROJECT%.slack.dsn.secret:
     external: true
