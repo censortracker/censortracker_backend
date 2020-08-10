@@ -122,3 +122,5 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
     },
 }
+
+SLACK_WEBHOOK = secret('slack.dsn', default='')
