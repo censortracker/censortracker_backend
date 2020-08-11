@@ -1,0 +1,55 @@
+stages:
+  - build
+  - deploy
+
+Build:
+  image: docker:latest
+  stage: build
+  tags:
+    - docker
+  script:
+    - docker login -u gitlab-ci-token -p "${CI_BUILD_TOKEN}" "${CI_REGISTRY}"
+    - docker build -t "${CI_REGISTRY_IMAGE}/app:${CI_COMMIT_REF_NAME}" -f meta/docker/Dockerfile.app .
+    - docker push "${CI_REGISTRY_IMAGE}/app:${CI_COMMIT_REF_NAME}"
+
+Deploy:
+  image: alpine:latest
+  stage: deploy
+  tags:
+    - docker
+  before_script:
+    - |
+      if [[ "${CI_COMMIT_REF_NAME}" == "prod" ]]; then
+        export DJANGO_ENV="production"
+      else
+        export DEV="dev-"
+        export DJANGO_ENV="development"
+        sed \
+          -e "/## prod-only {/,/## } prod-only/{s@^@#@}" \
+          -e "/## dev-only {/,/## } dev-only/{s@^#@@}" \
+          -i meta/docker/docker-compose.yml
+      fi
+      export stk="${DEV}${CI_PROJECT_NAME//./-}"
+      export ENVPREF="${stk//-/_}"
+      export PROJECT="${ENVPREF//_/.}"
+    - |
+      sed \
+        -e "s#%IMAGE_PGSQL%#${CI_REGISTRY}/devops/db/pgsql#g" \
+        -e "s#%IMAGE_APP%#${CI_REGISTRY_IMAGE}/app:${CI_COMMIT_REF_NAME}#g" \
+        -e "s#%STACK%#${stk}#g" \
+        -e "s#%PROJECT%#${PROJECT}#g" \
+        -e "s#%DJANGO_ENV%#${DJANGO_ENV}#g" \
+        -i meta/docker/docker-compose.yml
+  script:
+    - apk add openssh-client
+    - mkdir -p ~/.ssh
+    - base64 -d "${SSH_KEY}" > ~/.ssh/key
+    - chmod 600 ~/.ssh/key
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\tIdentityFile ~/.ssh/key\n\tUser ci-deploy\n\tPort 55222\n\n" > ~/.ssh/config
+    - for s in $(env|grep "^${ENVPREF}.*_secret="); do var_name="${s%%=*}"; secret_name="${var_name//_/.}"; eval "echo \$${var_name}" | base64 -d | ssh swarm.roskomsvoboda.org setsecret "sct:${secret_name}" "stk:${stk}"; done
+    - for c in $(env|grep "^${ENVPREF}.*_config="); do var_name="${c%%=*}";   conf_name="${var_name//_/.}"; eval "cat  \$${var_name}"             | ssh swarm.roskomsvoboda.org setconfig "cfg:${conf_name}"   "stk:${stk}"; done
+    - cat meta/docker/docker-compose.yml | ssh swarm.roskomsvoboda.org setcompose "stk:${stk}"
+    - sha512sum meta/docker/docker-compose.yml | ssh swarm.roskomsvoboda.org deploy "tkn:${CI_BUILD_TOKEN}" "reg:${CI_REGISTRY}" "stk:${stk}"
+  only:
+    - dev@web/censortracker
+    - prod@web/censortracker
