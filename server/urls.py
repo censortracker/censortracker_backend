@@ -16,5 +16,5 @@ from django.urls import include, path
 from server.apps.api import urls as api_urls
 
 urlpatterns = [
-    path('', include(api_urls, namespace='api')),
+    path('api/', include(api_urls, namespace='api')),
 ]
