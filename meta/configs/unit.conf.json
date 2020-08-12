@@ -11,7 +11,6 @@
         "max":  50,
         "spare":  5
       },
-      "working_directory": "/app/public",
       "user": "nobody",
       "group": "nobody",
       "path": "/app",

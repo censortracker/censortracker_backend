@@ -44,8 +44,6 @@ function db_ok() {
 	} else {
 		print "Migrations skipped due to DB conatiner inavailability" >&2
 	}
-		manage collectstatic --noinput >/dev/null
-		chown 65534:65534 -R /app/public/static
 } 2>&1
 
 unitd --no-daemon --control unix:/var/run/control.unit.sock --log /dev/stdout
