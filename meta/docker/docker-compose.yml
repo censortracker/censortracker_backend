@@ -18,7 +18,7 @@ x-defaults: &defaults
     DB_HOST: %STACK%-db
     DJANGO_ENV: %DJANGO_ENV%
     DB_PASSWD_SECRET_NAME: pg.%DJANGO_ENV%.passwd
-    RABBIT_HOST: %PROJECT%-rbt
+    RABBIT_HOST: rbt-proxy
     RABBIT_APP: %PROJECT%
   networks:
     default:
