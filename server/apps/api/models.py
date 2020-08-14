@@ -50,6 +50,7 @@ class Case(models.Model):
         blank=True,
         default=''
     )
+    created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = 'Case'
