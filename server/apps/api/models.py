@@ -10,6 +10,22 @@ class Domain(models.Model):
         null=False,
         blank=False,
     )
+
+    class Meta:
+        verbose_name = 'Domain'
+        verbose_name_plural = 'Domains'
+
+    def __str__(self):
+        return self.domain
+
+
+class Case(models.Model):
+    domain = models.ForeignKey(
+        Domain,
+        on_delete=models.CASCADE,
+        null=False,
+        blank=False,
+    )
     client_ip = models.GenericIPAddressField(
         verbose_name='Client IP',
         null=True,
@@ -35,8 +51,5 @@ class Domain(models.Model):
     )
 
     class Meta:
-        verbose_name = 'Domain'
-        verbose_name_plural = 'Domains'
-
-    def __str__(self):
-        return self.domain
+        verbose_name = 'Case'
+        verbose_name_plural = 'Cases'

@@ -5,7 +5,7 @@ from django.urls import path
 from server.apps.api import views
 
 urlpatterns = [
-    path('domain/', views.DomainCreateAPIView.as_view(), name='create-domain'),
+    path('case/', views.CaseCreateAPIView.as_view(), name='create-case'),
     path('domains/', views.DomainListView.as_view(), name='domain-list'),
 ]
 
