@@ -7,13 +7,15 @@ from time import sleep
 import requests
 
 from django.core.management.base import BaseCommand
-from django.db.models import Count
+from django.db.models import Count, Max
+from django.utils import timezone
 
 from server.apps.api.models import Case, Domain
 from server.apps.api.logic import notifier
 
 
 MIN_CASE_COUNT_PER_DOMAIN = 2
+SIGNIFICANT_CASES_PERIOD_DAYS = 3
 
 
 class Command(BaseCommand):
@@ -31,13 +33,20 @@ def alert_to_slack(domain_names):
 
 
 def blocked_domains():
+    start_date = (timezone.now() -
+                  timezone.timedelta(days=SIGNIFICANT_CASES_PERIOD_DAYS))
+    hour_ago = (timezone.now() -
+                timezone.timedelta(hours=1))
     domain_pks = (Case.objects
+                  .filter(created__gte=start_date)
                   .values('domain_id', 'client_hash')
                   .distinct()
                   .values('domain_id')
                   .annotate(hash_count=Count('client_hash'))
                   .values('domain_id', 'hash_count')
                   .filter(hash_count__gte=MIN_CASE_COUNT_PER_DOMAIN)
+                  .annotate(latest_case=Max('created'))
+                  .filter(latest_case__gte=hour_ago)
                   .values_list('domain', flat=True))
     return (Domain.objects
             .filter(pk__in=domain_pks)
