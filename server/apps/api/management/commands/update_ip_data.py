@@ -13,7 +13,7 @@ from server.apps.api.models import Case, Domain
 from server.apps.api.logic import notifier
 
 
-MIN_IP_COUNT = 2
+MIN_CASE_COUNT_PER_DOMAIN = 2
 
 
 class Command(BaseCommand):
@@ -37,7 +37,7 @@ def blocked_domains():
                   .values('domain_id')
                   .annotate(hash_count=Count('client_hash'))
                   .values('domain_id', 'hash_count')
-                  .filter(hash_count__gte=MIN_IP_COUNT)
+                  .filter(hash_count__gte=MIN_CASE_COUNT_PER_DOMAIN)
                   .values_list('domain', flat=True))
     return (Domain.objects
             .filter(pk__in=domain_pks)
