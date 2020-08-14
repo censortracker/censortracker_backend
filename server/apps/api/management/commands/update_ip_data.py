@@ -62,7 +62,7 @@ def fetch_data_chunk(ips_chunk):
                  for ip in ips_chunk]
     response = requests.post(url, data=json.dumps(send_data))
     if response.status_code != 200:
-        return
+        return []
     return json.loads(response.content)
 
 
