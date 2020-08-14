@@ -36,7 +36,7 @@ API
 This web-site provides two endpoints:
 
 ```
-POST /domain/
+POST /case/
 GET /domains/
 ```
 
