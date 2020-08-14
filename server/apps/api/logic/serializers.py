@@ -1,11 +1,11 @@
 from rest_framework import serializers
 
-from server.apps.api.models import Domain
+from server.apps.api.models import Case, Domain
 
 
-class DomainSerializer(serializers.ModelSerializer):
+class CaseSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Domain
+        model = Case
         fields = ('domain', 'client_ip')
 
 
