@@ -93,12 +93,8 @@ def hash_case_data(case):
     return hashlib.sha256(data.encode()).hexdigest()
 
 
-def new_cases():
-    return Case.objects.filter(client_ip__isnull=False)
-
-
 def update_ip_data():
-    cases = new_cases()
+    cases = Case.objects.filter(client_ip__isnull=False)
     ips = [case.client_ip for case in cases]
     ips_data = get_ips_data(ips)
     for (case, ip_data) in zip(cases, ips_data):
