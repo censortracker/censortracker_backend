@@ -25,6 +25,7 @@ class Case(models.Model):
         on_delete=models.CASCADE,
         null=False,
         blank=False,
+        related_name='cases'
     )
     client_ip = models.GenericIPAddressField(
         verbose_name='Client IP',
