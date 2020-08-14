@@ -19,7 +19,12 @@ class CaseCreateAPIView(ClientIPMixin, generics.CreateAPIView):
     def create(self, request, *args, **kwargs):
         data = request.data
         data['client_ip'] = self.get_client_ip(request)
-        data['domain'] = self.get_domain_or_create(data)
+        domain_name = data.get('domain', '').lower()
+        if not domain_name:
+            return Response({"errors": ("domain required",)},
+                            status=status.HTTP_400_BAD_REQUEST)
+        domain, _ = Domain.objects.get_or_create(domain=domain_name)
+        data['domain'] = domain.pk
         serializer = self.serializer_class(data=data)
         try:
             serializer.is_valid(raise_exception=True)
@@ -28,14 +33,6 @@ class CaseCreateAPIView(ClientIPMixin, generics.CreateAPIView):
         except ValidationError:
             return Response({"errors": (serializer.errors,)},
                             status=status.HTTP_400_BAD_REQUEST)
-
-    @staticmethod
-    def get_domain_or_create(data):
-        domain_name = data.get('domain', '').lower()
-        if not domain_name:
-            return
-        domain, created = Domain.objects.get_or_create(domain=domain_name)
-        return domain.pk
 
 
 class DomainListView(generics.ListAPIView):
