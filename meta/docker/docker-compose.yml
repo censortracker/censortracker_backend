@@ -41,8 +41,9 @@ x-app: &app
     DB_NAME: %PROJECT%
     DB_USER: %PROJECT%
     DB_HOST: %STACK%-db
-    RABBIT_HOST: rbt-proxy
-    RABBIT_APP: %PROJECT%
+    REDIS_HOST: %PROJECT%-redis
+  volumes:
+    - "static:/app/public"
 
 services:
   %STACK%-app:
@@ -70,9 +71,18 @@ services:
     image: %IMAGE_APP%
     hostname: %STACK%-celery-workers
     command: start.celery.workers
+  %STACK%-redis:
+     <<: *defaults
+     hostname: %STACK%-redis
+     image: %IMAGE_REDIS%
+     volumes:
+       - "redis-data:/var/lib/redis"
 
 volumes:
   db:
+  static:
+  redis-data:
+
 networks:
   default:
     external: true
@@ -88,10 +98,6 @@ secrets:
   %PROJECT%.sentry.%DJANGO_ENV%.dsn.secret:
     external: true
   %PROJECT%.pg.%DJANGO_ENV%.passwd.secret:
-    external: true
-  rbt.user.secret:
-    external: true
-  rbt.passwd.secret:
     external: true
   %PROJECT%.slack.dsn.secret:
     external: true
