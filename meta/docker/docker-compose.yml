@@ -33,8 +33,6 @@ x-app: &app
     - %PROJECT%.django.key.secret
     - %PROJECT%.sentry.%DJANGO_ENV%.dsn.secret
     - %PROJECT%.slack.dsn.secret
-    - rbt.user.secret
-    - rbt.passwd.secret
   environment:
     PROJECT: %PROJECT%
     DJANGO_ENV: %DJANGO_ENV%
