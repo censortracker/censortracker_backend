@@ -4,11 +4,9 @@
 Celery module
 """
 
-from server.settings.components import env, secret
+from server.settings.components.common import env
 
-CELERY_BROKER_URL = 'amqp://{user}:{passwd}@{host}/{app}'.format(
-    user=secret('user', stack_name='rbt', default='guest'),
-    passwd=secret('passwd', stack_name='rbt', default='guest'),
-    host=env('RABBIT_HOST'),
-    app=env('RABBIT_APP', default=''),
-)
+REDIS_HOST = env("REDIS_HOST")
+
+CELERYD_TASK_TIME_LIMIT = 60 * 60
+CELERY_BROKER_URL = f"redis://{REDIS_HOST}:6379/0"

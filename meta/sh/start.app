@@ -27,11 +27,6 @@ function db_ok() {
 	manage dbshell <<< "SELECT 1;"
 }
 
-#PGHOST="${DB_HOST}"
-#PGUSER="${DB_USER}"
-#PGDATABASE="${DB_NAME}"
-#PGPASSWORD=$(get_secret ${DB_PASSWD_SECRET_NAME:-db.passwd})
-
 {
 	if {wait_for_db host} {
 		if {wait_for_db up} {
@@ -44,6 +39,9 @@ function db_ok() {
 	} else {
 		print "Migrations skipped due to DB conatiner inavailability" >&2
 	}
+			manage collectstatic --noinput >/dev/null
+		  chown 65534:65534 -R /app/public/static
+		  chown 65534:65534 -R /app/public/uploads
 } 2>&1
 
 unitd --no-daemon --control unix:/var/run/control.unit.sock --log /dev/stdout
