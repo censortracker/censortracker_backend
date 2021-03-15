@@ -11,7 +11,8 @@ ENV POETRY_VERSION=1.0.5 \
   POETRY_VIRTUALENVS_CREATE=false \
   POETRY_CACHE_DIR='/var/cache/pypoetry' \
   PIP_NO_CACHE_DIR=off \
-  PIP_DISABLE_PIP_VERSION_CHECK=on
+  PIP_DISABLE_PIP_VERSION_CHECK=on \
+  CRYPTOGRAPHY_DONT_BUILD_RUST=1
 
 RUN sed -e '/community/{p;s@v[^/]*/@edge/@;s@community@testing@}' -i /etc/apk/repositories && \
 	apk update && \
@@ -46,4 +47,5 @@ RUN poetry install --no-interaction --no-ansi
 COPY /meta/sh /bin/
 
 COPY --chown=65534:65534 /manage.py /app/
+COPY --chown=65534:65534 /public /app/public/
 COPY --chown=65534:65534 /server /app/server/

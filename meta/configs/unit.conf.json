@@ -4,13 +4,34 @@
       "application": "app"
     }
   },
+  "routes": {
+    "app": [
+      {
+        "match": {
+          "uri": [
+            "/static/*",
+            "/uploads/*"
+          ]
+        },
+        "action": {
+          "share": "/app/public"
+        }
+      },
+      {
+        "action": {
+          "pass": "applications/app"
+        }
+      }
+    ]
+  },
   "applications": {
     "app": {
       "type": "python 3",
       "processes": {
-        "max":  50,
-        "spare":  5
+        "max": 50,
+        "spare": 5
       },
+      "working_directory": "/app/public",
       "user": "nobody",
       "group": "nobody",
       "path": "/app",

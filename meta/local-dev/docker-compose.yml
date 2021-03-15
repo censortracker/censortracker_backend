@@ -12,16 +12,15 @@ x-dj: &dj
     - %PROJECT%.django.key.secret
     - %PROJECT%.sentry.%DJANGO_ENV%.dsn.secret
     - %PROJECT%.pg.%DJANGO_ENV%.passwd.secret
-    - rbt.user.secret
-    - rbt.passwd.secret
   environment:
     PROJECT: %PROJECT%
     DJANGO_ENV: %DJANGO_ENV%
     DB_NAME: postgres
     DB_USER: postgres
     DB_HOST: %PROJECT%-db
-    MEMCACHE_HOST: %PROJECT%-cache
-    RABBIT_HOST: %PROJECT%-rbt
+    REDIS_HOST: %PROJECT%-redis
+  volumes:
+    - "static:/app/public"
 
 x-celery: &celery
   <<: *defaults
@@ -59,14 +58,6 @@ services:
     hostname: %PROJECT%-web
     ports:
       - "8000:80"
-  %PROJECT%-rbt:
-    <<: *defaults
-    image: rabbitmq:alpine
-    hostname: %PROJECT%-rbt
-    environment:
-      NODENAME: rbt@%PROJECT%-rbt
-    volumes:
-      - "rbt-storage:/var/lib/rabbitmq"
   %PROJECT%-db:
     <<: *defaults
     image: postgres:alpine
@@ -77,11 +68,18 @@ services:
       POSTGRES_PASSWORD_FILE: /run/secrets/%PROJECT%.pg.%DJANGO_ENV%.passwd.secret
     volumes:
       - "pgbase:/var/lib/postgresql/data"
+  %PROJECT%-redis:
+     <<: *defaults
+     image: redis:5-alpine
+     hostname: %PROJECT%-redis
+     volumes:
+       - "redis-data:/data"
+
 
 volumes:
   static:
   pgbase:
-  rbt-storage:
+  redis-data:
 
 networks:
   bridge:
@@ -95,8 +93,4 @@ secrets:
   %PROJECT%.sentry.%DJANGO_ENV%.dsn.secret:
     external: true
   %PROJECT%.pg.%DJANGO_ENV%.passwd.secret:
-    external: true
-  rbt.user.secret:
-    external: true
-  rbt.passwd.secret:
     external: true
