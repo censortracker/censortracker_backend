@@ -35,6 +35,7 @@ Deploy:
     - |
       sed \
         -e "s#%IMAGE_PGSQL%#${CI_REGISTRY}/devops/db/pgsql#g" \
+        -e "s#%IMAGE_REDIS%#${CI_REGISTRY}/devops/db/redis#g" \
         -e "s#%IMAGE_APP%#${CI_REGISTRY_IMAGE}/app:${CI_COMMIT_REF_NAME}#g" \
         -e "s#%STACK%#${stk}#g" \
         -e "s#%PROJECT%#${PROJECT}#g" \

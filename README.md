@@ -17,16 +17,16 @@ Configuring Rabbit
 On configuring Celery do not forget to add vhost for your stack, like this:
 
 ```
-docker exec -i -t RABBIT_CONTAINER_ID_HERE bash -c 'rabbitmqctl set_permissions -p /STACK_NAME_HERE RABBIT_USER_HERE ".*" ".*" ".*"'
+docker exec -i -t RABBIT_CONTAINER_ID_HERE bash -c 'rabbitmqctl set_permissions -p STACK_NAME_HERE RABBIT_USER_HERE ".*" ".*" ".*"'
 ```
 
-In our case, `STACK_NAME` can be `dev.censortracker` or `censortracker`.
+In our case, `STACK_NAME` is vhost and can be `dev.censortracker` or `censortracker`.
 
 Running
 =======
 
 Just run this command:
-
+g
     ~ bash meta/local-dev/deploy.sh -s
     
  
@@ -36,7 +36,7 @@ API
 This web-site provides two endpoints:
 
 ```
-POST /domain/
+POST /case/
 GET /domains/
 ```
 

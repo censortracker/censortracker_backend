@@ -7,5 +7,5 @@ celery -A server worker \
 	--workdir="/app/" \
 	--concurrency=2 \
 	--uid=65534 \
-	--gid=65534
+	--gid=65534 \
 	--loglevel=info

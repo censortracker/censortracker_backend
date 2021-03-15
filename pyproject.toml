@@ -16,6 +16,8 @@ sentry-sdk = "*"
 bcrypt = "*"
 django-ipware = "*"
 celery = "^4.4.6"
+redis = "^3.5.3"
+hiredis = "^1.1.0"
 
 [tool.poetry.dev-dependencies]
 

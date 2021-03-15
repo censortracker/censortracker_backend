@@ -26,6 +26,13 @@ INSTALLED_APPS = (
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django.contrib.humanize",
+
+    # django-admin:
+    "django.contrib.admin",
+    "django.contrib.admindocs",
 
     # REST API:
     "rest_framework",
@@ -41,7 +48,9 @@ MIDDLEWARE = (
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 )
 
@@ -105,6 +114,20 @@ TEMPLATES = [
     }
 ]
 
+STATIC_URL = "/static/"
+
+STATICFILES_FINDERS = (
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+)
+
+STATICFILES_DIRS = [
+    BASE_DIR.joinpath("server", "static"),
+]
+
+MEDIA_URL = "/uploads/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "public", "uploads")
+
 REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": (
         "rest_framework.renderers.JSONRenderer",
@@ -112,15 +135,6 @@ REST_FRAMEWORK = {
     "DEFAULT_PARSER_CLASSES": (
         "rest_framework.parsers.JSONParser",
     ),
-}
-
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-    },
-    'axes_cache': {
-        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
-    },
 }
 
 SLACK_WEBHOOK = secret('slack.dsn', default='')
