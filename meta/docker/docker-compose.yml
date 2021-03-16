@@ -39,7 +39,7 @@ x-app: &app
     DB_NAME: %PROJECT%
     DB_USER: %PROJECT%
     DB_HOST: %STACK%-db
-    REDIS_HOST: %PROJECT%-redis
+    REDIS_HOST: %STACK%-redis
   volumes:
     - "static:/app/public"
 
