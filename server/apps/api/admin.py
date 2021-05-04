@@ -10,8 +10,6 @@ from server.apps.api.models import Domain, Case
 
 @admin.register(Domain)
 class DomainAdmin(admin.ModelAdmin):
-    pass
-
     list_display = ('domain', 'view_related_cases', 'cases_count')
 
     def get_queryset(self, request):
@@ -38,6 +36,4 @@ class DomainAdmin(admin.ModelAdmin):
 
 @admin.register(Case)
 class CaseAdmin(admin.ModelAdmin):
-    pass
-
     list_display = ('domain', 'client_region', 'client_provider')
