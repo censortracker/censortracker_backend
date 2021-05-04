@@ -10,9 +10,9 @@ from django.core.management import call_command
 
 
 class IPData(PeriodicTask):
-    name = 'Update IP data'
+    name = "Update IP data"
     run_every = crontab(hour=3)
 
     def run(self, *args, **kwargs):
-        call_command('update_ip_data')
+        call_command("update_ip_data")
         return True

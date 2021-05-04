@@ -17,20 +17,21 @@ def slack_message(message, channel=None, app_name=None):
         return False
 
     if not channel:
-        channel = '#registry-logs'
+        channel = "#registry-logs"
 
     if not app_name:
-        app_name = 'Registry Logger'
+        app_name = "Registry Logger"
 
     if settings.SLACK_WEBHOOK:
         response = requests.post(
             url=settings.SLACK_WEBHOOK,
             json={
-                'channel': channel,
-                'text': message,
-                'mrkdw': True,
-                'username': app_name,
-            })
+                "channel": channel,
+                "text": message,
+                "mrkdw": True,
+                "username": app_name,
+            },
+        )
 
         if response.status_code == 200:
             return True

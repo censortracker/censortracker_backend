@@ -3,4 +3,4 @@ from rest_framework.throttling import AnonRateThrottle
 
 
 class CreateCaseRateThrottle(AnonRateThrottle):
-    cache = caches['api']
+    cache = caches["api"]

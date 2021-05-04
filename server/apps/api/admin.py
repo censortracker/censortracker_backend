@@ -10,14 +10,14 @@ from server.apps.api.models import Domain, Case
 
 @admin.register(Domain)
 class DomainAdmin(admin.ModelAdmin):
-    list_display = ('domain', 'view_related_cases', 'cases_count')
+    list_display = ("domain", "view_related_cases", "cases_count")
 
     def get_queryset(self, request):
         """
         Make new '_cases_count' field to use it later for ordering and url-link-text
         """
         queryset = super().get_queryset(request)
-        queryset = queryset.annotate(_cases_count=Count('cases', distinct=True))
+        queryset = queryset.annotate(_cases_count=Count("cases", distinct=True))
         return queryset
 
     def cases_count(self, obj):
@@ -29,11 +29,11 @@ class DomainAdmin(admin.ModelAdmin):
         """
         count = obj._cases_count
         url = f'{reverse("admin:api_case_changelist")}?domain__id={obj.id}'
-        return format_html(f'<a href={url}>{count} Related Cases</a>')
+        return format_html(f"<a href={url}>{count} Related Cases</a>")
 
-    cases_count.admin_order_field = '_cases_count'
+    cases_count.admin_order_field = "_cases_count"
 
 
 @admin.register(Case)
 class CaseAdmin(admin.ModelAdmin):
-    list_display = ('domain', 'client_region', 'client_provider')
+    list_display = ("domain", "client_region", "client_provider")

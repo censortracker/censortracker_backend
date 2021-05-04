@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0002_allow_null'),
+        ("api", "0002_allow_null"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='domain',
-            name='domain',
-            field=models.CharField(max_length=128, verbose_name='Domain'),
+            model_name="domain",
+            name="domain",
+            field=models.CharField(max_length=128, verbose_name="Domain"),
         ),
     ]

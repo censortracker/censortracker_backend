@@ -7,39 +7,81 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0004_auto_20200729_0752'),
+        ("api", "0004_auto_20200729_0752"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='domain',
-            name='client_hash',
+            model_name="domain",
+            name="client_hash",
         ),
         migrations.RemoveField(
-            model_name='domain',
-            name='client_ip',
+            model_name="domain",
+            name="client_ip",
         ),
         migrations.RemoveField(
-            model_name='domain',
-            name='client_provider',
+            model_name="domain",
+            name="client_provider",
         ),
         migrations.RemoveField(
-            model_name='domain',
-            name='client_region',
+            model_name="domain",
+            name="client_region",
         ),
         migrations.CreateModel(
-            name='Case',
+            name="Case",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('client_ip', models.GenericIPAddressField(blank=True, null=True, verbose_name='Client IP')),
-                ('client_hash', models.CharField(blank=True, default='', max_length=64, verbose_name='Client Hash')),
-                ('client_region', models.CharField(blank=True, default='', max_length=64, verbose_name='Client region')),
-                ('client_provider', models.CharField(blank=True, default='', max_length=64, verbose_name='Client provider')),
-                ('domain', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api.Domain')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "client_ip",
+                    models.GenericIPAddressField(
+                        blank=True, null=True, verbose_name="Client IP"
+                    ),
+                ),
+                (
+                    "client_hash",
+                    models.CharField(
+                        blank=True,
+                        default="",
+                        max_length=64,
+                        verbose_name="Client Hash",
+                    ),
+                ),
+                (
+                    "client_region",
+                    models.CharField(
+                        blank=True,
+                        default="",
+                        max_length=64,
+                        verbose_name="Client region",
+                    ),
+                ),
+                (
+                    "client_provider",
+                    models.CharField(
+                        blank=True,
+                        default="",
+                        max_length=64,
+                        verbose_name="Client provider",
+                    ),
+                ),
+                (
+                    "domain",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="api.Domain"
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Case',
-                'verbose_name_plural': 'Cases',
+                "verbose_name": "Case",
+                "verbose_name_plural": "Cases",
             },
         ),
     ]
