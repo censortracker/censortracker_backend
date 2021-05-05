@@ -8,19 +8,25 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0005_auto_20200813_1806'),
+        ("api", "0005_auto_20200813_1806"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='case',
-            name='created',
-            field=models.DateTimeField(auto_now_add=True, default=django.utils.timezone.now),
+            model_name="case",
+            name="created",
+            field=models.DateTimeField(
+                auto_now_add=True, default=django.utils.timezone.now
+            ),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='case',
-            name='domain',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='cases', to='api.Domain'),
+            model_name="case",
+            name="domain",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="cases",
+                to="api.Domain",
+            ),
         ),
     ]

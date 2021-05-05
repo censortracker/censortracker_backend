@@ -7,20 +7,27 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Domain',
+            name="Domain",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('domain', models.URLField(verbose_name='Domain')),
-                ('client_ip', models.GenericIPAddressField(verbose_name='Client IP')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("domain", models.URLField(verbose_name="Domain")),
+                ("client_ip", models.GenericIPAddressField(verbose_name="Client IP")),
             ],
             options={
-                'verbose_name': 'Domain',
-                'verbose_name_plural': 'Domains',
+                "verbose_name": "Domain",
+                "verbose_name_plural": "Domains",
             },
         ),
     ]

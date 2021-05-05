@@ -6,23 +6,29 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0003_make_field_charfield'),
+        ("api", "0003_make_field_charfield"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='domain',
-            name='client_hash',
-            field=models.CharField(blank=True, default='', max_length=64, verbose_name='Client Hash'),
+            model_name="domain",
+            name="client_hash",
+            field=models.CharField(
+                blank=True, default="", max_length=64, verbose_name="Client Hash"
+            ),
         ),
         migrations.AddField(
-            model_name='domain',
-            name='client_provider',
-            field=models.CharField(blank=True, default='', max_length=64, verbose_name='Client provider'),
+            model_name="domain",
+            name="client_provider",
+            field=models.CharField(
+                blank=True, default="", max_length=64, verbose_name="Client provider"
+            ),
         ),
         migrations.AddField(
-            model_name='domain',
-            name='client_region',
-            field=models.CharField(blank=True, default='', max_length=64, verbose_name='Client region'),
+            model_name="domain",
+            name="client_region",
+            field=models.CharField(
+                blank=True, default="", max_length=64, verbose_name="Client region"
+            ),
         ),
     ]

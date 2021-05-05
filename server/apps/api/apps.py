@@ -6,4 +6,4 @@ from django.apps import AppConfig
 class ApiAppConfig(AppConfig):
     """Default django-app configuration."""
 
-    name = 'server.apps.api'
+    name = "server.apps.api"
