@@ -21,6 +21,10 @@ class CaseCreateAPIView(ClientIPMixin, generics.CreateAPIView):
         data = request.data
         data["client_ip"] = self.get_client_ip(request)
         domain_name = data.get("domain", "").lower()
+
+        if not domain_name:
+            domain_name = data.get("hostname", "").lower()
+
         if not domain_name:
             return Response(
                 {"errors": ("domain required",)}, status=status.HTTP_400_BAD_REQUEST

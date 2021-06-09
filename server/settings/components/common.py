@@ -126,10 +126,11 @@ REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),
     "DEFAULT_PARSER_CLASSES": ("rest_framework.parsers.JSONParser",),
     "DEFAULT_THROTTLE_CLASSES": [
-        "server.apps.api.logic.throttling.AnonymousRateThrottle",
-        "rest_framework.throttling.UserRateThrottle",
+        "rest_framework.throttling.AnonRateThrottle",
     ],
-    "DEFAULT_THROTTLE_RATES": {"anon": "100/day"},
+    "DEFAULT_THROTTLE_RATES": {
+        "anon": "100/day",
+    },
 }
 
 SLACK_WEBHOOK = secret("slack.dsn", default="")
