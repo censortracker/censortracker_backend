@@ -27,8 +27,7 @@ class Command(BaseCommand):
 def alert_to_slack(domain_names):
     message = "Blocked: {}".format(", ".join(domain_names))
     notifier.slack_message(
-        message=message,
-        channel="#tests",
+        message=message, channel="#tests",
     )
 
 

@@ -35,6 +35,7 @@ INSTALLED_APPS = (
     # REST API:
     "rest_framework",
     # Your apps go here:
+    "server.apps.core",
     "server.apps.api",
 )
 
@@ -80,7 +81,10 @@ LANGUAGE_CODE = "en"
 USE_I18N = False
 USE_L10N = False
 
-LANGUAGES = (("en", "English"),)
+LANGUAGES = (
+    ("en", "English"),
+    ("ru", "Russian"),
+)
 
 USE_TZ = True
 TIME_ZONE = "UTC"
@@ -125,12 +129,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "public", "uploads")
 REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),
     "DEFAULT_PARSER_CLASSES": ("rest_framework.parsers.JSONParser",),
-    "DEFAULT_THROTTLE_CLASSES": [
-        "rest_framework.throttling.AnonRateThrottle",
-    ],
-    "DEFAULT_THROTTLE_RATES": {
-        "anon": "100/day",
-    },
+    "DEFAULT_THROTTLE_CLASSES": ["rest_framework.throttling.AnonRateThrottle", ],
+    "DEFAULT_THROTTLE_RATES": {"anon": "100/day", },
 }
 
 SLACK_WEBHOOK = secret("slack.dsn", default="")
