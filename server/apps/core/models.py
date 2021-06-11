@@ -44,8 +44,8 @@ class Config(models.Model):
     )
 
     class Meta:
-        verbose_name = _('Config')
-        verbose_name_plural = _('Configs')
+        verbose_name = _("Config")
+        verbose_name_plural = _("Configs")
 
     def __str__(self):
         return self.country.name

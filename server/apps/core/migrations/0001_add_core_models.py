@@ -9,35 +9,66 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Country',
+            name="Country",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=512, unique=True, verbose_name='Name')),
-                ('code', models.CharField(max_length=3, unique=True, verbose_name='Country code')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(max_length=512, unique=True, verbose_name="Name"),
+                ),
+                (
+                    "code",
+                    models.CharField(
+                        max_length=3, unique=True, verbose_name="Country code"
+                    ),
+                ),
             ],
-            options={
-                'verbose_name': 'Country',
-                'verbose_name_plural': 'Countries',
-            },
+            options={"verbose_name": "Country", "verbose_name_plural": "Countries",},
         ),
         migrations.CreateModel(
-            name='Config',
+            name="Config",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('registry_url', models.URLField(verbose_name='URL')),
-                ('custom_registry_url', models.URLField(verbose_name='Custom Registry URL')),
-                ('report_endpoint', models.URLField(verbose_name='DPI API Endpoint')),
-                ('specifics', django.contrib.postgres.fields.jsonb.JSONField(blank=True, default=dict, verbose_name='Specifics')),
-                ('country', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='core.Country')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("registry_url", models.URLField(verbose_name="URL")),
+                (
+                    "custom_registry_url",
+                    models.URLField(verbose_name="Custom Registry URL"),
+                ),
+                ("report_endpoint", models.URLField(verbose_name="DPI API Endpoint")),
+                (
+                    "specifics",
+                    django.contrib.postgres.fields.jsonb.JSONField(
+                        blank=True, default=dict, verbose_name="Specifics"
+                    ),
+                ),
+                (
+                    "country",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.DO_NOTHING,
+                        to="core.Country",
+                    ),
+                ),
             ],
-            options={
-                'verbose_name': 'Config',
-                'verbose_name_plural': 'Configs',
-            },
+            options={"verbose_name": "Config", "verbose_name_plural": "Configs",},
         ),
     ]
