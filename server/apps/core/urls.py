@@ -2,8 +2,6 @@
 
 from django.urls import path  # noqa
 
-urlpatterns = [
-
-]
+urlpatterns = []
 
 app_name = "api"

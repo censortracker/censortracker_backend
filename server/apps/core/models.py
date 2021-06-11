@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from django.contrib.postgres.fields import JSONField
 from django.utils.translation import gettext_lazy as _
 
 
@@ -23,8 +24,28 @@ class Country(models.Model):
     def __str__(self):
         return self.name
 
+    def __repr__(self):
+        return self.name
+
 
 class Config(models.Model):
     country = models.ForeignKey(
         Country, on_delete=models.DO_NOTHING, blank=False, null=False
     )
+    registry_url = models.URLField(verbose_name=_("URL"), null=False, blank=False)
+    custom_registry_url = models.URLField(
+        verbose_name=_("Custom Registry URL"), null=False, blank=False
+    )
+    report_endpoint = models.URLField(
+        verbose_name=_("DPI API Endpoint"), null=False, blank=False
+    )
+    specifics = JSONField(
+        verbose_name=_("Specifics"), blank=True, null=False, default=dict
+    )
+
+    class Meta:
+        verbose_name = _('Config')
+        verbose_name_plural = _('Configs')
+
+    def __str__(self):
+        return self.country.name
