@@ -16,8 +16,8 @@ class Country(models.Model):
         null=False,
         blank=False,
     )
-    iso_a2_code = models.CharField(verbose_name=_('Alpha 2'), unique=True, max_length=2, null=True, blank=False)
-    iso_a3_code = models.CharField(verbose_name=_('Alpha 3'), unique=True, max_length=3, null=True, blank=False)
+    iso_a2_code = models.CharField(verbose_name=_('Alpha 2'), max_length=2, null=True)
+    iso_a3_code = models.CharField(verbose_name=_('Alpha 3'), max_length=3, null=True)
 
     class Meta:
         verbose_name = _("Country")
