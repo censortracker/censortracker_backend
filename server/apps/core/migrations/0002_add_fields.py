@@ -6,23 +6,27 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0001_add_core_models'),
+        ("core", "0001_add_core_models"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='country',
-            name='iso_a2_code',
-            field=models.CharField(max_length=2, null=True, unique=True, verbose_name='Alpha 2'),
+            model_name="country",
+            name="iso_a2_code",
+            field=models.CharField(
+                max_length=2, null=True, unique=True, verbose_name="Alpha 2"
+            ),
         ),
         migrations.AddField(
-            model_name='country',
-            name='iso_a3_code',
-            field=models.CharField(max_length=3, null=True, unique=True, verbose_name='Alpha 3'),
+            model_name="country",
+            name="iso_a3_code",
+            field=models.CharField(
+                max_length=3, null=True, unique=True, verbose_name="Alpha 3"
+            ),
         ),
         migrations.AlterField(
-            model_name='config',
-            name='registry_url',
-            field=models.URLField(verbose_name='Registry URL'),
+            model_name="config",
+            name="registry_url",
+            field=models.URLField(verbose_name="Registry URL"),
         ),
     ]
