@@ -16,6 +16,8 @@ class Country(models.Model):
         null=False,
         blank=False,
     )
+    iso_a2_code = models.CharField(verbose_name=_('Alpha 2'), unique=True, max_length=2, null=True, blank=False)
+    iso_a3_code = models.CharField(verbose_name=_('Alpha 3'), unique=True, max_length=3, null=True, blank=False)
 
     class Meta:
         verbose_name = _("Country")
@@ -32,7 +34,7 @@ class Config(models.Model):
     country = models.ForeignKey(
         Country, on_delete=models.DO_NOTHING, blank=False, null=False
     )
-    registry_url = models.URLField(verbose_name=_("URL"), null=False, blank=False)
+    registry_url = models.URLField(verbose_name=_("Registry URL"), null=False, blank=False)
     custom_registry_url = models.URLField(
         verbose_name=_("Custom Registry URL"), null=False, blank=False
     )

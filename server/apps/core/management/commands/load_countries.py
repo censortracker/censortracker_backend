@@ -15,7 +15,11 @@ class Command(BaseCommand):
         for item in response.json():
             try:
                 Country.objects.create(
-                    name=item["name"], code=item["country-code"],
+                    name=item["name"],
+                    code=item["country-code"],
+                    iso_a2_code=item['alpha-2'],
+                    iso_a3_code=item['alpha-3'],
+
                 )
             except:
                 continue

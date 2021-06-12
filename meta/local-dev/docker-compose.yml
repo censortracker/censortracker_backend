@@ -52,8 +52,6 @@ services:
     command: start.app
     ports:
       - "8800:80"
-    volumes:
-      - "../server:/app/server"
   %PROJECT%-web:
     <<: *pub
     image: %IMAGE_WEB%
