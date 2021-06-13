@@ -52,5 +52,5 @@ Deploy:
     - cat meta/docker/docker-compose.yml | ssh swarm.roskomsvoboda.org setcompose "stk:${stk}"
     - sha512sum meta/docker/docker-compose.yml | ssh swarm.roskomsvoboda.org deploy "tkn:${CI_BUILD_TOKEN}" "reg:${CI_REGISTRY}" "stk:${stk}"
   only:
-    - dev@web/censortracker
-    - prod@web/censortracker
+    - dev@web/dj/censortracker
+    - prod@web/dj/censortracker

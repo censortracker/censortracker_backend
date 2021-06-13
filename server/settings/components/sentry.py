@@ -12,9 +12,5 @@ from server.settings.components import env, secret
 SENTRY_DSN = secret("sentry.%s.dsn" % env("DJANGO_ENV"))
 
 sentry_sdk.init(
-    dsn=SENTRY_DSN,
-    integrations=[
-        DjangoIntegration(),
-    ],
-    send_default_pii=True,
+    dsn=SENTRY_DSN, integrations=[DjangoIntegration(),], send_default_pii=True,
 )

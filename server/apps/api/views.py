@@ -7,9 +7,14 @@ from rest_framework.response import Response
 
 from server.apps.api.logic.mixins import ClientIPMixin
 from server.apps.api.logic.permissions import AllowByHeaders
-from server.apps.api.logic.serializers import DomainListSerializer, CaseSerializer
+from server.apps.api.logic.serializers import (
+    DomainListSerializer,
+    CaseSerializer,
+    ConfigSerializer,
+)
 from server.apps.api.logic.throttling import CreateCaseRateThrottle
 from server.apps.api.models import Domain
+from server.apps.core.models import Config
 
 
 class CaseCreateAPIView(ClientIPMixin, generics.CreateAPIView):
@@ -21,6 +26,10 @@ class CaseCreateAPIView(ClientIPMixin, generics.CreateAPIView):
         data = request.data
         data["client_ip"] = self.get_client_ip(request)
         domain_name = data.get("domain", "").lower()
+
+        if not domain_name:
+            domain_name = data.get("hostname", "").lower()
+
         if not domain_name:
             return Response(
                 {"errors": ("domain required",)}, status=status.HTTP_400_BAD_REQUEST
@@ -42,3 +51,9 @@ class DomainListView(generics.ListAPIView):
     serializer_class = DomainListSerializer
     permission_classes = [AllowAny]
     queryset = Domain.objects.all()
+
+
+class ConfigListView(generics.ListAPIView):
+    serializer_class = ConfigSerializer
+    permission_classes = [AllowAny]
+    queryset = Config.objects.all()

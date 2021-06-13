@@ -11,22 +11,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name="domain",
-            name="client_hash",
-        ),
-        migrations.RemoveField(
-            model_name="domain",
-            name="client_ip",
-        ),
-        migrations.RemoveField(
-            model_name="domain",
-            name="client_provider",
-        ),
-        migrations.RemoveField(
-            model_name="domain",
-            name="client_region",
-        ),
+        migrations.RemoveField(model_name="domain", name="client_hash",),
+        migrations.RemoveField(model_name="domain", name="client_ip",),
+        migrations.RemoveField(model_name="domain", name="client_provider",),
+        migrations.RemoveField(model_name="domain", name="client_region",),
         migrations.CreateModel(
             name="Case",
             fields=[
@@ -79,9 +67,6 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={
-                "verbose_name": "Case",
-                "verbose_name_plural": "Cases",
-            },
+            options={"verbose_name": "Case", "verbose_name_plural": "Cases",},
         ),
     ]
