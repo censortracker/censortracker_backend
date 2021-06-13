@@ -53,7 +53,10 @@ class DomainListView(generics.ListAPIView):
     queryset = Domain.objects.all()
 
 
-class ConfigListView(generics.ListAPIView):
+class ConfigListView(ClientIPMixin, generics.ListAPIView):
     serializer_class = ConfigSerializer
     permission_classes = [AllowAny]
-    queryset = Config.objects.all()
+
+    def get_queryset(self):
+        client_country_code = self.get_client_country_code()
+        return Config.objects.filter(country__iso_a2_code__iexact=client_country_code)
