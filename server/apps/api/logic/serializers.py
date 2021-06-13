@@ -19,7 +19,7 @@ class DomainListSerializer(serializers.ModelSerializer):
 class CountrySerializer(serializers.ModelSerializer):
     class Meta:
         model = Country
-        fields = ("name", "iso_a3_code")
+        fields = ("name", "iso_a2_code")
 
 
 class ConfigSerializer(serializers.ModelSerializer):
