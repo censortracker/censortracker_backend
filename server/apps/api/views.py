@@ -59,4 +59,4 @@ class ConfigListView(ClientIPMixin, generics.ListAPIView):
 
     def get_queryset(self):
         client_country_code = self.get_client_country_code()
-        return Config.objects.filter(country__iso_a2_code__iexact=client_country_code)
+        return Config.objects.filter(country__iso_a2_code=client_country_code)

@@ -44,6 +44,6 @@ function db_ok() {
 		  chown 65534:65534 -R /app/public/uploads
 } 2>&1
 
-unitd --no-daemon --control unix:/var/run/control.unit.sock --log /dev/stdout
+unitd --no-daemon --tmp /tmp --control unix:/var/run/control.unit.sock --log /dev/stdout
 
 # vim: ft=zsh sw=2 ts=2
