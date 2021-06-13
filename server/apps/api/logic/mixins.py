@@ -3,9 +3,9 @@ from ipware import get_client_ip
 
 
 class ClientIPMixin:
-
     def get_client_ip(self):
         client_ip, is_routable = get_client_ip(self.request)
+
         if client_ip is None:
             return None
         else:
@@ -19,6 +19,6 @@ class ClientIPMixin:
 
         if ip is not None:
             country = geo.country(ip)
-            return country['country_code']
+            return country["country_code"]
 
         return None
