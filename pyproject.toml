@@ -20,6 +20,7 @@ redis = "^3.5.3"
 hiredis = "^1.1.0"
 django-debug-toolbar = "^3.2.1"
 django-redis-cache = "^3.0.0"
+geoip2 = "^4.2.0"
 
 [tool.poetry.dev-dependencies]
 

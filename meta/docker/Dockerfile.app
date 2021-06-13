@@ -27,6 +27,8 @@ RUN sed -e '/community/{p;s@v[^/]*/@edge/@;s@community@testing@}' -i /etc/apk/re
 		python3-dev \
 		postgresql-dev \
 		libffi-dev \
+		gettext \
+		libmaxminddb \
 		musl-dev \
 		gcc \
 		dcron \
