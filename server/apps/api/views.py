@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from django.shortcuts import get_object_or_404
 from rest_framework import generics, status
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import AllowAny
@@ -8,9 +9,9 @@ from rest_framework.response import Response
 from server.apps.api.logic.mixins import ClientIPMixin
 from server.apps.api.logic.permissions import AllowByHeaders
 from server.apps.api.logic.serializers import (
-    DomainListSerializer,
     CaseSerializer,
     ConfigSerializer,
+    DomainListSerializer,
 )
 from server.apps.api.logic.throttling import CreateCaseRateThrottle
 from server.apps.api.models import Domain
@@ -59,4 +60,4 @@ class ConfigRetrieveAPIView(ClientIPMixin, generics.RetrieveAPIView):
 
     def get_object(self):
         client_country_code = self.get_client_country_code()
-        return Config.objects.get(country__iso_a2_code=client_country_code)
+        return get_object_or_404(Config, country__iso_a2_code=client_country_code)

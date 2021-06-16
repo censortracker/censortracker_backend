@@ -1,18 +1,16 @@
 # -*- coding: utf-8 -*-
 
-import json
 import hashlib
+import json
 from time import sleep
 
 import requests
-
 from django.core.management.base import BaseCommand
 from django.db.models import Count, Max
 from django.utils import timezone
 
-from server.apps.api.models import Case, Domain
 from server.apps.api.logic import notifier
-
+from server.apps.api.models import Case, Domain
 
 MIN_CASE_COUNT_PER_DOMAIN = 2
 SIGNIFICANT_CASES_PERIOD_DAYS = 3
