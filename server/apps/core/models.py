@@ -18,6 +18,9 @@ class Country(models.Model):
     )
     iso_a2_code = models.CharField(verbose_name=_("Alpha 2"), max_length=2, null=True)
     iso_a3_code = models.CharField(verbose_name=_("Alpha 3"), max_length=3, null=True)
+    locale_code = models.CharField(
+        verbose_name=_("Locale code"), max_length=8, null=True, default=None
+    )
 
     class Meta:
         verbose_name = _("Country")
