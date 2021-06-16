@@ -38,13 +38,13 @@ class Config(models.Model):
         Country, on_delete=models.DO_NOTHING, blank=False, null=False
     )
     registry_url = models.URLField(
-        verbose_name=_("Registry URL"), null=False, blank=False
+        verbose_name=_("Registry URL"), null=True, blank=True
     )
     custom_registry_url = models.URLField(
-        verbose_name=_("Custom Registry URL"), null=False, blank=False
+        verbose_name=_("Custom Registry URL"), null=True, blank=True
     )
     report_endpoint = models.URLField(
-        verbose_name=_("DPI API Endpoint"), null=False, blank=False
+        verbose_name=_("DPI API Endpoint"), null=True, blank=True
     )
     specifics = JSONField(
         verbose_name=_("Specifics"), blank=True, null=False, default=dict

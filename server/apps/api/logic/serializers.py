@@ -27,4 +27,7 @@ class ConfigSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Config
-        exclude = ("id", "country",)
+        exclude = (
+            "id",
+            "country",
+        )

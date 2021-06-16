@@ -134,8 +134,8 @@ REST_FRAMEWORK = {
     "DEFAULT_PARSER_CLASSES": (
         "djangorestframework_camel_case.parser.CamelCaseJSONParser",
     ),
-    "DEFAULT_THROTTLE_CLASSES": ["rest_framework.throttling.AnonRateThrottle", ],
-    "DEFAULT_THROTTLE_RATES": {"anon": "100/day", },
+    "DEFAULT_THROTTLE_CLASSES": ["rest_framework.throttling.AnonRateThrottle",],
+    "DEFAULT_THROTTLE_RATES": {"anon": "100/day",},
 }
 
 SLACK_WEBHOOK = secret("slack.dsn", default="")
