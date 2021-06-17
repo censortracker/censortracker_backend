@@ -1,15 +1,15 @@
 {
-   "settings": {
+  "settings": {
     "http": {
       "body_read_timeout": 600,
       "send_timeout": 600,
       "idle_timeout": 180,
-      "max_body_size": 52428800,
+      "max_body_size": 52428800
     }
   },
   "listeners": {
     "*:80": {
-      "application": "app"
+      "pass": "routes/app"
     }
   },
   "routes": {
@@ -41,7 +41,7 @@
       },
       "working_directory": "/app/public",
       "user": "nobody",
-      "group": "nobody",
+      "group": "nogroup",
       "path": "/app",
       "home": "/usr",
       "environment": {
