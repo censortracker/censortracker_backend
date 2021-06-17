@@ -23,27 +23,37 @@ class CaseCreateAPIView(ClientIPMixin, generics.CreateAPIView):
     throttle_classes = [CreateCaseRateThrottle]
 
     def create(self, request, *args, **kwargs):
-        data = request.data
-        # data['client_ip'] = self.get_client_ip(request)
+        domain = request.data.get("domain")
+        hostname = request.data.get("hostname")
 
-        domain_name = data.get('domain', '').lower()
+        if not domain:
+            domain = hostname
 
-        if not domain_name:
-            domain_name = data.get("hostname", "").lower()
+        if not domain:
+            return Response(
+                {"error": "Domain required"}, status=status.HTTP_400_BAD_REQUEST
+            )
 
-        if not domain_name:
-            return Response({"errors": ("domain required",)},
-                            status=status.HTTP_400_BAD_REQUEST)
-        domain, _ = Domain.objects.get_or_create(domain=domain_name)
-        data['domain'] = domain.pk
-        serializer = self.serializer_class(data=data)
+        domain_obj, _ = Domain.objects.get_or_create(domain=domain)
+        request.data["domain"] = domain_obj.pk
+        request.data["client_ip"] = self.get_client_ip()
+
+        try:
+            request.data["client_country"] = Country.objects.get(
+                iso_a2_code=self.get_client_country_code()
+            ).pk
+        except Country.DoesNotExist:
+            pass
+
+        serializer = self.serializer_class(data=request.data)
         try:
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            return Response({'status': 200, 'message': 'OK'})
+            return Response({"status": status.HTTP_201_CREATED, "message": "created"})
         except ValidationError:
-            return Response({"errors": (serializer.errors,)},
-                            status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"errors": (serializer.errors,)}, status=status.HTTP_400_BAD_REQUEST
+            )
 
 
 class DomainListView(generics.ListAPIView):

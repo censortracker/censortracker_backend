@@ -3,8 +3,8 @@ from ipware import get_client_ip
 
 
 class ClientIPMixin:
-    def get_client_ip(self, request: bool = None):
-        client_ip, is_routable = get_client_ip(request or self.request)
+    def get_client_ip(self):
+        client_ip, is_routable = get_client_ip(self.request)
 
         if client_ip is None:
             return None

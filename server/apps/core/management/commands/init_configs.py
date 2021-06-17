@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from server.apps.core.models import Country, Config
+from server.apps.core.models import Config, Country
 
 
 class Command(BaseCommand):
