@@ -7,7 +7,6 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from server.apps.api.logic.mixins import ClientIPMixin
-from server.apps.api.logic.permissions import AllowByHeaders
 from server.apps.api.logic.serializers import (
     CaseSerializer,
     ConfigSerializer,
@@ -15,16 +14,16 @@ from server.apps.api.logic.serializers import (
 )
 from server.apps.api.logic.throttling import CreateCaseRateThrottle
 from server.apps.api.models import Domain
-from server.apps.core.models import Config
+from server.apps.core.models import Config, Country
 
 
 class CaseCreateAPIView(ClientIPMixin, generics.CreateAPIView):
     serializer_class = CaseSerializer
-    permission_classes = [AllowByHeaders]
     throttle_classes = [CreateCaseRateThrottle]
 
     def create(self, request, *args, **kwargs):
         data = request.data
+
         data["client_ip"] = self.get_client_ip(request)
         domain_name = data.get("domain", "").lower()
 
@@ -37,6 +36,13 @@ class CaseCreateAPIView(ClientIPMixin, generics.CreateAPIView):
             )
         domain, _ = Domain.objects.get_or_create(domain=domain_name)
         data["domain"] = domain.pk
+
+        try:
+            client_country = self.get_client_country_code()
+            data['client_country'] = Country.objects.get(iso_a2_code__iexact=client_country)
+        except Country.DoesNotExist:
+            data['client_country'] = None
+
         serializer = self.serializer_class(data=data)
         try:
             serializer.is_valid(raise_exception=True)
