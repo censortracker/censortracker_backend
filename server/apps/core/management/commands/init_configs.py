@@ -14,5 +14,5 @@ class Command(BaseCommand):
             except Config.DoesNotExist:
                 Config.objects.create(
                     country=country,
-                    report_endpoint='https://dpi.censortracker.org/api/case/',
+                    report_endpoint="https://dpi.censortracker.org/api/case/",
                 )
