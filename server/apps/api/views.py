@@ -25,6 +25,7 @@ class CaseCreateAPIView(ClientIPMixin, generics.CreateAPIView):
     def create(self, request, *args, **kwargs):
         data = request.data
         # data['client_ip'] = self.get_client_ip(request)
+
         domain_name = data.get('domain', '').lower()
 
         if not domain_name:
