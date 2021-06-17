@@ -19,6 +19,7 @@ from server.apps.core.models import Config, Country
 
 class CaseCreateAPIView(ClientIPMixin, generics.CreateAPIView):
     serializer_class = CaseSerializer
+    permission_classes = [AllowAny]
     throttle_classes = [CreateCaseRateThrottle]
 
     def create(self, request, *args, **kwargs):
