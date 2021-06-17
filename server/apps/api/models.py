@@ -2,6 +2,8 @@
 
 from django.db import models
 
+from server.apps.core.models import Country
+
 
 class Domain(models.Model):
     domain = models.CharField(
@@ -33,6 +35,10 @@ class Case(models.Model):
         verbose_name="Client provider", max_length=64, blank=True, default=""
     )
     created = models.DateTimeField(auto_now_add=True)
+
+    client_country = models.ForeignKey(
+        Country, on_delete=models.DO_NOTHING, blank=True, null=True
+    )
 
     class Meta:
         verbose_name = "Case"

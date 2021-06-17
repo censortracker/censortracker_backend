@@ -11,10 +11,10 @@ This examples uses Django's default media
 files serving technique in development.
 """
 
-from django.contrib import admin
-from django.urls import include, path, re_path
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib import admin
+from django.urls import include, path, re_path
 
 from server.apps.api import urls as api_urls
 

@@ -128,8 +128,12 @@ MEDIA_URL = "/uploads/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "public", "uploads")
 
 REST_FRAMEWORK = {
-    "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),
-    "DEFAULT_PARSER_CLASSES": ("rest_framework.parsers.JSONParser",),
+    "DEFAULT_RENDERER_CLASSES": (
+        "djangorestframework_camel_case.render.CamelCaseJSONRenderer",
+    ),
+    "DEFAULT_PARSER_CLASSES": (
+        "djangorestframework_camel_case.parser.CamelCaseJSONParser",
+    ),
     "DEFAULT_THROTTLE_CLASSES": ["rest_framework.throttling.AnonRateThrottle",],
     "DEFAULT_THROTTLE_RATES": {"anon": "100/day",},
 }

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from django.db import models
 from django.contrib.postgres.fields import JSONField
+from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
@@ -18,6 +18,9 @@ class Country(models.Model):
     )
     iso_a2_code = models.CharField(verbose_name=_("Alpha 2"), max_length=2, null=True)
     iso_a3_code = models.CharField(verbose_name=_("Alpha 3"), max_length=3, null=True)
+    locale_code = models.CharField(
+        verbose_name=_("Locale code"), max_length=8, null=True, default=None
+    )
 
     class Meta:
         verbose_name = _("Country")
@@ -35,13 +38,13 @@ class Config(models.Model):
         Country, on_delete=models.DO_NOTHING, blank=False, null=False
     )
     registry_url = models.URLField(
-        verbose_name=_("Registry URL"), null=False, blank=False
+        verbose_name=_("Registry URL"), null=True, blank=True
     )
     custom_registry_url = models.URLField(
-        verbose_name=_("Custom Registry URL"), null=False, blank=False
+        verbose_name=_("Custom Registry URL"), null=True, blank=True
     )
     report_endpoint = models.URLField(
-        verbose_name=_("DPI API Endpoint"), null=False, blank=False
+        verbose_name=_("DPI API Endpoint"), null=True, blank=True
     )
     specifics = JSONField(
         verbose_name=_("Specifics"), blank=True, null=False, default=dict

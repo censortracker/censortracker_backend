@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib import admin
+from django.db.models import Count
 from django.urls import reverse
 from django.utils.html import format_html
-from django.db.models import Count
 
-from server.apps.api.models import Domain, Case
+from server.apps.api.models import Case, Domain
 
 
 @admin.register(Domain)
