@@ -198,3 +198,5 @@ fabric.properties
 # vim
 *.swp
 tmp/docker-compose.yml
+
+app.py
