@@ -12,7 +12,11 @@ from server.apps.api.logic.serializers import (
     ConfigSerializer,
     DomainListSerializer,
 )
-from server.apps.api.logic.throttling import CreateCaseRateThrottle
+from server.apps.api.logic.throttling import (
+    ConfigRetrieveRateThrottle,
+    CreateCaseRateThrottle,
+    DomainListRateThrottle,
+)
 from server.apps.api.models import Domain
 from server.apps.core.models import Config, Country
 
@@ -59,12 +63,14 @@ class CaseCreateAPIView(ClientIPMixin, generics.CreateAPIView):
 class DomainListView(generics.ListAPIView):
     serializer_class = DomainListSerializer
     permission_classes = [AllowAny]
+    throttle_classes = [DomainListRateThrottle]
     queryset = Domain.objects.all()
 
 
 class ConfigRetrieveAPIView(ClientIPMixin, generics.RetrieveAPIView):
     serializer_class = ConfigSerializer
     permission_classes = [AllowAny]
+    throttle_classes = [ConfigRetrieveRateThrottle]
 
     def get_object(self):
         client_country_code = self.get_client_country_code()
