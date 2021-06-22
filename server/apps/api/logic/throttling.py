@@ -9,12 +9,12 @@ class CreateCaseRateThrottle(AnonRateThrottle):
 
 
 class DomainListRateThrottle(AnonRateThrottle):
-    rate = "10000/day"
+    rate = "30000/day"
     caches = caches["api"]
     scope = "domain_list_anon"
 
 
 class ConfigRetrieveRateThrottle(AnonRateThrottle):
-    rate = "30000/day"
+    rate = "5000/day"
     caches = caches["api"]
     scope = "retrieve_config_anon"
