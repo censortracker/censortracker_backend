@@ -11,14 +11,16 @@ from server.apps.api.logic.serializers import (
     CaseSerializer,
     ConfigSerializer,
     DomainListSerializer,
+    ProxyConfigSerializer,
 )
 from server.apps.api.logic.throttling import (
     ConfigRetrieveRateThrottle,
     CreateCaseRateThrottle,
     DomainListRateThrottle,
+    ProxyConfigListRateThrottle,
 )
 from server.apps.api.models import Domain
-from server.apps.core.models import Config, Country
+from server.apps.core.models import Config, Country, ProxyConfig
 
 
 class CaseCreateAPIView(ClientIPMixin, generics.CreateAPIView):
@@ -65,6 +67,13 @@ class DomainListView(generics.ListAPIView):
     permission_classes = [AllowAny]
     throttle_classes = [DomainListRateThrottle]
     queryset = Domain.objects.all()
+
+
+class ProxyConfigListView(generics.ListAPIView):
+    serializer_class = ProxyConfigSerializer
+    permission_classes = [AllowAny]
+    throttle_classes = [ProxyConfigListRateThrottle]
+    queryset = ProxyConfig.objects.all()
 
 
 class ConfigRetrieveAPIView(ClientIPMixin, generics.RetrieveAPIView):

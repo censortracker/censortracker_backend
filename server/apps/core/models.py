@@ -56,3 +56,39 @@ class Config(models.Model):
 
     def __str__(self):
         return self.country.name
+
+
+class ProxyConfig(models.Model):
+    class Priority(models.IntegerChoices):
+        LOW = 1, _("Low")
+        MEDIUM = 2, _("Medium")
+        HIGH = 3, _("High")
+        DEFAULT = 0, _("Default")
+
+    name = models.CharField(
+        verbose_name=_("Config name"), max_length=64, blank=False, null=False
+    )
+    server = models.CharField(
+        verbose_name=_("Proxy server"), max_length=256, blank=False, null=False
+    )
+    port = models.CharField(
+        verbose_name=_("Proxy server"), max_length=6, blank=False, null=False
+    )
+    priority = models.IntegerField(
+        verbose_name=_("Priority"),
+        choices=Priority.choices,
+        default=Priority.DEFAULT,
+        null=False,
+        blank=True,
+    )
+
+    class Meta:
+        ordering = ["-priority"]
+        verbose_name = _("Proxy config")
+        verbose_name_plural = _("Proxy Configs")
+
+    def __str__(self):
+        return f"{self.name}: <{self.server}:{self.port}>"
+
+    def __repr__(self):
+        return f"Proxy <{self.server}:{self.port}>"

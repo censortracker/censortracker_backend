@@ -14,6 +14,12 @@ class DomainListRateThrottle(AnonRateThrottle):
     scope = "domain_list_anon"
 
 
+class ProxyConfigListRateThrottle(AnonRateThrottle):
+    rate = "120/day"
+    caches = caches["api"]
+    scope = "proxy_config_list_anon"
+
+
 class ConfigRetrieveRateThrottle(AnonRateThrottle):
     rate = "5000/day"
     caches = caches["api"]
