@@ -9,7 +9,7 @@ urlpatterns = [
     path("domains/", views.DomainListView.as_view(), name="domain_list"),
     path("config/", views.ConfigRetrieveAPIView.as_view(), name="config_detail"),
     path(
-        "proxy-config/", views.ProxyConfigListView.as_view(), name="proxy_config_list"
+        "proxy-configs/", views.ProxyConfigListView.as_view(), name="proxy_config_list"
     ),
 ]
 
