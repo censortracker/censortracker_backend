@@ -1,4 +1,5 @@
 This Django project provides extremely simple API for writing and reading domains reported by [Censor Tracker](https://git.io/JfoBg). 
+
 This is a part of the mechanism which will help us to detect DPI locks initiated by the government services.
 
 Pre Requirements
