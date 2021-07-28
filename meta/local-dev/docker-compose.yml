@@ -12,6 +12,7 @@ x-dj: &dj
     - %PROJECT%.django.key.secret
     - %PROJECT%.sentry.%DJANGO_ENV%.dsn.secret
     - %PROJECT%.pg.%DJANGO_ENV%.passwd.secret
+    - %PROJECT%.slack.dsn.secret
   environment:
     PROJECT: %PROJECT%
     DJANGO_ENV: %DJANGO_ENV%
@@ -95,4 +96,6 @@ secrets:
   %PROJECT%.sentry.%DJANGO_ENV%.dsn.secret:
     external: true
   %PROJECT%.pg.%DJANGO_ENV%.passwd.secret:
+    external: true
+  %PROJECT%.slack.dsn.secret:
     external: true

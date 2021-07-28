@@ -4,10 +4,4 @@ set -o errexit
 set -o nounset
 
 rm -f '/tmp/celerybeat.pid'
-celery -A server beat  \
-	--workdir="/app/" \
-	--loglevel=info \
-	--uid=65534 \
-	--gid=65534 \
-	--pidfile="/tmp/celerybeat.pid"
-
+celery --app=server --workdir="/app/" beat --uid=65534 --gid=65534 --pidfile="/tmp/celerybeat.pid" --loglevel='INFO'
