@@ -30,17 +30,18 @@ def alert_to_slack(domain_names):
 def blocked_domains():
     start_date = timezone.now() - timezone.timedelta(days=SIGNIFICANT_CASES_PERIOD_DAYS)
     hour_ago = timezone.now() - timezone.timedelta(hours=1)
+    cases = Case.objects.filter(created__gte=start_date)
+
     domain_pks = (
-        Case.objects.filter(created__gte=start_date)
-        .values("domain_id", "client_hash")
+        cases.values("domain__pk", "client_hash")
         .distinct()
-        .values("domain_id")
+        .values("domain__pk")
         .annotate(hash_count=Count("client_hash"))
-        .values("domain_id", "hash_count")
+        .values("domain__pk", "hash_count")
         .filter(hash_count__gte=MIN_CASE_COUNT_PER_DOMAIN)
         .annotate(latest_case=Max("created"))
         .filter(latest_case__gte=hour_ago)
-        .values_list("domain", flat=True)
+        .values_list("domain__pk", flat=True)
     )
     return Domain.objects.filter(pk__in=domain_pks).values_list("domain", flat=True)
 
@@ -48,6 +49,7 @@ def blocked_domains():
 def check_blocked():
     domains = blocked_domains()
     if not domains:
+        print("Domains not found!")
         return
     alert_to_slack(domains)
 
@@ -67,9 +69,9 @@ def fetch_data_chunk(ips_chunk):
 
 
 def get_ips_data(ips):
-    ratelimit = 15
+    rate_limit = 15
     max_query_length = 100
-    for minute_chunk in chunks(ips, ratelimit * max_query_length):
+    for minute_chunk in chunks(ips, rate_limit * max_query_length):
         for query_chunk in chunks(minute_chunk, max_query_length):
             data_chunk = fetch_data_chunk(query_chunk)
             for ip_data in data_chunk:
@@ -77,13 +79,15 @@ def get_ips_data(ips):
         sleep(60)
 
 
-def hash_case_data(case):
+def generate_case_hash(case):
     data = case.client_ip + case.client_provider + case.client_region
     return hashlib.sha256(data.encode()).hexdigest()
 
 
 def update_ip_data():
-    cases = Case.objects.filter(client_ip__isnull=False)
+    cases = Case.objects.filter(
+        client_ip__isnull=False, client_country__iso_a2_code="RU"
+    )
     ips = [case.client_ip for case in cases]
     ips_data = get_ips_data(ips)
     for (case, ip_data) in zip(cases, ips_data):
@@ -91,6 +95,6 @@ def update_ip_data():
             continue
         case.client_provider = ip_data["isp"]
         case.client_region = ip_data["regionName"]
-        case.client_hash = hash_case_data(case)
+        case.client_hash = generate_case_hash(case)
         case.client_ip = None
         case.save()

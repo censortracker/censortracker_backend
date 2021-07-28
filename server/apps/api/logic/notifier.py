@@ -10,7 +10,7 @@ def slack_message(message):
     """
     Send message to slack
     """
-    if not settings.DEBUG and settings.SLACK_WEBHOOK and message:
+    if settings.SLACK_WEBHOOK and message:
         response = requests.post(
             url=settings.SLACK_WEBHOOK, json={"text": message, "mrkdw": True},
         )
