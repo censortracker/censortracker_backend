@@ -24,9 +24,7 @@ class Command(BaseCommand):
 
 def alert_to_slack(domain_names):
     message = "Blocked: {}".format(", ".join(domain_names))
-    notifier.slack_message(
-        message=message, channel="#tests",
-    )
+    notifier.slack_message(message=message)
 
 
 def blocked_domains():
@@ -60,7 +58,7 @@ def chunks(iterable, size):
 
 
 def fetch_data_chunk(ips_chunk):
-    url = "http://ip-api.com/batch"
+    url = "https://ip-api.com/batch"
     send_data = [{"query": ip, "fields": "isp,regionName"} for ip in ips_chunk]
     response = requests.post(url, data=json.dumps(send_data))
     if response.status_code != 200:

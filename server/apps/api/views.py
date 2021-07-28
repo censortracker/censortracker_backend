@@ -6,6 +6,7 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
+import validators
 from server.apps.api.logic.mixins import ClientIPMixin
 from server.apps.api.logic.serializers import (
     CaseSerializer,
@@ -35,9 +36,10 @@ class CaseCreateAPIView(ClientIPMixin, generics.CreateAPIView):
         if not domain:
             domain = hostname
 
-        if not domain:
+        if not domain or not validators.domain(domain):
             return Response(
-                {"error": "Domain required"}, status=status.HTTP_400_BAD_REQUEST
+                {"error": "Domain is empty or invalid"},
+                status=status.HTTP_400_BAD_REQUEST,
             )
 
         domain_obj, _ = Domain.objects.get_or_create(domain=domain)
