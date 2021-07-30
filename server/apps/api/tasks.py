@@ -17,12 +17,3 @@ class IPData(PeriodicTask):
     def run(self, *args, **kwargs):
         call_command("update_ip_data")
         return True
-
-
-class ReportSlack(PeriodicTask):
-    name = "Report about DPI block"
-    run_every = crontab(hour=1, minute=5)
-
-    def run(self, *args, **kwargs):
-        call_command("report_case")
-        return True
