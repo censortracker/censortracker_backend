@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-
 import hashlib
+import itertools
 import json
 from time import sleep
 
@@ -10,7 +10,7 @@ from django.db.models import Count, Max
 from django.utils import timezone
 
 from server.apps.api.logic import notifier
-from server.apps.api.models import Case, Domain
+from server.apps.api.models import Case
 
 MIN_CASE_COUNT_PER_DOMAIN = 2
 SIGNIFICANT_CASES_PERIOD_DAYS = 3
@@ -22,8 +22,13 @@ class Command(BaseCommand):
         check_blocked()
 
 
-def alert_to_slack(domain_names):
-    message = "Blocked: {}".format(", ".join(domain_names))
+def alert_to_slack(cases_by_domains):
+    messages = []
+    for case in cases_by_domains:
+        domain_name = case.pop("domain_name")
+        values = "\n".join([x for x in case.values() if x])
+        messages.append(f"[{domain_name}]\n{values}")
+    message = "\n\n".join(messages)
     notifier.slack_message(message=message)
 
 
@@ -35,7 +40,6 @@ def blocked_domains():
     domain_pks = (
         cases.values("domain__pk", "client_hash")
         .distinct()
-        .values("domain__pk")
         .annotate(hash_count=Count("client_hash"))
         .values("domain__pk", "hash_count")
         .filter(hash_count__gte=MIN_CASE_COUNT_PER_DOMAIN)
@@ -43,15 +47,40 @@ def blocked_domains():
         .filter(latest_case__gte=hour_ago)
         .values_list("domain__pk", flat=True)
     )
-    return Domain.objects.filter(pk__in=domain_pks).values_list("domain", flat=True)
+    last_cases_for_domains = (
+        cases.filter(created__gte=hour_ago, domain_id__in=domain_pks)
+        .values(
+            "id", "domain__domain", "client_region", "client_provider", "client_country"
+        )
+        .order_by("domain__domain")
+    )
+
+    cases_by_domains = []
+    for domain_name, cases_by_domain in itertools.groupby(
+        last_cases_for_domains, key=lambda item: item["domain__domain"]
+    ):
+        for case_id, g in itertools.groupby(
+            cases_by_domain, key=lambda item: item["id"]
+        ):
+            values = list(g)[0]
+            cases_by_domains.append(
+                {
+                    "domain_name": domain_name,
+                    "client_country": values["client_country"],
+                    "client_region": values["client_region"],
+                    "client_provider": values["client_provider"],
+                }
+            )
+
+    return cases_by_domains
 
 
 def check_blocked():
-    domains = blocked_domains()
-    if not domains:
-        print("Domains not found!")
+    cases_by_domains = blocked_domains()
+    if not cases_by_domains:
+        print("No new domains found")
         return
-    alert_to_slack(domains)
+    alert_to_slack(cases_by_domains)
 
 
 def chunks(iterable, size):
