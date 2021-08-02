@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import hashlib
+import itertools
 import json
-from itertools import groupby
 from time import sleep
 
 import requests
@@ -26,8 +26,8 @@ def alert_to_slack(cases_by_domains):
     messages = []
     for case in cases_by_domains:
         domain_name = case.pop("domain_name")
-        values = "\n".join([x for x in list(case.values()) if x not in [None, ""]])
-        messages.append(f"[{domain_name}]\n" + values)
+        values = "\n".join([x for x in case.values() if x])
+        messages.append(f"[{domain_name}]\n{values}")
     message = "\n\n".join(messages)
     notifier.slack_message(message=message)
 
@@ -47,7 +47,6 @@ def blocked_domains():
         .filter(latest_case__gte=hour_ago)
         .values_list("domain__pk", flat=True)
     )
-
     last_cases_for_domains = (
         cases.filter(created__gte=hour_ago, domain_id__in=domain_pks)
         .values(
@@ -57,10 +56,12 @@ def blocked_domains():
     )
 
     cases_by_domains = []
-    for domain_name, cases_by_domain in groupby(
-        last_cases_for_domains, key=lambda lc: lc["domain__domain"]
+    for domain_name, cases_by_domain in itertools.groupby(
+        last_cases_for_domains, key=lambda item: item["domain__domain"]
     ):
-        for case_id, g in groupby(cases_by_domain, key=lambda lc: lc["id"]):
+        for case_id, g in itertools.groupby(
+            cases_by_domain, key=lambda item: item["id"]
+        ):
             values = list(g)[0]
             cases_by_domains.append(
                 {
