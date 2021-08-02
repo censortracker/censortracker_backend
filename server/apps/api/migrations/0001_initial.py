@@ -25,6 +25,9 @@ class Migration(migrations.Migration):
                 ("domain", models.URLField(verbose_name="Domain")),
                 ("client_ip", models.GenericIPAddressField(verbose_name="Client IP")),
             ],
-            options={"verbose_name": "Domain", "verbose_name_plural": "Domains",},
+            options={
+                "verbose_name": "Domain",
+                "verbose_name_plural": "Domains",
+            },
         ),
     ]

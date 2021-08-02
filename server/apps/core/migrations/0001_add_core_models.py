@@ -35,7 +35,10 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"verbose_name": "Country", "verbose_name_plural": "Countries",},
+            options={
+                "verbose_name": "Country",
+                "verbose_name_plural": "Countries",
+            },
         ),
         migrations.CreateModel(
             name="Config",
@@ -69,6 +72,9 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            options={"verbose_name": "Config", "verbose_name_plural": "Configs",},
+            options={
+                "verbose_name": "Config",
+                "verbose_name_plural": "Configs",
+            },
         ),
     ]
