@@ -7,10 +7,7 @@ from server.apps.core.models import Country
 
 class Domain(models.Model):
     domain = models.CharField(
-        verbose_name="Domain",
-        max_length=128,
-        null=False,
-        blank=False,
+        verbose_name="Domain", max_length=128, null=False, blank=False,
     )
 
     class Meta:
@@ -26,18 +23,16 @@ class Case(models.Model):
         Domain, on_delete=models.CASCADE, null=False, blank=False, related_name="cases"
     )
     client_ip = models.GenericIPAddressField(
-        verbose_name="Client IP",
-        null=True,
-        blank=True,
+        verbose_name="Client IP", null=True, blank=True,
     )
     client_hash = models.CharField(
         verbose_name="Client Hash", max_length=64, blank=True, default=""
     )
     client_region = models.CharField(
-        verbose_name="Client region", max_length=64, blank=True, default=""
+        verbose_name="Client region", max_length=128, blank=True, default=""
     )
     client_provider = models.CharField(
-        verbose_name="Client provider", max_length=64, blank=True, default=""
+        verbose_name="Client provider", max_length=256, blank=True, default=""
     )
     created = models.DateTimeField(auto_now_add=True)
 

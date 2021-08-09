@@ -2,7 +2,7 @@
 import hashlib
 import itertools
 import json
-from time import sleep
+import time
 
 import requests
 from django.core.management.base import BaseCommand
@@ -83,29 +83,28 @@ def check_blocked():
     alert_to_slack(cases_by_domains)
 
 
-def chunks(iterable, size):
-    for i in range(0, len(iterable), size):
-        yield iterable[i : i + size]
+def fetch_data_by_ip(ip):
+    """Fetch data of client by IP.
 
+    This endpoint is limited to 45 requests per minute from an IP address.
 
-def fetch_data_chunk(ips_chunk):
-    url = "https://ip-api.com/batch"
-    send_data = [{"query": ip, "fields": "isp,regionName"} for ip in ips_chunk]
-    response = requests.post(url, data=json.dumps(send_data))
-    if response.status_code != 200:
-        return []
-    return json.loads(response.content)
+    If you go over the limit your requests will be throttled (HTTP 429) until
+    your rate limit window is reset.
 
+    If you constantly go over the limit your IP address will be banned for 1 hour.
 
-def get_ips_data(ips):
-    rate_limit = 15
-    max_query_length = 100
-    for minute_chunk in chunks(ips, rate_limit * max_query_length):
-        for query_chunk in chunks(minute_chunk, max_query_length):
-            data_chunk = fetch_data_chunk(query_chunk)
-            for ip_data in data_chunk:
-                yield ip_data
-        sleep(60)
+    Your implementation should always check the value of the X-Rl header, and if its
+    is 0 you must not send any more requests for the duration of X-Ttl in seconds.
+    """
+    response = requests.get(f"http://ip-api.com/json/{ip}")
+
+    ttl = int(response.headers["X-Ttl"])
+    rate_limit = int(response.headers["X-Rl"])
+
+    if rate_limit == 0 or response.status_code == 429:
+        time.sleep(ttl)
+
+    return response.json()
 
 
 def generate_case_hash(case):
@@ -117,13 +116,18 @@ def update_ip_data():
     cases = Case.objects.filter(
         client_ip__isnull=False, client_country__iso_a2_code="RU"
     )
-    ips = [case.client_ip for case in cases]
-    ips_data = get_ips_data(ips)
-    for (case, ip_data) in zip(cases, ips_data):
-        if not ip_data:
+    for case in cases:
+        try:
+            ip_data = fetch_data_by_ip(case.client_ip)
+        except json.decoder.JSONDecodeError:
             continue
+
         case.client_provider = ip_data["isp"]
         case.client_region = ip_data["regionName"]
         case.client_hash = generate_case_hash(case)
-        case.client_ip = None
+
+        if case.client_hash:
+            print(f"Client hash updated for {case.pk}")
+            case.client_ip = None
+
         case.save()

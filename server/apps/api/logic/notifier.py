@@ -12,8 +12,7 @@ def slack_message(message):
     """
     if settings.SLACK_WEBHOOK and message:
         response = requests.post(
-            url=settings.SLACK_WEBHOOK,
-            json={"text": message, "mrkdw": True},
+            url=settings.SLACK_WEBHOOK, json={"text": message, "mrkdw": True},
         )
 
         if response.status_code == 200:

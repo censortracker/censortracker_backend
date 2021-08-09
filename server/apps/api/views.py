@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
-import validators
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, status
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
+import validators
 from server.apps.api.logic.mixins import ClientIPMixin
 from server.apps.api.logic.serializers import (
     CaseSerializer,

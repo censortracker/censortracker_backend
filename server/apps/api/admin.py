@@ -36,4 +36,10 @@ class DomainAdmin(admin.ModelAdmin):
 
 @admin.register(Case)
 class CaseAdmin(admin.ModelAdmin):
-    list_display = ("domain", "client_region", "client_provider")
+    list_display = (
+        "domain",
+        "client_region",
+        "client_provider",
+        "client_hash",
+        "created",
+    )
