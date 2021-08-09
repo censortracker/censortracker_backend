@@ -39,28 +39,28 @@ def blocked_domains():
 
     domain_pks = (
         cases.values("domain__pk", "client_hash")
-        .distinct()
-        .annotate(hash_count=Count("client_hash"))
-        .values("domain__pk", "hash_count")
-        .filter(hash_count__gte=MIN_CASE_COUNT_PER_DOMAIN)
-        .annotate(latest_case=Max("created"))
-        .filter(latest_case__gte=hour_ago)
-        .values_list("domain__pk", flat=True)
+            .distinct()
+            .annotate(hash_count=Count("client_hash"))
+            .values("domain__pk", "hash_count")
+            .filter(hash_count__gte=MIN_CASE_COUNT_PER_DOMAIN)
+            .annotate(latest_case=Max("created"))
+            .filter(latest_case__gte=hour_ago)
+            .values_list("domain__pk", flat=True)
     )
     last_cases_for_domains = (
         cases.filter(created__gte=hour_ago, domain_id__in=domain_pks)
-        .values(
+            .values(
             "id", "domain__domain", "client_region", "client_provider", "client_country"
         )
-        .order_by("domain__domain")
+            .order_by("domain__domain")
     )
 
     cases_by_domains = []
     for domain_name, cases_by_domain in itertools.groupby(
-        last_cases_for_domains, key=lambda item: item["domain__domain"]
+            last_cases_for_domains, key=lambda item: item["domain__domain"]
     ):
         for case_id, g in itertools.groupby(
-            cases_by_domain, key=lambda item: item["id"]
+                cases_by_domain, key=lambda item: item["id"]
         ):
             values = list(g)[0]
             cases_by_domains.append(
@@ -107,14 +107,11 @@ def fetch_data_by_ip(ip):
     return response.json()
 
 
-def generate_case_hash(case):
-    data = case.client_ip + case.client_provider + case.client_region
-    return hashlib.sha256(data.encode()).hexdigest()
-
-
 def update_ip_data():
     cases = Case.objects.filter(
-        client_ip__isnull=False, client_country__iso_a2_code="RU"
+        client_hash="",
+        client_ip__isnull=False,
+        client_country__iso_a2_code="RU"
     )
     for case in cases:
         try:
@@ -124,10 +121,11 @@ def update_ip_data():
 
         case.client_provider = ip_data["isp"]
         case.client_region = ip_data["regionName"]
-        case.client_hash = generate_case_hash(case)
+
+        case_uid = f"{case.client_ip}{case.client_provider}{case.client_region}"
+        case.client_hash = hashlib.sha256(case_uid.encode()).hexdigest()
 
         if case.client_hash:
-            print(f"Client hash updated for {case.pk}")
             case.client_ip = None
 
         case.save()
