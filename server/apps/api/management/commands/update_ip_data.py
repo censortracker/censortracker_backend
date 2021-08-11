@@ -27,6 +27,9 @@ def alert_to_slack(cases_by_domains):
         print("Nothing to report.")
         return
 
+    timestamp = timezone.now().strftime('%d-%m-%Y %H:%M:%S')
+    notifier.slack_message(f"📃 Отчет о DPI блокировках: *{timestamp}*")
+
     for case in cases_by_domains:
         case_id = case.pop('case_id')
         domain_name = case.pop("domain_name")
@@ -35,6 +38,8 @@ def alert_to_slack(cases_by_domains):
 
         if notified:
             Case.objects.filter(pk=case_id).update(reported=True)
+
+    notifier.slack_message(f"✅ Отчет сформирован, <@U0GBE515J>, <@U100MCJG7>")
 
 
 def get_cases():
