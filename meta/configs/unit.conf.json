@@ -1,0 +1,54 @@
+{
+  "settings": {
+    "http": {
+      "body_read_timeout": 600,
+      "send_timeout": 600,
+      "idle_timeout": 180,
+      "max_body_size": 52428800
+    }
+  },
+  "listeners": {
+    "*:80": {
+      "pass": "routes/app"
+    }
+  },
+  "routes": {
+    "app": [
+      {
+        "match": {
+          "uri": [
+            "/static/*",
+            "/uploads/*"
+          ]
+        },
+        "action": {
+          "share": "/app/public"
+        }
+      },
+      {
+        "action": {
+          "pass": "applications/app"
+        }
+      }
+    ]
+  },
+  "applications": {
+    "app": {
+      "type": "python 3",
+      "processes": {
+        "max": 50,
+        "spare": 5
+      },
+      "working_directory": "/app/public",
+      "user": "nobody",
+      "group": "nogroup",
+      "path": "/app",
+      "home": "/usr",
+      "environment": {
+        "ts": "0"
+      },
+      "module": "server.wsgi"
+    }
+  },
+  "access_log": "/dev/stdout"
+}

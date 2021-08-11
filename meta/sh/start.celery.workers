@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+set -o errexit
+set -o nounset
+
+celery --app=server --workdir="/app/" worker --max-tasks-per-child=1 --concurrency=2 --uid=65534 --gid=65534 --loglevel='INFO'
