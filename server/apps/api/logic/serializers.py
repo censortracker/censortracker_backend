@@ -7,7 +7,7 @@ from server.apps.core.models import Config, Country, ProxyConfig
 class CaseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Case
-        fields = ("domain", "client_ip", "client_country")
+        fields = ("domain", "client_ip", "client_country", "user_agent")
 
 
 class DomainListSerializer(serializers.ModelSerializer):

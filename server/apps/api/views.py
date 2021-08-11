@@ -32,6 +32,7 @@ class CaseCreateAPIView(ClientIPMixin, generics.CreateAPIView):
     def create(self, request, *args, **kwargs):
         domain = request.data.get("domain")
         hostname = request.data.get("hostname")
+        user_agent = request.data.get('userAgent')
 
         if not domain:
             domain = hostname
@@ -45,6 +46,9 @@ class CaseCreateAPIView(ClientIPMixin, generics.CreateAPIView):
         domain_obj, _ = Domain.objects.get_or_create(domain=domain)
         request.data["domain"] = domain_obj.pk
         request.data["client_ip"] = self.get_client_ip()
+
+        if user_agent:
+            request.data['user_agent'] = user_agent
 
         try:
             request.data["client_country"] = Country.objects.get(

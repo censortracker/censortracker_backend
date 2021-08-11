@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from django.contrib.postgres.fields import JSONField
 
 from server.apps.core.models import Country
 
@@ -40,6 +41,7 @@ class Case(models.Model):
         Country, on_delete=models.DO_NOTHING, blank=True, null=True
     )
 
+    user_agent = models.TextField(verbose_name="User agent", null=True, blank=True)
     reported = models.BooleanField(default=False, null=False)
 
     class Meta:
