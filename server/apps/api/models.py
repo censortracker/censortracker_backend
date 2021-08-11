@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from django.contrib.postgres.fields import JSONField
 
 from server.apps.core.models import Country
 
@@ -39,6 +40,8 @@ class Case(models.Model):
     client_country = models.ForeignKey(
         Country, on_delete=models.DO_NOTHING, blank=True, null=True
     )
+
+    ct_meta_info = JSONField(verbose_name='CensorTracker\'s meta info', default=dict, null=False)
 
     reported = models.BooleanField(default=False, null=False)
 
