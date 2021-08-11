@@ -41,8 +41,7 @@ class Case(models.Model):
         Country, on_delete=models.DO_NOTHING, blank=True, null=True
     )
 
-    ct_meta_info = JSONField(verbose_name='CensorTracker\'s meta info', default=dict, null=False)
-
+    user_agent = models.TextField(verbose_name="User agent", null=True, blank=True)
     reported = models.BooleanField(default=False, null=False)
 
     class Meta:
