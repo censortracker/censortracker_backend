@@ -27,11 +27,11 @@ def alert_to_slack(cases_by_domains):
         print("Nothing to report.")
         return
 
-    timestamp = timezone.now().strftime('%d-%m-%Y %H:%M:%S')
+    timestamp = timezone.now().strftime("%d-%m-%Y %H:%M:%S")
     notifier.slack_message(f"📃 Отчет о DPI блокировках: *{timestamp}*")
 
     for case in cases_by_domains:
-        case_id = case.pop('case_id')
+        case_id = case.pop("case_id")
         domain_name = case.pop("domain_name")
         values = "\n".join([str(x) for x in case.values() if x])
         notified = notifier.slack_message(f"[{domain_name}]\n{values}")
@@ -49,29 +49,35 @@ def get_cases():
 
     domain_pks = (
         cases.values("domain__pk", "client_hash")
-            .distinct()
-            .annotate(hash_count=Count("client_hash"))
-            .values("domain__pk", "hash_count")
-            .filter(hash_count__gte=MIN_CASE_COUNT_PER_DOMAIN)
-            .annotate(latest_case=Max("created"))
-            .filter(latest_case__gte=day_ago)
-            .values_list("domain__pk", flat=True)
+        .distinct()
+        .annotate(hash_count=Count("client_hash"))
+        .values("domain__pk", "hash_count")
+        .filter(hash_count__gte=MIN_CASE_COUNT_PER_DOMAIN)
+        .annotate(latest_case=Max("created"))
+        .filter(latest_case__gte=day_ago)
+        .values_list("domain__pk", flat=True)
     )
 
     last_cases_for_domains = (
         cases.filter(domain_id__in=domain_pks)
-            .values(
-            "id", "domain__domain", "client_region", "client_provider", "client_country__name"
+        .values(
+            "id",
+            "domain__domain",
+            "client_region",
+            "client_provider",
+            "client_country__name",
         )
-            .order_by("domain__domain")
+        .order_by("domain__domain")
     )
 
     cases_by_domains = []
 
     for domain_name, cases_by_domain in itertools.groupby(
-            last_cases_for_domains, key=lambda item: item["domain__domain"]
+        last_cases_for_domains, key=lambda item: item["domain__domain"]
     ):
-        for case_id, g in itertools.groupby(cases_by_domain, key=lambda item: item["id"]):
+        for case_id, g in itertools.groupby(
+            cases_by_domain, key=lambda item: item["id"]
+        ):
             values = list(g)[0]
             cases_by_domains.append(
                 {
@@ -111,11 +117,29 @@ def fetch_data_by_ip(ip):
 
 
 def update_case_hash():
+    allowed_country_codes = [
+        "RU",
+        "UA",
+        "BY",
+        "UZ",
+        "KZ",
+        "GE",
+        "AZ",
+        "LT",
+        "MD",
+        "LV",
+        "KG",
+        "TJ",
+        "AM",
+        "TM",
+        "EE",
+    ]
+
     cases = Case.objects.filter(
         client_hash="",
         client_ip__isnull=False,
         reported=False,
-        client_country__iso_a2_code="RU"
+        client_country__iso_a2_code__in=allowed_country_codes,
     )
     for case in cases:
         try:
