@@ -7,13 +7,15 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0009_add_reported_field'),
+        ("api", "0009_add_reported_field"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='case',
-            name='ct_meta_info',
-            field=django.contrib.postgres.fields.jsonb.JSONField(default=dict, verbose_name="CensorTracker's meta info"),
+            model_name="case",
+            name="ct_meta_info",
+            field=django.contrib.postgres.fields.jsonb.JSONField(
+                default=dict, verbose_name="CensorTracker's meta info"
+            ),
         ),
     ]
