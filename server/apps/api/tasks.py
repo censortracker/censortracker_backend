@@ -15,5 +15,5 @@ class IPData(PeriodicTask):
     # run_every = crontab()
 
     def run(self, *args, **kwargs):
-        call_command("generate_case_sha256_hash")
+        call_command("generate_case_hash")
         return True
