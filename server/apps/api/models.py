@@ -49,4 +49,4 @@ class Case(models.Model):
         verbose_name_plural = "Cases"
 
     def __str__(self):
-        return f'Case <{self.client_hash}>'
+        return f"Case <{self.client_hash}>"

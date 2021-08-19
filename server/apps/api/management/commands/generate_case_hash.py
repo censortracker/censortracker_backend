@@ -33,8 +33,11 @@ def alert_to_slack(cases_by_domains):
     for case in cases_by_domains:
         case_id = case.pop("case_id")
         domain_name = case.pop("domain_name")
+        client_hash = case.pop("client_hash")
         values = "\n".join([str(x) for x in case.values() if x])
-        notified = notifier.slack_message(f"[{domain_name}]\n{values}")
+        notified = notifier.slack_message(
+            f"[{domain_name}]\n{values}\n\n Hash: {client_hash}"
+        )
 
         if notified:
             Case.objects.filter(pk=case_id).update(reported=True)
@@ -66,6 +69,7 @@ def get_cases():
             "client_region",
             "client_provider",
             "client_country__name",
+            "client_hash",
         )
         .order_by("domain__domain")
     )
@@ -86,6 +90,7 @@ def get_cases():
                     "client_country": values["client_country__name"],
                     "client_region": values["client_region"],
                     "client_provider": values["client_provider"],
+                    "client_hash": values["client_hash"],
                 }
             )
 

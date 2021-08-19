@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('api', '0008_change_max_len_for_fields'),
+        ("api", "0008_change_max_len_for_fields"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='case',
-            name='reported',
+            model_name="case",
+            name="reported",
             field=models.BooleanField(default=False),
         ),
     ]
