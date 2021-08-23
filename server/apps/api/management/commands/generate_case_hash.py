@@ -33,10 +33,11 @@ def alert_to_slack(cases_by_domains):
     for case in cases_by_domains:
         case_id = case.pop("case_id")
         domain_name = case.pop("domain_name")
-        client_hash = case.pop("client_hash")
+        client_hash = case.pop("client_hash", "")[:8]
         values = "\n".join([str(x) for x in case.values() if x])
         notified = notifier.slack_message(
-            f"[{domain_name}]\n{values}\n\n Hash: {client_hash}"
+            f"[{domain_name}]\n{values}\n\n"
+            f"Сигнатура: {client_hash}"
         )
 
         if notified:
@@ -71,6 +72,7 @@ def get_cases():
             "client_country__name",
             "client_hash",
         )
+        .distinct("domain__domain", "client_hash")
         .order_by("domain__domain")
     )
 
