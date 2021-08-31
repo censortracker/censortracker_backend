@@ -3,8 +3,10 @@ import hashlib
 import itertools
 import json
 import time
+from typing import List
 
 import requests
+from requests.exceptions import ConnectionError, ConnectTimeout
 from django.core.management.base import BaseCommand
 from django.db.models import Count, Max
 from django.utils import timezone
@@ -14,6 +16,24 @@ from server.apps.api.models import Case
 
 MIN_CASE_COUNT_PER_DOMAIN = 2
 SIGNIFICANT_CASES_PERIOD_DAYS = 3
+
+REGISTRY_API_URL = 'https://reestr.rublacklist.net/api/v2/domains/json/'
+
+
+def get_registry_domains() -> List[str]:
+    try:
+        response = requests.get(REGISTRY_API_URL, timeout=5)
+        data = response.json()
+
+        domains = set()
+
+        for domain in data:
+            if domain.startswith('*.'):
+                domains.add(domain[2:])
+
+        return data
+    except (ConnectionError, ConnectTimeout):
+        return []
 
 
 class Command(BaseCommand):
@@ -30,9 +50,15 @@ def alert_to_slack(cases_by_domains):
     timestamp = timezone.now().strftime("%d-%m-%Y %H:%M:%S")
     notifier.slack_message(f"📃 Отчет о DPI блокировках: *{timestamp}*")
 
+    domains = get_registry_domains()
+
     for case in cases_by_domains:
         case_id = case.pop("case_id")
         domain_name = case.pop("domain_name")
+
+        if domain_name in domains:
+            continue
+
         client_hash = case.pop("client_hash", "")[:8]
         values = "\n".join([str(x) for x in case.values() if x])
         notified = notifier.slack_message(
@@ -53,18 +79,18 @@ def get_cases():
 
     domain_pks = (
         cases.values("domain__pk", "client_hash")
-        .distinct()
-        .annotate(hash_count=Count("client_hash"))
-        .values("domain__pk", "hash_count")
-        .filter(hash_count__gte=MIN_CASE_COUNT_PER_DOMAIN)
-        .annotate(latest_case=Max("created"))
-        .filter(latest_case__gte=day_ago)
-        .values_list("domain__pk", flat=True)
+            .distinct()
+            .annotate(hash_count=Count("client_hash"))
+            .values("domain__pk", "hash_count")
+            .filter(hash_count__gte=MIN_CASE_COUNT_PER_DOMAIN)
+            .annotate(latest_case=Max("created"))
+            .filter(latest_case__gte=day_ago)
+            .values_list("domain__pk", flat=True)
     )
 
     last_cases_for_domains = (
         cases.filter(domain_id__in=domain_pks)
-        .values(
+            .values(
             "id",
             "domain__domain",
             "client_region",
@@ -72,17 +98,17 @@ def get_cases():
             "client_country__name",
             "client_hash",
         )
-        .distinct("domain__domain", "client_hash")
-        .order_by("domain__domain")
+            .distinct("domain__domain", "client_hash")
+            .order_by("domain__domain")
     )
 
     cases_by_domains = []
 
     for domain_name, cases_by_domain in itertools.groupby(
-        last_cases_for_domains, key=lambda item: item["domain__domain"]
+            last_cases_for_domains, key=lambda item: item["domain__domain"]
     ):
         for case_id, g in itertools.groupby(
-            cases_by_domain, key=lambda item: item["id"]
+                cases_by_domain, key=lambda item: item["id"]
         ):
             values = list(g)[0]
             cases_by_domains.append(
