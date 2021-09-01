@@ -19,6 +19,10 @@ SIGNIFICANT_CASES_PERIOD_DAYS = 3
 
 REGISTRY_API_URL = 'https://reestr.rublacklist.net/api/v2/domains/json/'
 
+IGNORE = [
+    'google.com'
+]
+
 
 def get_registry_domains() -> List[str]:
     try:
@@ -56,7 +60,7 @@ def alert_to_slack(cases_by_domains):
         case_id = case.pop("case_id")
         domain_name = case.pop("domain_name")
 
-        if domain_name in domains:
+        if domain_name in domains or domain_name in IGNORE:
             continue
 
         client_hash = case.pop("client_hash", "")[:8]
