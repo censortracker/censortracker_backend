@@ -17,11 +17,9 @@ from server.apps.api.models import Case
 MIN_CASE_COUNT_PER_DOMAIN = 2
 SIGNIFICANT_CASES_PERIOD_DAYS = 3
 
-REGISTRY_API_URL = 'https://reestr.rublacklist.net/api/v2/domains/json/'
+REGISTRY_API_URL = "https://reestr.rublacklist.net/api/v2/domains/json/"
 
-IGNORE = [
-    'google.com'
-]
+IGNORE = ["google.com"]
 
 
 def get_registry_domains() -> List[str]:
@@ -32,7 +30,7 @@ def get_registry_domains() -> List[str]:
         domains = set()
 
         for domain in data:
-            if domain.startswith('*.'):
+            if domain.startswith("*."):
                 domains.add(domain[2:])
 
         return data
@@ -46,28 +44,40 @@ class Command(BaseCommand):
         alert_to_slack(get_cases())
 
 
-def alert_to_slack(cases_by_domains):
-    if not cases_by_domains:
+def alert_to_slack(cases):
+    if not cases:
         print("Nothing to report.")
         return
 
+    blocked_domains = get_registry_domains()
     timestamp = timezone.now().strftime("%d-%m-%Y %H:%M:%S")
+
+    final_cases = []
+
+    for case in cases:
+        domain = case.pop("domain_name")
+
+        if domain in blocked_domains or domain in IGNORE:
+            continue
+
+        final_cases.append(case)
+
+    if not final_cases:
+        return
+
     notifier.slack_message(f"📃 Отчет о DPI блокировках: *{timestamp}*")
 
-    domains = get_registry_domains()
-
-    for case in cases_by_domains:
+    for case in final_cases:
         case_id = case.pop("case_id")
         domain_name = case.pop("domain_name")
 
-        if domain_name in domains or domain_name in IGNORE:
+        if domain_name in blocked_domains or domain_name in IGNORE:
             continue
 
         client_hash = case.pop("client_hash", "")[:8]
         values = "\n".join([str(x) for x in case.values() if x])
         notified = notifier.slack_message(
-            f"[{domain_name}]\n{values}\n\n"
-            f"Сигнатура: {client_hash}"
+            f"[{domain_name}]\n{values}\n\n" f"Сигнатура: {client_hash}"
         )
 
         if notified:
