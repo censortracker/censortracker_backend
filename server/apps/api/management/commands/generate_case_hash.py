@@ -55,7 +55,7 @@ def alert_to_slack(cases):
     final_cases = []
 
     for case in cases:
-        domain = case.pop("domain_name")
+        domain = case.get("domain_name")
 
         if domain in blocked_domains or domain in IGNORE:
             continue
@@ -92,7 +92,7 @@ def get_cases():
     cases = Case.objects.filter(created__gte=start_date, reported=False)
 
     domain_pks = (
-        cases.values("domain__pk", "client_hash")
+        cases.values("domain__pk", "client_hash", "client_country__name")
             .distinct()
             .annotate(hash_count=Count("client_hash"))
             .values("domain__pk", "hash_count")
