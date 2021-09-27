@@ -17,6 +17,7 @@ MIN_CASE_COUNT_PER_DOMAIN = 2
 SIGNIFICANT_CASES_PERIOD_DAYS = 3
 
 REGISTRY_API_URL = "https://reestr.rublacklist.net/api/v2/domains/json/"
+CASE_URL = "https://app.censortracker.org/dashboard/ad/api/case/"
 
 IGNORE = ["google.com"]
 
@@ -79,7 +80,8 @@ def alert_to_slack(cases):
         client_hash = case.pop("client_hash", "")[:8]
         values = "\n".join([str(x) for x in case.values() if x])
         notified = notifier.slack_message(
-            f"[{domain_name}]\n{values}\n\n" f"Сигнатура: {client_hash}"
+            f"[{domain_name}]\n{values}\n\n"
+            f"Сигнатура: <{CASE_URL}{case_id}|*{client_hash}*>"
         )
 
         if notified:
