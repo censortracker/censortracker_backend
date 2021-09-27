@@ -83,7 +83,7 @@ def alert_to_slack(cases):
         )
 
         if notified:
-            Case.objects.filter(pk=case_id).update(reported=False)
+            Case.objects.filter(pk=case_id).update(reported=True)
 
     notifier.slack_message(f"✅ Отчет сформирован, <@U0GBE515J>, <@U100MCJG7>")
 
