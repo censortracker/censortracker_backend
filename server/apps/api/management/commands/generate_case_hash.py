@@ -21,6 +21,9 @@ REGISTRY_API_URL = "https://reestr.rublacklist.net/api/v2/domains/json/"
 
 IGNORE = ["google.com"]
 
+START_DATE = timezone.now() - timezone.timedelta(days=SIGNIFICANT_CASES_PERIOD_DAYS)
+ONE_DAY_AGO = timezone.now() - timezone.timedelta(days=1)
+
 
 def get_registry_domains() -> List[str]:
     try:
@@ -87,42 +90,47 @@ def alert_to_slack(cases):
 
 
 def get_cases():
-    start_date = timezone.now() - timezone.timedelta(days=SIGNIFICANT_CASES_PERIOD_DAYS)
-    day_ago = timezone.now() - timezone.timedelta(days=1)
-    cases = Case.objects.filter(created__gte=start_date, reported=False)
+    unreported_cases = Case.objects.unreported().filter(created__gte=START_DATE)
 
-    domain_pks = (
-        cases.values("domain__pk", "client_hash", "client_country__name")
-            .distinct()
-            .annotate(hash_count=Count("client_hash"))
-            .values("domain__pk", "hash_count")
-            .filter(hash_count__gte=MIN_CASE_COUNT_PER_DOMAIN)
-            .annotate(latest_case=Max("created"))
-            .filter(latest_case__gte=day_ago)
-            .values_list("domain__pk", flat=True)
+    domains = (
+        unreported_cases.values("domain__pk", "client_hash", "client_country__name")
+        .distinct()
+        .annotate(hash_count=Count("client_hash"))
+        .values("domain__pk", "hash_count")
+        .filter(hash_count__gte=MIN_CASE_COUNT_PER_DOMAIN)
+        .annotate(latest_case=Max("created"))
+        .filter(latest_case__gte=ONE_DAY_AGO)
+        .values("domain__pk", "client_country__name")
     )
 
-    last_cases_for_domains = (
-        cases.filter(domain_id__in=domain_pks)
+    ungrouped_cases = []
+
+    for case in domains:
+        last_cases_for_domains = (
+            unreported_cases.filter(
+                domain_id=case["domain__pk"],
+                client_country__name=case["client_country__name"],
+            )
             .values(
-            "id",
-            "domain__domain",
-            "client_region",
-            "client_provider",
-            "client_country__name",
-            "client_hash",
-        )
+                "id",
+                "domain__domain",
+                "client_region",
+                "client_provider",
+                "client_country__name",
+                "client_hash",
+            )
             .distinct("domain__domain", "client_hash")
             .order_by("domain__domain")
-    )
+        )
+
+        ungrouped_cases.extend(list(last_cases_for_domains))
 
     cases_by_domains = []
-
     for domain_name, cases_by_domain in itertools.groupby(
-            last_cases_for_domains, key=lambda item: item["domain__domain"]
+        ungrouped_cases, key=lambda item: item["domain__domain"]
     ):
         for case_id, g in itertools.groupby(
-                cases_by_domain, key=lambda item: item["id"]
+            cases_by_domain, key=lambda item: item["id"]
         ):
             values = list(g)[0]
             cases_by_domains.append(

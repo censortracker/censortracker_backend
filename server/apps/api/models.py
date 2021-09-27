@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
-from django.contrib.postgres.fields import JSONField
 
 from server.apps.core.models import Country
+from server.apps.api.logic.managers import CaseManager
 
 
 class Domain(models.Model):
@@ -44,9 +44,14 @@ class Case(models.Model):
     user_agent = models.TextField(verbose_name="User agent", null=True, blank=True)
     reported = models.BooleanField(default=False, null=False)
 
+    objects = CaseManager()
+
     class Meta:
         verbose_name = "Case"
         verbose_name_plural = "Cases"
 
     def __str__(self):
         return f"Case <{self.client_hash}>"
+
+    def generate_hash(self):
+        raise NotImplementedError()
