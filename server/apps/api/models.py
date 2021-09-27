@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-
+import hashlib
 from django.db import models
-from django.contrib.postgres.fields import JSONField
 
 from server.apps.core.models import Country
+from server.apps.api.logic.managers import CaseManager
 
 
 class Domain(models.Model):
@@ -44,9 +44,20 @@ class Case(models.Model):
     user_agent = models.TextField(verbose_name="User agent", null=True, blank=True)
     reported = models.BooleanField(default=False, null=False)
 
+    objects = CaseManager()
+
     class Meta:
         verbose_name = "Case"
         verbose_name_plural = "Cases"
 
     def __str__(self):
         return f"Case <{self.client_hash}>"
+
+    def generate_hash(self):
+        if self.client_ip and self.client_region and self.client_provider:
+            case_uid = f"{self.client_ip}{self.client_provider}{self.client_region}"
+            self.client_hash = hashlib.sha256(case_uid.encode()).hexdigest()
+
+            if self.client_ip:
+                self.client_ip = None
+            self.save()
