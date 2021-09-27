@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import hashlib
 from django.db import models
 
 from server.apps.core.models import Country
@@ -54,4 +54,10 @@ class Case(models.Model):
         return f"Case <{self.client_hash}>"
 
     def generate_hash(self):
-        raise NotImplementedError()
+        if self.client_ip and self.client_region and self.client_provider:
+            case_uid = f"{self.client_ip}{self.client_provider}{self.client_region}"
+            self.client_hash = hashlib.sha256(case_uid.encode()).hexdigest()
+
+            if self.client_ip:
+                self.client_ip = None
+            self.save()

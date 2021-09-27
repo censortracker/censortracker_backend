@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import hashlib
 import itertools
 import json
 import time
@@ -84,7 +83,7 @@ def alert_to_slack(cases):
         )
 
         if notified:
-            Case.objects.filter(pk=case_id).update(reported=True)
+            Case.objects.filter(pk=case_id).update(reported=False)
 
     notifier.slack_message(f"✅ Отчет сформирован, <@U0GBE515J>, <@U100MCJG7>")
 
@@ -204,11 +203,5 @@ def update_case_hash():
 
         case.client_provider = ip_data["isp"]
         case.client_region = ip_data["regionName"]
-
-        case_uid = f"{case.client_ip}{case.client_provider}{case.client_region}"
-        case.client_hash = hashlib.sha256(case_uid.encode()).hexdigest()
-
-        if case.client_hash:
-            case.client_ip = None
-
         case.save()
+        case.generate_hash()
