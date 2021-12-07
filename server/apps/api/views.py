@@ -72,7 +72,12 @@ class DomainListView(generics.ListAPIView):
     serializer_class = DomainListSerializer
     permission_classes = [AllowAny]
     throttle_classes = [DomainListRateThrottle]
-    queryset = Domain.objects.all()
+    queryset = Domain.objects.distinct()
+
+    def list(self, request):
+        queryset = self.get_queryset().order_by('-domain')
+        serializer = DomainListSerializer(queryset, many=True)
+        return Response([i['domain'] for i in serializer.data])
 
 
 class ProxyConfigListView(generics.ListAPIView):
