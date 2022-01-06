@@ -326,7 +326,7 @@ python-versions = ">=3.6,<4.0"
 
 [[package]]
 name = "djangorestframework"
-version = "3.11.0"
+version = "3.11.2"
 description = "Web APIs for Django, made easy."
 category = "main"
 optional = false
@@ -823,8 +823,8 @@ django-split-settings = [
     {file = "django_split_settings-1.0.1-py3-none-any.whl", hash = "sha256:8d636649023289d0ef0ba08b0a4f37761adc94a29ee0ebfe65922c3cb0594ede"},
 ]
 djangorestframework = [
-    {file = "djangorestframework-3.11.0-py3-none-any.whl", hash = "sha256:05809fc66e1c997fd9a32ea5730d9f4ba28b109b9da71fccfa5ff241201fd0a4"},
-    {file = "djangorestframework-3.11.0.tar.gz", hash = "sha256:e782087823c47a26826ee5b6fa0c542968219263fb3976ec3c31edab23a4001f"},
+    {file = "djangorestframework-3.11.2-py3-none-any.whl", hash = "sha256:5cc724dc4b076463497837269107e1995b1fbc917468d1b92d188fd1af9ea789"},
+    {file = "djangorestframework-3.11.2.tar.gz", hash = "sha256:a5967b68a04e0d97d10f4df228e30f5a2d82ba63b9d03e1759f84993b7bf1b53"},
 ]
 djangorestframework-camel-case = [
     {file = "djangorestframework-camel-case-1.2.0.tar.gz", hash = "sha256:9714d43fba5bb654057c29501649684d3d9f11a92319ae417fd4d65e80d1159d"},
