@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from server.apps.core.models import Config, Country, ProxyConfig
+from server.apps.core.models import Config, Country, ProxyConfig, CountryRegistry
 
 
 @admin.register(Country)
@@ -16,3 +16,8 @@ class ConfigAdmin(admin.ModelAdmin):
 @admin.register(ProxyConfig)
 class ProxyConfigAdmin(admin.ModelAdmin):
     list_display = ("name", "server", "priority")
+
+
+@admin.register(CountryRegistry)
+class CountryRegistryAdmin(admin.ModelAdmin):
+    pass
