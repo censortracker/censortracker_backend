@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.contrib.postgres.fields import JSONField
+from django.contrib.postgres.fields import ArrayField, JSONField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -99,3 +99,23 @@ class ProxyConfig(models.Model):
 
     def __repr__(self):
         return f"Proxy <{self.server}:{self.port}>"
+
+
+class CountryRegistry(models.Model):
+    country = models.ForeignKey(
+        Country, on_delete=models.DO_NOTHING, blank=False, null=False
+    )
+    domains = ArrayField(
+        base_field=models.CharField(max_length=2048),
+        blank=True,
+    )
+
+    class Meta:
+        verbose_name = _('Country Registry')
+        verbose_name_plural = _('Country Registries')
+
+    def __str__(self):
+        return self.country.name
+
+    def __repr__(self):
+        return f"CountryRegistry <{self.country.iso_a2_code}>"
