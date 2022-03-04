@@ -84,7 +84,7 @@ class ProxyConfigListView(generics.RetrieveAPIView):
     serializer_class = ProxyConfigSerializer
     permission_classes = [AllowAny]
     throttle_classes = [ProxyConfigListRateThrottle]
-    queryset = ProxyConfig.objects.filter(priority__gt=0).order_by('?', '-priority')
+    queryset = ProxyConfig.objects.filter(priority__gt=0).order_by('?', 'priority')
 
     def get_object(self):
         return self.queryset.first()
