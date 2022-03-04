@@ -80,11 +80,14 @@ class DomainListView(generics.ListAPIView):
         return Response([i['domain'] for i in serializer.data])
 
 
-class ProxyConfigListView(generics.ListAPIView):
+class ProxyConfigListView(generics.RetrieveAPIView):
     serializer_class = ProxyConfigSerializer
     permission_classes = [AllowAny]
     throttle_classes = [ProxyConfigListRateThrottle]
-    queryset = ProxyConfig.objects.all()
+    queryset = ProxyConfig.objects.filter(priority__gt=0).order_by('?', '-priority')
+
+    def get_object(self):
+        return self.queryset.first()
 
 
 class ConfigRetrieveAPIView(ClientIPMixin, generics.RetrieveAPIView):
