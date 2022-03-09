@@ -13,6 +13,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='proxyconfig',
             name='ping_host',
-            field=models.CharField(blank=True, max_length=256, null=True, verbose_name='Proxy ping port'),
+            field=models.CharField(blank=True, max_length=256, null=True, verbose_name='Proxy ping host'),
         ),
     ]
