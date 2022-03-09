@@ -74,6 +74,12 @@ class ProxyConfig(models.Model):
     port = models.CharField(
         verbose_name=_("Proxy server"), max_length=6, blank=False, null=False
     )
+    ping_host = models.CharField(
+        verbose_name=_("Proxy ping host"),
+        max_length=256,
+        blank=True,
+        null=True,
+    )
     ping_port = models.CharField(
         verbose_name=_("Proxy ping port"),
         max_length=6,
