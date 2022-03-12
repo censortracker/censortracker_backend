@@ -80,7 +80,7 @@ class DomainListView(generics.ListAPIView):
         return Response([i['domain'] for i in serializer.data])
 
 
-class ProxyConfigListView(generics.RetrieveAPIView):
+class ProxyConfigRetrieveAPIView(generics.RetrieveAPIView):
     serializer_class = ProxyConfigSerializer
     permission_classes = [AllowAny]
     throttle_classes = [ProxyConfigListRateThrottle]
