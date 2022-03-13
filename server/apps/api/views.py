@@ -5,7 +5,6 @@ from rest_framework import generics, status
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 import validators
 from server.apps.api.logic.mixins import ClientIPMixin
@@ -23,13 +22,6 @@ from server.apps.api.logic.throttling import (
 )
 from server.apps.api.models import Domain
 from server.apps.core.models import Config, Country, ProxyConfig
-
-
-class IndexView(APIView):
-    permission_classes = [AllowAny]
-
-    def get(self, request, pk, format=None):
-        return Response({'status': 'ok'}, status=status.HTTP_200_OK)
 
 
 class CaseCreateAPIView(ClientIPMixin, generics.CreateAPIView):
