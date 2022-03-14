@@ -32,7 +32,11 @@ if settings.DEBUG:  # pragma: no cover
         path("__debug__/", include(debug_toolbar.urls)),
         # Serving media files in development only:
         re_path(
-            r"^media/(?P<path>.*)$", serve, {"document_root": settings.MEDIA_ROOT,},
+            r"^media/(?P<path>.*)$",
+            serve,
+            {
+                "document_root": settings.MEDIA_ROOT,
+            },
         ),
     ] + urlpatterns
 

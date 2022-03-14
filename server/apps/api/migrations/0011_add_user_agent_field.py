@@ -10,7 +10,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(model_name="case", name="ct_meta_info",),
+        migrations.RemoveField(
+            model_name="case",
+            name="ct_meta_info",
+        ),
         migrations.AddField(
             model_name="case",
             name="user_agent",

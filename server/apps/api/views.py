@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 
+import validators
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, status
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-import validators
 from server.apps.api.logic.mixins import ClientIPMixin
 from server.apps.api.logic.serializers import (
     CaseSerializer,
@@ -75,16 +75,16 @@ class DomainListView(generics.ListAPIView):
     queryset = Domain.objects.distinct()
 
     def list(self, request):
-        queryset = self.get_queryset().order_by('-domain')
+        queryset = self.get_queryset().order_by("-domain")
         serializer = DomainListSerializer(queryset, many=True)
-        return Response([i['domain'] for i in serializer.data])
+        return Response([i["domain"] for i in serializer.data])
 
 
 class ProxyConfigRetrieveAPIView(generics.RetrieveAPIView):
     serializer_class = ProxyConfigSerializer
     permission_classes = [AllowAny]
     throttle_classes = [ProxyConfigListRateThrottle]
-    queryset = ProxyConfig.objects.filter(priority__gt=0).order_by('?', 'priority')
+    queryset = ProxyConfig.objects.filter(priority__gt=0).order_by("?", "priority")
 
     def get_object(self):
         return self.queryset.first()

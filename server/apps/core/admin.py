@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from server.apps.core.models import Config, Country, ProxyConfig, CountryRegistry
+from server.apps.core.models import Config, Country, CountryRegistry, ProxyConfig
 
 
 @admin.register(Country)

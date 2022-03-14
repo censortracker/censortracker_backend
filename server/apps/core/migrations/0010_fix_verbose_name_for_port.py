@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0009_add_ping_host'),
+        ("core", "0009_add_ping_host"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='proxyconfig',
-            name='port',
-            field=models.CharField(max_length=6, verbose_name='Proxy port'),
+            model_name="proxyconfig",
+            name="port",
+            field=models.CharField(max_length=6, verbose_name="Proxy port"),
         ),
     ]

@@ -117,8 +117,8 @@ class CountryRegistry(models.Model):
     )
 
     class Meta:
-        verbose_name = _('Country Registry')
-        verbose_name_plural = _('Country Registries')
+        verbose_name = _("Country Registry")
+        verbose_name_plural = _("Country Registries")
 
     def __str__(self):
         return self.country.name

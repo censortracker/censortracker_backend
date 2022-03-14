@@ -1,14 +1,18 @@
 # -*- coding: utf-8 -*-
 import hashlib
+
 from django.db import models
 
-from server.apps.core.models import Country
 from server.apps.api.logic.managers import CaseManager
+from server.apps.core.models import Country
 
 
 class Domain(models.Model):
     domain = models.CharField(
-        verbose_name="Domain", max_length=128, null=False, blank=False,
+        verbose_name="Domain",
+        max_length=128,
+        null=False,
+        blank=False,
     )
 
     class Meta:
@@ -24,7 +28,9 @@ class Case(models.Model):
         Domain, on_delete=models.CASCADE, null=False, blank=False, related_name="cases"
     )
     client_ip = models.GenericIPAddressField(
-        verbose_name="Client IP", null=True, blank=True,
+        verbose_name="Client IP",
+        null=True,
+        blank=True,
     )
     client_hash = models.CharField(
         verbose_name="Client Hash", max_length=64, blank=True, default=""

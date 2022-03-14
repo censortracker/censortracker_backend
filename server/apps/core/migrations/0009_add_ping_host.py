@@ -6,13 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0008_add_countryregistry'),
+        ("core", "0008_add_countryregistry"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='proxyconfig',
-            name='ping_host',
-            field=models.CharField(blank=True, max_length=256, null=True, verbose_name='Proxy ping host'),
+            model_name="proxyconfig",
+            name="ping_host",
+            field=models.CharField(
+                blank=True, max_length=256, null=True, verbose_name="Proxy ping host"
+            ),
         ),
     ]

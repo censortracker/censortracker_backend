@@ -5,10 +5,10 @@ import time
 from typing import List
 
 import requests
-from requests.exceptions import ConnectionError, ConnectTimeout
 from django.core.management.base import BaseCommand
 from django.db.models import Count, Max
 from django.utils import timezone
+from requests.exceptions import ConnectionError, ConnectTimeout
 
 from server.apps.api.models import Case
 
@@ -75,13 +75,13 @@ def get_cases():
 
     domains = (
         unreported_cases.values("domain__pk", "client_hash", "client_country__name")
-            .distinct()
-            .annotate(hash_count=Count("client_hash"))
-            .values("domain__pk", "hash_count")
-            .filter(hash_count__gte=MIN_CASE_COUNT_PER_DOMAIN)
-            .annotate(latest_case=Max("created"))
-            .filter(latest_case__gte=ONE_DAY_AGO)
-            .values("domain__pk", "client_country__name")
+        .distinct()
+        .annotate(hash_count=Count("client_hash"))
+        .values("domain__pk", "hash_count")
+        .filter(hash_count__gte=MIN_CASE_COUNT_PER_DOMAIN)
+        .annotate(latest_case=Max("created"))
+        .filter(latest_case__gte=ONE_DAY_AGO)
+        .values("domain__pk", "client_country__name")
     )
 
     ungrouped_cases = []
@@ -92,7 +92,7 @@ def get_cases():
                 domain_id=case["domain__pk"],
                 client_country__name=case["client_country__name"],
             )
-                .values(
+            .values(
                 "id",
                 "domain__domain",
                 "client_region",
@@ -100,18 +100,18 @@ def get_cases():
                 "client_country__name",
                 "client_hash",
             )
-                .distinct("domain__domain", "client_hash")
-                .order_by("domain__domain")
+            .distinct("domain__domain", "client_hash")
+            .order_by("domain__domain")
         )
 
         ungrouped_cases.extend(list(last_cases_for_domains))
 
     cases_by_domains = []
     for domain_name, cases_by_domain in itertools.groupby(
-            ungrouped_cases, key=lambda item: item["domain__domain"]
+        ungrouped_cases, key=lambda item: item["domain__domain"]
     ):
         for case_id, g in itertools.groupby(
-                cases_by_domain, key=lambda item: item["id"]
+            cases_by_domain, key=lambda item: item["id"]
         ):
             values = list(g)[0]
             cases_by_domains.append(
