@@ -19,7 +19,7 @@ from django.urls import include, path, re_path
 from server.apps.api import urls as api_urls
 
 urlpatterns = [
-    path("dashboard/ad/", admin.site.urls),
+    path("wormhole/", admin.site.urls),
     path("api/", include(api_urls, namespace="api")),
 ]
 
