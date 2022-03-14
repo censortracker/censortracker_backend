@@ -6,6 +6,7 @@ from rest_framework import generics, status
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
+from rest_framework_api_key.permissions import HasAPIKey
 
 from server.apps.api.logic.mixins import ClientIPMixin
 from server.apps.api.logic.serializers import (
@@ -22,6 +23,31 @@ from server.apps.api.logic.throttling import (
 )
 from server.apps.api.models import Domain
 from server.apps.core.models import Config, Country, ProxyConfig
+
+
+class UpdatePortAPIView(generics.UpdateAPIView):
+
+    permission_classes = [HasAPIKey]
+
+    def patch(self, request, *args, **kwargs):
+        port = request.data.get("port")
+        server = request.data.get("server")
+
+        if server and port:
+            try:
+                pc = ProxyConfig.objects.get(server__iexact=server)
+                pc.port = port
+                pc.save()
+                return Response({"success": "ok"}, status=status.HTTP_200_OK)
+            except ProxyConfig.DoesNotExist:
+                return Response(
+                    {"error": "such server does not exist"}, status=status.HTTP_200_OK
+                )
+
+        return Response(
+            {"error": "invalid port or server"},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
 
 
 class CaseCreateAPIView(ClientIPMixin, generics.CreateAPIView):
