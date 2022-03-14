@@ -5,14 +5,13 @@ from server.apps.core.models import ProxyConfig
 
 
 class Command(BaseCommand):
-
     def add_arguments(self, parser):
-        parser.add_argument('--server', type=str, help='Host to update')
-        parser.add_argument('--new-port', type=int, help='New port')
+        parser.add_argument("--server", type=str, help="Host to update")
+        parser.add_argument("--new-port", type=int, help="New port")
 
     def handle(self, *args, **options):
-        server = options.get('server')
-        new_port = options.get('new_port')
+        server = options.get("server")
+        new_port = options.get("new_port")
 
         if server and new_port:
 
@@ -22,4 +21,4 @@ class Command(BaseCommand):
                 pc.port = new_port
                 pc.save()
             except ProxyConfig.MultipleObjectsReturned:
-                print(f'Cannot update port for {server}')
+                print(f"Cannot update port for {server}")

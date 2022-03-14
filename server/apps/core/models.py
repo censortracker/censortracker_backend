@@ -66,10 +66,18 @@ class ProxyConfig(models.Model):
         DEFAULT = 0, _("Default")
 
     name = models.CharField(
-        verbose_name=_("Config name"), max_length=64, blank=False, null=False, unique=True
+        verbose_name=_("Config name"),
+        max_length=64,
+        blank=False,
+        null=False,
+        unique=True,
     )
     server = models.CharField(
-        verbose_name=_("Proxy server"), max_length=256, blank=False, null=False, unique=True
+        verbose_name=_("Proxy server"),
+        max_length=256,
+        blank=False,
+        null=False,
+        unique=True,
     )
     port = models.CharField(
         verbose_name=_("Proxy port"), max_length=6, blank=False, null=False

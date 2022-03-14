@@ -6,18 +6,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0010_fix_verbose_name_for_port'),
+        ("core", "0010_fix_verbose_name_for_port"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='proxyconfig',
-            name='name',
-            field=models.CharField(max_length=64, unique=True, verbose_name='Config name'),
+            model_name="proxyconfig",
+            name="name",
+            field=models.CharField(
+                max_length=64, unique=True, verbose_name="Config name"
+            ),
         ),
         migrations.AlterField(
-            model_name='proxyconfig',
-            name='server',
-            field=models.CharField(max_length=256, unique=True, verbose_name='Proxy server'),
+            model_name="proxyconfig",
+            name="server",
+            field=models.CharField(
+                max_length=256, unique=True, verbose_name="Proxy server"
+            ),
         ),
     ]
