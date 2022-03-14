@@ -23,6 +23,7 @@ django-redis-cache = "^3.0.0"
 geoip2 = "^4.2.0"
 djangorestframework-camel-case = "^1.2.0"
 validators = "^0.18.2"
+djangorestframework-api-key = "^2.2.0"
 
 [tool.poetry.dev-dependencies]
 isort = "^5.9.3"

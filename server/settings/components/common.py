@@ -35,6 +35,7 @@ INSTALLED_APPS = (
     "django.contrib.admindocs",
     # REST API:
     "rest_framework",
+    "rest_framework_api_key",
     # Your apps go here:
     "server.apps.core",
     "server.apps.api",
@@ -128,6 +129,9 @@ MEDIA_URL = "/uploads/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "public", "uploads")
 
 REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework_api_key.permissions.HasAPIKey",
+    ],
     "DEFAULT_RENDERER_CLASSES": (
         "djangorestframework_camel_case.render.CamelCaseJSONRenderer",
     ),

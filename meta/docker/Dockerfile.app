@@ -7,7 +7,7 @@ WORKDIR /app
 # Each step is cached on the buildhost, so right commands order prevents it from unneded rebuilds
 # Change in any step will invalidate cache of all the next ones
 
-ENV POETRY_VERSION=1.0.5 \
+ENV POETRY_VERSION=1.1.13 \
   POETRY_VIRTUALENVS_CREATE=false \
   POETRY_CACHE_DIR='/var/cache/pypoetry' \
   PIP_NO_CACHE_DIR=off \
