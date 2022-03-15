@@ -47,7 +47,7 @@ class UpdatePortAPIView(generics.UpdateAPIView):
                 )
 
         return Response(
-            {"error": "invalid port, ping_port or server"},
+            {"error": "invalid port, pingPort or server"},
             status=status.HTTP_400_BAD_REQUEST,
         )
 
