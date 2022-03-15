@@ -31,12 +31,12 @@ class UpdatePortAPIView(generics.UpdateAPIView):
 
     def patch(self, request, *args, **kwargs):
         port = request.data.get("port")
-        server = request.data.get("server")
+        name = request.data.get("name")
         ping_port = request.data.get("pingPort")
 
-        if server and port and ping_port:
+        if name and port and ping_port:
             try:
-                pc = ProxyConfig.objects.get(server__iexact=server)
+                pc = ProxyConfig.objects.get(name__iexact=name)
                 pc.port = port
                 pc.ping_port = ping_port
                 pc.save()
@@ -47,7 +47,7 @@ class UpdatePortAPIView(generics.UpdateAPIView):
                 )
 
         return Response(
-            {"error": "invalid port, pingPort or server"},
+            {"error": "invalid port, pingPort or name"},
             status=status.HTTP_400_BAD_REQUEST,
         )
 
