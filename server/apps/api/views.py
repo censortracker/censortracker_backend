@@ -29,11 +29,11 @@ class UpdatePortAPIView(generics.UpdateAPIView):
     permission_classes = [HasAPIKey]
 
     def patch(self, request, *args, **kwargs):
-        name = request.data.get("name")
-        port = request.data.get("new_port")
-        ping_port = request.data.get("pingPort")
+        name = request.data.get("name", '')
+        port = request.data.get("port", '')
+        ping_port = request.data.get("pingPort", '')
 
-        if name and port:
+        if len(name) > 0 and len(port) > 0:
             try:
                 pc = ProxyConfig.objects.get(name__iexact=name)
                 pc.port = port
