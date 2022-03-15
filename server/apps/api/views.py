@@ -26,15 +26,14 @@ from server.apps.core.models import Config, Country, ProxyConfig
 
 
 class UpdatePortAPIView(generics.UpdateAPIView):
-
     permission_classes = [HasAPIKey]
 
     def patch(self, request, *args, **kwargs):
-        port = request.data.get("port")
         name = request.data.get("name")
+        port = request.data.get("new_port")
         ping_port = request.data.get("pingPort")
 
-        if name and port and ping_port:
+        if name and port:
             try:
                 pc = ProxyConfig.objects.get(name__iexact=name)
                 pc.port = port
