@@ -33,22 +33,21 @@ class UpdatePortAPIView(generics.UpdateAPIView):
         port = request.data.get("port", '')
         ping_port = request.data.get("pingPort", '')
 
-        if len(name) > 0 and len(port) > 0:
-            try:
-                pc = ProxyConfig.objects.get(name__iexact=name)
-                pc.port = port
-                pc.ping_port = ping_port
-                pc.save()
-                return Response({"success": "ok"}, status=status.HTTP_200_OK)
-            except ProxyConfig.DoesNotExist:
-                return Response(
-                    {"error": "such server does not exist"}, status=status.HTTP_200_OK
-                )
-
-        return Response(
-            {"error": "invalid port, pingPort or name"},
-            status=status.HTTP_400_BAD_REQUEST,
-        )
+        try:
+            pc = ProxyConfig.objects.get(name__iexact=name)
+            pc.port = port
+            pc.ping_port = ping_port
+            pc.save()
+            return Response({"success": "ok"}, status=status.HTTP_200_OK)
+        except ProxyConfig.DoesNotExist:
+            return Response(
+                {"error": "such server does not exist"}, status=status.HTTP_200_OK
+            )
+        except BaseException as e:
+            return Response(
+                {"error": str(e)},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
 
 class CaseCreateAPIView(ClientIPMixin, generics.CreateAPIView):
