@@ -103,6 +103,13 @@ class ProxyConfig(models.Model):
         blank=True,
     )
 
+    active = models.BooleanField(
+        verbose_name=_("Active"),
+        default=False,
+        null=False,
+        blank=False,
+    )
+
     class Meta:
         ordering = ["-priority"]
         verbose_name = _("Proxy config")
