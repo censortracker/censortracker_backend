@@ -15,7 +15,15 @@ class ConfigAdmin(admin.ModelAdmin):
 
 @admin.register(ProxyConfig)
 class ProxyConfigAdmin(admin.ModelAdmin):
-    list_display = ("name", "server", "priority")
+    list_display = (
+        "name",
+        "server",
+        "port",
+        "ping_host",
+        "ping_port",
+        "priority",
+        "active",
+    )
 
 
 @admin.register(CountryRegistry)

@@ -4,6 +4,8 @@ from django.contrib.postgres.fields import ArrayField, JSONField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from server.apps.api.logic.managers import ProxyConfigManager
+
 
 class Country(models.Model):
     name = models.CharField(
@@ -110,6 +112,8 @@ class ProxyConfig(models.Model):
         blank=False,
     )
 
+    objects = ProxyConfigManager()
+
     class Meta:
         ordering = ["-priority"]
         verbose_name = _("Proxy config")
@@ -120,6 +124,19 @@ class ProxyConfig(models.Model):
 
     def __repr__(self):
         return f"Proxy <{self.server}:{self.port}>"
+
+    @property
+    def weight(self):
+        weights = {
+            self.Priority.DEFAULT: 1,
+            self.Priority.LOW: 3,
+            self.Priority.MEDIUM: 6,
+            self.Priority.HIGH: 10,
+        }
+        try:
+            return weights[self.priority]
+        except KeyError:
+            return 1
 
 
 class CountryRegistry(models.Model):

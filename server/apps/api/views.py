@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+import itertools
+import random
+import secrets
 
 import validators
 from django.shortcuts import get_object_or_404
@@ -110,10 +113,15 @@ class ProxyConfigRetrieveAPIView(generics.RetrieveAPIView):
     serializer_class = ProxyConfigSerializer
     permission_classes = [AllowAny]
     throttle_classes = [ProxyConfigListRateThrottle]
-    queryset = ProxyConfig.objects.filter(priority__gt=0).order_by("?", "priority")
+    queryset = ProxyConfig.objects.active()
 
     def get_object(self):
-        return self.queryset.first()
+        configs = []
+        for proxy in self.get_queryset():
+            configs.extend(
+                itertools.repeat(proxy, proxy.weight),
+            )
+        return secrets.choice(configs)
 
 
 class ConfigRetrieveAPIView(ClientIPMixin, generics.RetrieveAPIView):

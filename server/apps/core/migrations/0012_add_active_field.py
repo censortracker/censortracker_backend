@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0011_make_fields_unique'),
+        ("core", "0011_make_fields_unique"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='proxyconfig',
-            name='active',
-            field=models.BooleanField(default=False, verbose_name='Active'),
+            model_name="proxyconfig",
+            name="active",
+            field=models.BooleanField(default=False, verbose_name="Active"),
         ),
     ]
