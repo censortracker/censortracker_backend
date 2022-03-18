@@ -28,10 +28,10 @@ from server.apps.core.models import Config, Country, ProxyConfig
 class UpdatePortAPIView(generics.UpdateAPIView):
     permission_classes = [HasAPIKey]
 
-    def patch(self, request, *args, **kwargs):
-        name = request.data.get("name", '')
-        port = request.data.get("port", '')
-        ping_port = request.data.get("pingPort", '')
+    def patch(self, request, *args, **kwargs) -> Response:
+        name = request.data.get("name")
+        port = request.data.get("port")
+        ping_port = request.data.get("ping_port")
 
         try:
             pc = ProxyConfig.objects.get(name__iexact=name)
@@ -55,7 +55,7 @@ class CaseCreateAPIView(ClientIPMixin, generics.CreateAPIView):
     permission_classes = [AllowAny]
     throttle_classes = [CreateCaseRateThrottle]
 
-    def create(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs) -> Response:
         domain = request.data.get("domain")
         hostname = request.data.get("hostname")
         user_agent = request.data.get("userAgent")
@@ -100,7 +100,7 @@ class DomainListView(generics.ListAPIView):
     throttle_classes = [DomainListRateThrottle]
     queryset = Domain.objects.distinct()
 
-    def list(self, request):
+    def list(self, request) -> Response:
         queryset = self.get_queryset().order_by("-domain")
         serializer = DomainListSerializer(queryset, many=True)
         return Response([i["domain"] for i in serializer.data])
