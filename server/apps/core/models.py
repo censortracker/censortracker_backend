@@ -61,12 +61,6 @@ class Config(models.Model):
 
 
 class ProxyConfig(models.Model):
-    class Priority(models.IntegerChoices):
-        LOW = 1, _("Low")
-        MEDIUM = 2, _("Medium")
-        HIGH = 3, _("High")
-        DEFAULT = 0, _("Default")
-
     name = models.CharField(
         verbose_name=_("Config name"),
         max_length=64,
@@ -97,12 +91,11 @@ class ProxyConfig(models.Model):
         null=False,
         default=0,
     )
-    priority = models.IntegerField(
-        verbose_name=_("Priority"),
-        choices=Priority.choices,
-        default=Priority.DEFAULT,
+    weight = models.IntegerField(
+        verbose_name=_("Weight"),
         null=False,
-        blank=True,
+        blank=False,
+        default=0,
     )
 
     active = models.BooleanField(
@@ -115,7 +108,7 @@ class ProxyConfig(models.Model):
     objects = ProxyConfigManager()
 
     class Meta:
-        ordering = ["-priority"]
+        ordering = ["-weight"]
         verbose_name = _("Proxy config")
         verbose_name_plural = _("Proxy Configs")
 
@@ -124,19 +117,6 @@ class ProxyConfig(models.Model):
 
     def __repr__(self):
         return f"Proxy <{self.server}:{self.port}>"
-
-    @property
-    def weight(self):
-        weights = {
-            self.Priority.DEFAULT: 1,
-            self.Priority.LOW: 3,
-            self.Priority.MEDIUM: 6,
-            self.Priority.HIGH: 10,
-        }
-        try:
-            return weights[self.priority]
-        except KeyError:
-            return 1
 
 
 class CountryRegistry(models.Model):

@@ -54,7 +54,7 @@ services:
     ports:
       - "8800:80"
     volumes:
-      - "../server:/app/server"
+      - "/Users/likid_geimfari/Developer/GitHub/Python/censortracker/server:/app/server"
   %PROJECT%-web:
     <<: *pub
     image: %IMAGE_WEB%

@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib import messages
 
 from server.apps.core.models import Config, Country, CountryRegistry, ProxyConfig
 
@@ -21,9 +22,21 @@ class ProxyConfigAdmin(admin.ModelAdmin):
         "port",
         "ping_host",
         "ping_port",
-        "priority",
         "active",
     )
+
+    def make_active(self, request, queryset):
+        queryset.update(active=True)
+        messages.success(request, 'Done!')
+
+    def make_inactive(self, request, queryset):
+        queryset.update(active=False)
+        messages.success(request, 'Done!')
+
+    make_active.short_description = 'Mark selected as active'
+    make_inactive.short_description = 'Mark selected as inactive'
+
+    actions = ['make_active', 'make_inactive']
 
 
 @admin.register(CountryRegistry)
