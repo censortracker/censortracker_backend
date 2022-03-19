@@ -22,6 +22,7 @@ class ProxyConfigAdmin(admin.ModelAdmin):
         "port",
         "ping_host",
         "ping_port",
+        "weight",
         "active",
     )
 
