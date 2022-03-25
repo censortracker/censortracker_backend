@@ -14,11 +14,13 @@ from server.apps.api.logic.mixins import ClientIPMixin
 from server.apps.api.logic.serializers import (
     CaseSerializer,
     ConfigSerializer,
+    CountrySerializer,
     DomainListSerializer,
     ProxyConfigSerializer,
 )
 from server.apps.api.logic.throttling import (
     ConfigRetrieveRateThrottle,
+    CountryListRateThrottle,
     CreateCaseRateThrottle,
     DomainListRateThrottle,
     ProxyConfigListRateThrottle,
@@ -130,6 +132,11 @@ class ConfigRetrieveAPIView(ClientIPMixin, generics.RetrieveAPIView):
 
     def get_object(self):
         country_code = self.get_client_country_code()
-        return get_object_or_404(
-            Config, country__iso_a2_code__iexact=country_code
-        )
+        return get_object_or_404(Config, country__iso_a2_code__iexact=country_code)
+
+
+class CountryListView(generics.ListAPIView):
+    serializer_class = CountrySerializer
+    permission_classes = [AllowAny]
+    throttle_classes = [CountryListRateThrottle]
+    queryset = Country.objects.all()
