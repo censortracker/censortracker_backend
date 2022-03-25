@@ -129,5 +129,7 @@ class ConfigRetrieveAPIView(ClientIPMixin, generics.RetrieveAPIView):
     throttle_classes = [ConfigRetrieveRateThrottle]
 
     def get_object(self):
-        client_country_code = self.get_client_country_code()
-        return get_object_or_404(Config, country__iso_a2_code=client_country_code)
+        country_code = self.get_client_country_code()
+        return get_object_or_404(
+            Config, country__iso_a2_code__iexact=country_code
+        )

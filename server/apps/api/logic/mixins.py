@@ -6,19 +6,22 @@ class ClientIPMixin:
     def get_client_ip(self):
         client_ip, is_routable = get_client_ip(self.request)
 
-        if client_ip is None:
-            return None
-        else:
-            if is_routable:
-                return client_ip
+        if client_ip and is_routable:
+            return client_ip
+
         return None
 
     def get_client_country_code(self):
         geo = GeoIP2()
-        ip = self.get_client_ip()
+        client_ip = self.get_client_ip()
 
-        if ip is not None:
-            country = geo.country(ip)
+        custom_country_code = self.request.query_params.get("countryCode")
+
+        if custom_country_code is not None:
+            return custom_country_code
+
+        if client_ip is not None:
+            country = geo.country(client_ip)
             return country["country_code"]
 
         return None

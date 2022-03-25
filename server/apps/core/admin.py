@@ -1,5 +1,4 @@
-from django.contrib import admin
-from django.contrib import messages
+from django.contrib import admin, messages
 
 from server.apps.core.models import Config, Country, CountryRegistry, ProxyConfig
 
@@ -28,16 +27,16 @@ class ProxyConfigAdmin(admin.ModelAdmin):
 
     def make_active(self, request, queryset):
         queryset.update(active=True)
-        messages.success(request, 'Done!')
+        messages.success(request, "Done!")
 
     def make_inactive(self, request, queryset):
         queryset.update(active=False)
-        messages.success(request, 'Done!')
+        messages.success(request, "Done!")
 
-    make_active.short_description = 'Mark selected as active'
-    make_inactive.short_description = 'Mark selected as inactive'
+    make_active.short_description = "Mark selected as active"
+    make_inactive.short_description = "Mark selected as inactive"
 
-    actions = ['make_active', 'make_inactive']
+    actions = ["make_active", "make_inactive"]
 
 
 @admin.register(CountryRegistry)
