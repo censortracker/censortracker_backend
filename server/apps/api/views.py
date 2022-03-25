@@ -139,4 +139,4 @@ class CountryListView(generics.ListAPIView):
     serializer_class = CountrySerializer
     permission_classes = [AllowAny]
     throttle_classes = [CountryListRateThrottle]
-    queryset = Country.objects.all()
+    queryset = Country.objects.filter(active=True)
