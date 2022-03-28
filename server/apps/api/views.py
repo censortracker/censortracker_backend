@@ -104,7 +104,7 @@ class DomainListView(generics.ListAPIView):
     throttle_classes = [DomainListRateThrottle]
     queryset = Domain.objects.distinct()
 
-    def list(self, request) -> Response:
+    def list(self, request, *args, **kwargs) -> Response:
         queryset = self.get_queryset().order_by("-domain")
         serializer = DomainListSerializer(queryset, many=True)
         return Response([i["domain"] for i in serializer.data])
