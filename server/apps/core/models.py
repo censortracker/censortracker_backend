@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from django.contrib.postgres.fields import ArrayField, JSONField
 from django.db import models
+from django.contrib.postgres.fields import ArrayField, JSONField
 from django.utils.translation import gettext_lazy as _
 
 from server.apps.api.logic.managers import ProxyConfigManager
@@ -23,7 +23,7 @@ class Country(models.Model):
     locale_code = models.CharField(
         verbose_name=_("Locale code"), max_length=8, null=True, default=None
     )
-    active = models.BooleanField(verbose_name=_('Active'), default=False)
+    active = models.BooleanField(verbose_name=_("Active"), default=False)
 
     class Meta:
         verbose_name = _("Country")
