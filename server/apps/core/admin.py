@@ -1,6 +1,12 @@
 from django.contrib import admin, messages
 
-from server.apps.core.models import Config, Country, CountryRegistry, ProxyConfig
+from server.apps.core.models import (
+    Config,
+    Country,
+    CountryRegistry,
+    ProxyConfig,
+)
+from server.apps.core.logic import actions
 
 
 @admin.register(Country)
@@ -24,6 +30,14 @@ class ProxyConfigAdmin(admin.ModelAdmin):
         "weight",
         "active",
     )
+
+    def save_model(self, request, obj, form, change):
+        try:
+            actions.update_api_proxy_configs()
+            messages.success(request, 'API data for /api/proxy-configs/ updated!')
+        except:
+            messages.error(request, 'Error on updating /api/proxy-configs/')
+        super(ProxyConfigAdmin, self).save_model(request, obj, form, change)
 
     def make_active(self, request, queryset):
         queryset.update(active=True)
