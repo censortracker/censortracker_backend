@@ -36,6 +36,8 @@ INSTALLED_APPS = (
     # REST API:
     "rest_framework",
     "rest_framework_api_key",
+    # RQ
+    "django_rq",
     # Your apps go here:
     "server.apps.core",
     "server.apps.api",

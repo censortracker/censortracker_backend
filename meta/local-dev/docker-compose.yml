@@ -23,28 +23,12 @@ x-dj: &dj
   volumes:
     - "static:/app/public"
 
-x-celery: &celery
-  <<: *defaults
-  <<: *dj
-  volumes:
-    - "static:/app/public"
-
 x-pub: &pub
   <<: *defaults
   volumes:
     - "static:/app/public"
 
 services:
-  %PROJECT%-celery-beat:
-    <<: *celery
-    image: %IMAGE_APP%
-    hostname: %PROJECT%-celery-beat
-    command: start.celery.beat
-  %PROJECT%-celery-workers:
-    <<: *celery
-    image: %IMAGE_APP%
-    hostname: %PROJECT%-celery-workers
-    command: start.celery.workers
   %PROJECT%-app:
     <<: *dj
     <<: *pub
@@ -77,7 +61,6 @@ services:
      hostname: %PROJECT%-redis
      volumes:
        - "redis-data:/data"
-
 
 volumes:
   static:

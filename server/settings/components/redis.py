@@ -3,4 +3,12 @@
 from server.settings.components.common import env
 
 REDIS_HOST = env("REDIS_HOST")
-REDIS_BROKER_URL = f"redis://{REDIS_HOST}:6379/0"
+
+RQ_QUEUES = {
+    'default': {
+        'HOST': REDIS_HOST,
+        'PORT': 6379,
+        'DB': 0,
+        'DEFAULT_TIMEOUT': 350,
+    },
+}

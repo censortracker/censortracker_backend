@@ -29,10 +29,10 @@ x-defaults: &defaults
 
 x-app: &app
   secrets:
-    - %PROJECT%.pg.%DJANGO_ENV%.passwd.secret
     - %PROJECT%.django.key.secret
-    - %PROJECT%.sentry.%DJANGO_ENV%.dsn.secret
     - %PROJECT%.slack.dsn.secret
+    - %PROJECT%.pg.%DJANGO_ENV%.passwd.secret
+    - %PROJECT%.sentry.%DJANGO_ENV%.dsn.secret
   environment:
     PROJECT: %PROJECT%
     DJANGO_ENV: %DJANGO_ENV%
@@ -57,18 +57,12 @@ services:
     command: start
     volumes:
       - "db:/var/lib/postgresql"
-  %STACK%-celery-beat:
+  %STACK%-rq:
     <<: *defaults
     <<: *app
     image: %IMAGE_APP%
-    hostname: %STACK%-celery-beat
-    command: start.celery.beat
-  %STACK%-celery-workers:
-    <<: *defaults
-    <<: *app
-    image: %IMAGE_APP%
-    hostname: %STACK%-celery-workers
-    command: start.celery.workers
+    hostname: %STACK%-rq
+    command: rq
   %STACK%-redis:
      <<: *defaults
      hostname: %STACK%-redis
