@@ -9,7 +9,11 @@ from server.apps.api.logic.managers import ProxyConfigManager
 
 class Country(models.Model):
     name = models.CharField(
-        verbose_name=_("Name"), unique=True, max_length=512, null=False, blank=False
+        verbose_name=_("Name"),
+        unique=True,
+        max_length=512,
+        null=False,
+        blank=False,
     )
     code = models.CharField(
         verbose_name=_("Country code"),
@@ -18,7 +22,11 @@ class Country(models.Model):
         null=False,
         blank=False,
     )
-    iso_a2_code = models.CharField(verbose_name=_("Alpha 2"), max_length=2, null=True)
+    iso_a2_code = models.CharField(
+        verbose_name=_("Alpha 2"),
+        max_length=2,
+        null=True,
+    )
     iso_a3_code = models.CharField(verbose_name=_("Alpha 3"), max_length=3, null=True)
     locale_code = models.CharField(
         verbose_name=_("Locale code"), max_length=8, null=True, default=None
@@ -138,3 +146,27 @@ class CountryRegistry(models.Model):
 
     def __repr__(self):
         return f"CountryRegistry <{self.country.iso_a2_code}>"
+
+
+class Ignore(models.Model):
+    name = models.CharField(
+        verbose_name=_("Name"),
+        unique=True,
+        max_length=512,
+        null=False,
+        blank=False,
+    )
+    domains = ArrayField(
+        base_field=models.TextField(),
+        blank=True,
+    )
+
+    class Meta:
+        verbose_name = _("Ignore")
+        verbose_name_plural = _("Ignore")
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return f"Ignore <{self.name}>"

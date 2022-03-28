@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from server.apps.api.models import Case, Domain
-from server.apps.core.models import Config, Country, ProxyConfig
+from server.apps.core.models import Config, Country, ProxyConfig, Ignore
 
 
 class CaseSerializer(serializers.ModelSerializer):
@@ -43,3 +43,9 @@ class ProxyConfigStatusSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProxyConfig
         exclude = ("id", "name", "weight")
+
+
+class IgnoreSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ignore
+        fields = "__all__"
