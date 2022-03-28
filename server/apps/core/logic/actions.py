@@ -1,11 +1,11 @@
-import os
 import json
+import os
 
-from server.apps.core.models import ProxyConfig, Ignore
 from server.apps.api.logic.serializers import (
-    ProxyConfigStatusSerializer,
     IgnoreSerializer,
+    ProxyConfigStatusSerializer,
 )
+from server.apps.core.models import Ignore, ProxyConfig
 from server.settings.components.common import BASE_DIR
 
 PROXY_CONFIGS_PATH = BASE_DIR.joinpath("public", "api", "proxy-configs", "json")

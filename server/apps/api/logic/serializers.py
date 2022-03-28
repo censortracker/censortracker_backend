@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from server.apps.api.models import Case, Domain
-from server.apps.core.models import Config, Country, ProxyConfig, Ignore
+from server.apps.core.models import Config, Country, Ignore, ProxyConfig
 
 
 class CaseSerializer(serializers.ModelSerializer):

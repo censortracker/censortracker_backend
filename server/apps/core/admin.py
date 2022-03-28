@@ -1,13 +1,13 @@
 from django.contrib import admin, messages
 
+from server.apps.core.logic import actions
 from server.apps.core.models import (
     Config,
     Country,
     CountryRegistry,
-    ProxyConfig,
     Ignore,
+    ProxyConfig,
 )
-from server.apps.core.logic import actions
 
 
 @admin.register(Country)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from django.db import models
 from django.contrib.postgres.fields import ArrayField, JSONField
+from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from server.apps.api.logic.managers import ProxyConfigManager
