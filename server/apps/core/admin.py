@@ -33,11 +33,8 @@ class ProxyConfigAdmin(admin.ModelAdmin):
     )
 
     def save_model(self, request, obj, form, change):
-        try:
-            actions.update_api_proxy_configs()
-            messages.success(request, "API data for /api/proxy-configs/ updated!")
-        except:
-            messages.error(request, "Error on updating /api/proxy-configs/")
+        actions.update_api_proxy_configs()
+        messages.success(request, "API data for /api/proxy-configs/ updated!")
         super(ProxyConfigAdmin, self).save_model(request, obj, form, change)
 
     def make_active(self, request, queryset):
@@ -67,10 +64,6 @@ class IgnoreAdmin(admin.ModelAdmin):
     )
 
     def save_model(self, request, obj, form, change):
-        try:
-            actions.update_api_ignore()
-            messages.success(request, "API data for /api/ignore/ updated!")
-        except:
-            messages.error(request, "Error on updating /api/ignore/")
-
+        actions.update_api_ignore()
+        messages.success(request, "API data for /api/ignore/ updated!")
         super(IgnoreAdmin, self).save_model(request, obj, form, change)

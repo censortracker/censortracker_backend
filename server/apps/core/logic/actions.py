@@ -13,7 +13,7 @@ __all__ = ['update_api_ignore', 'update_api_proxy_configs']
 API_PATH = BASE_DIR.joinpath("public", "api")
 
 
-def create_api_endpoint(*, scope, queryset, serializer_class) -> None:
+def _create_api_endpoint(*, scope, queryset, serializer_class) -> None:
     file_path = API_PATH.joinpath(scope, "json")
 
     if not os.path.exists(file_path):
@@ -25,7 +25,7 @@ def create_api_endpoint(*, scope, queryset, serializer_class) -> None:
 
 
 def update_api_proxy_configs() -> None:
-    create_api_endpoint(
+    _create_api_endpoint(
         scope="proxy-configs",
         queryset=ProxyConfig.objects.all(),
         serializer_class=ProxyConfigStatusSerializer
@@ -33,7 +33,7 @@ def update_api_proxy_configs() -> None:
 
 
 def update_api_ignore() -> None:
-    create_api_endpoint(
+    _create_api_endpoint(
         scope="ignore",
         queryset=Ignore.objects.all(),
         serializer_class=IgnoreSerializer,
