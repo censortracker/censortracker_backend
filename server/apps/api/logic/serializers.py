@@ -48,4 +48,4 @@ class ProxyConfigStatusSerializer(serializers.ModelSerializer):
 class IgnoreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ignore
-        fields = "__all__"
+        exclude = ("pk", "name")
