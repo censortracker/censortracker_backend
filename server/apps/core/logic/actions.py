@@ -11,7 +11,7 @@ API_PATH = BASE_DIR.joinpath("public", "api")
 
 
 def create_api_endpoint(*, scope, data) -> None:
-    file_path = API_PATH.joinpath(scope, "json")
+    file_path = API_PATH.joinpath(scope)
 
     if not os.path.exists(file_path):
         os.makedirs(file_path)
