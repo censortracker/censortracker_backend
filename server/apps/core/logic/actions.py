@@ -23,9 +23,19 @@ def create_api_endpoint(*, scope, data) -> None:
 def update_api_proxy_configs() -> None:
     queryset = ProxyConfig.objects.all()
     serializer = ProxyConfigStatusSerializer(queryset, many=True)
+
+    data = []
+    for item in serializer.data:
+        item['pingHost'] = item['ping_host']
+        item['pingPort'] = item['ping_port']
+
+        del item['ping_host']
+        del item['ping_port']
+        data.append(item)
+
     create_api_endpoint(
         scope="proxy-configs",
-        data=serializer.data,
+        data=data,
     )
 
 
