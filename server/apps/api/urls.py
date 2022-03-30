@@ -10,11 +10,6 @@ urlpatterns = [
     path("domains/", views.DomainListView.as_view(), name="domain_list"),
     path("countries/", views.CountryListView.as_view(), name="country_list"),
     path("config/", views.ConfigRetrieveAPIView.as_view(), name="config_detail"),
-    path(
-        "proxy-config/",
-        views.ProxyConfigRetrieveAPIView.as_view(),
-        name="proxy_config_detail",
-    ),
 ]
 
 app_name = "api"
