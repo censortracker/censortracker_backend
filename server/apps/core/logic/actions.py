@@ -5,7 +5,7 @@ from server.apps.api.logic.serializers import ProxyConfigStatusSerializer
 from server.apps.core.models import Ignore, ProxyConfig
 from server.settings.components.common import BASE_DIR
 
-__all__ = ['update_api_ignore', 'update_api_proxy_configs']
+__all__ = ["update_api_ignore", "update_api_proxy_configs"]
 
 API_PATH = BASE_DIR.joinpath("public", "api")
 
@@ -26,11 +26,11 @@ def update_api_proxy_configs() -> None:
 
     data = []
     for item in serializer.data:
-        item['pingHost'] = item['ping_host']
-        item['pingPort'] = item['ping_port']
+        item["pingHost"] = item["ping_host"]
+        item["pingPort"] = item["ping_port"]
 
-        del item['ping_host']
-        del item['ping_port']
+        del item["ping_host"]
+        del item["ping_port"]
         data.append(item)
 
     create_api_endpoint(
