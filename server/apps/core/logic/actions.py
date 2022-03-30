@@ -11,7 +11,7 @@ API_PATH = BASE_DIR.joinpath("public", "api")
 
 
 def create_api_endpoint(*, scope, data) -> None:
-    file_path = API_PATH.joinpath(scope)
+    file_path = API_PATH.joinpath(*scope)
 
     if not os.path.exists(file_path):
         os.makedirs(file_path)
@@ -34,7 +34,7 @@ def update_api_proxy_configs() -> None:
         data.append(item)
 
     create_api_endpoint(
-        scope="proxy-configs",
+        scope=("proxy", "list",),
         data=data,
     )
 
@@ -46,4 +46,4 @@ def update_api_ignore() -> None:
     for obj in queryset:
         data.extend(obj.domains)
 
-    create_api_endpoint(scope="ignore", data=data)
+    create_api_endpoint(scope=("ignore",), data=data)
