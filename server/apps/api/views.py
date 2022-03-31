@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-import itertools
-import secrets
 
 import validators
 from django.shortcuts import get_object_or_404
@@ -16,14 +14,12 @@ from server.apps.api.logic.serializers import (
     ConfigSerializer,
     CountrySerializer,
     DomainListSerializer,
-    ProxyConfigSerializer,
 )
 from server.apps.api.logic.throttling import (
     ConfigRetrieveRateThrottle,
     CountryListRateThrottle,
     CreateCaseRateThrottle,
     DomainListRateThrottle,
-    ProxyConfigListRateThrottle,
 )
 from server.apps.api.models import Domain
 from server.apps.core.models import Config, Country, ProxyConfig
@@ -136,21 +132,6 @@ class DomainListView(generics.ListAPIView):
         queryset = self.get_queryset().order_by("-domain")
         serializer = DomainListSerializer(queryset, many=True)
         return Response([i["domain"] for i in serializer.data])
-
-
-class ProxyConfigRetrieveAPIView(generics.RetrieveAPIView):
-    serializer_class = ProxyConfigSerializer
-    permission_classes = [AllowAny]
-    throttle_classes = [ProxyConfigListRateThrottle]
-    queryset = ProxyConfig.objects.active()
-
-    def get_object(self):
-        configs = []
-        for proxy in self.get_queryset():
-            configs.extend(
-                itertools.repeat(proxy, proxy.weight),
-            )
-        return secrets.choice(configs)
 
 
 class ConfigRetrieveAPIView(ClientIPMixin, generics.RetrieveAPIView):

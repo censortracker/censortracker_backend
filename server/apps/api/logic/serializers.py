@@ -36,13 +36,7 @@ class ConfigSerializer(serializers.ModelSerializer):
 class ProxyConfigSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProxyConfig
-        exclude = ("id", "name", "weight", "active")
-
-
-class ProxyConfigStatusSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ProxyConfig
-        exclude = ("id", "name")
+        exclude = ("id", )
 
 
 class IgnoreSerializer(serializers.ModelSerializer):

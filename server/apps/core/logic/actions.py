@@ -1,7 +1,7 @@
 import json
 import os
 
-from server.apps.api.logic.serializers import ProxyConfigStatusSerializer
+from server.apps.api.logic.serializers import ProxyConfigSerializer
 from server.apps.core.models import Ignore, ProxyConfig
 from server.settings.components.common import BASE_DIR
 
@@ -22,7 +22,7 @@ def create_api_endpoint(*, scope, data) -> None:
 
 def update_api_proxy_configs() -> None:
     queryset = ProxyConfig.objects.all()
-    serializer = ProxyConfigStatusSerializer(queryset, many=True)
+    serializer = ProxyConfigSerializer(queryset, many=True)
 
     data = []
     for item in serializer.data:
