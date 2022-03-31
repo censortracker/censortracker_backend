@@ -34,7 +34,10 @@ def update_api_proxy_configs() -> None:
         data.append(item)
 
     create_api_endpoint(
-        scope=("proxy", "list",),
+        scope=(
+            "proxy",
+            "list",
+        ),
         data=data,
     )
 

@@ -14,6 +14,7 @@ from server.apps.api.logic.serializers import (
     ConfigSerializer,
     CountrySerializer,
     DomainListSerializer,
+    ProxyConfigSerializer,
 )
 from server.apps.api.logic.throttling import (
     ConfigRetrieveRateThrottle,
@@ -25,32 +26,11 @@ from server.apps.api.models import Domain
 from server.apps.core.models import Config, Country, ProxyConfig
 
 
-# TODO: Refactor
-
-
-class ToggleProxyConfigAPIView(generics.UpdateAPIView):
-    permission_classes = [HasAPIKey]
-
-    def patch(self, request, *args, **kwargs) -> Response:
-        name = request.data.get("name")
-        active = request.data.get("active")
-
-        try:
-            pc = ProxyConfig.objects.get(name__iexact=name)
-            pc.active = active
-            pc.save()
-            return Response(
-                {"success": "ok", "name": pc.name}, status=status.HTTP_200_OK
-            )
-        except ProxyConfig.DoesNotExist:
-            return Response(
-                {"error": "such server does not exist"}, status=status.HTTP_200_OK
-            )
-        except BaseException as e:
-            return Response(
-                {"error": str(e)},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
+class ProxyConfigUpdateAPIView(generics.UpdateAPIView):
+    lookup_field = "name"
+    queryset = ProxyConfig.objects.all()
+    permission_classes = (HasAPIKey, )
+    serializer_class = ProxyConfigSerializer
 
 
 class UpdatePortAPIView(generics.UpdateAPIView):

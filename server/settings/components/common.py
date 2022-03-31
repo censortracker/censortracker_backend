@@ -135,6 +135,7 @@ REST_FRAMEWORK = {
         "rest_framework_api_key.permissions.HasAPIKey",
     ],
     "DEFAULT_RENDERER_CLASSES": (
+        "rest_framework.renderers.BrowsableAPIRenderer",
         "djangorestframework_camel_case.render.CamelCaseJSONRenderer",
     ),
     "DEFAULT_PARSER_CLASSES": (
@@ -149,5 +150,3 @@ SLACK_WEBHOOK = secret("slack.dsn", default="")
 GEOIP_PATH = os.path.join(BASE_DIR, "server", "geoip")
 GEOIP_COUNTRY = "GeoLite2-Country.mmdb"
 GEOIP_CITY = "GeoLite2-City.mmdb"
-
-PROXY_CONFIGS_PATH = BASE_DIR.joinpath("public", "api", "proxy-configs", "json")
