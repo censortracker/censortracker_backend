@@ -135,7 +135,6 @@ REST_FRAMEWORK = {
         "rest_framework_api_key.permissions.HasAPIKey",
     ],
     "DEFAULT_RENDERER_CLASSES": (
-        "rest_framework.renderers.BrowsableAPIRenderer",
         "djangorestframework_camel_case.render.CamelCaseJSONRenderer",
     ),
     "DEFAULT_PARSER_CLASSES": (
