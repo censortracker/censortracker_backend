@@ -1,6 +1,5 @@
 from django.contrib import admin, messages
 
-from server.apps.core.logic import actions
 from server.apps.core.models import (
     Config,
     Country,
@@ -33,7 +32,6 @@ class ProxyConfigAdmin(admin.ModelAdmin):
     )
 
     def save_model(self, request, obj, form, change):
-        actions.update_api_proxy_configs()
         messages.success(request, "API data for /api/proxy-configs/ updated!")
         super(ProxyConfigAdmin, self).save_model(request, obj, form, change)
 
@@ -64,6 +62,5 @@ class IgnoreAdmin(admin.ModelAdmin):
     )
 
     def save_model(self, request, obj, form, change):
-        actions.update_api_ignore()
         messages.success(request, "API data for /api/ignore/ updated!")
         super(IgnoreAdmin, self).save_model(request, obj, form, change)
