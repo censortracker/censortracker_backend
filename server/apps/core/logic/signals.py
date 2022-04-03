@@ -1,8 +1,8 @@
-from django.dispatch import receiver
 from django.db.models.signals import post_delete, post_save
+from django.dispatch import receiver
 
-from server.apps.core.models import ProxyConfig, Ignore
 from server.apps.core.logic import actions
+from server.apps.core.models import Ignore, ProxyConfig
 
 
 @receiver([post_save, post_delete], sender=ProxyConfig)
