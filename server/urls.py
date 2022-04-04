@@ -19,7 +19,6 @@ from django.urls import include, path, re_path
 from server.apps.api import urls as api_urls
 
 urlpatterns = [
-    path("django-rq/", include("django_rq.urls")),
     path("wormhole/", admin.site.urls),
     path("api/", include(api_urls, namespace="api")),
 ]

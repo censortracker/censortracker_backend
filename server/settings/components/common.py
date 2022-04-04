@@ -30,14 +30,15 @@ INSTALLED_APPS = (
     "django.contrib.staticfiles",
     "django.contrib.humanize",
     "django.contrib.gis.geoip2",
+
     # django-admin:
     "django.contrib.admin",
     "django.contrib.admindocs",
+
     # REST API:
     "rest_framework",
     "rest_framework_api_key",
-    # RQ
-    "django_rq",
+
     # Your apps go here:
     "server.apps.core",
     "server.apps.api",
