@@ -32,7 +32,7 @@ function db_ok() {
 		if {wait_for_db up} {
 			manage migrate --noinput >/dev/null
 		} else {
-			print "Migrations are skipped due to database inavailability (although host is up). Please check what's happening)" >&2
+			print "Migrations are skipped due to database unavailability (although host is up). Please check what's happening)" >&2
 			print "Reason:"
 			db_ok
 		}
