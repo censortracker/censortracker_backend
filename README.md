@@ -22,8 +22,8 @@ API
 This web-site provides two endpoints:
 
 ```
-POST /case/
-GET /domains/
+GET /config/ - Configuration
+GET /countries/ - Supported countries
 ```
 
 License
