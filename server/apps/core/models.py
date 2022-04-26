@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.contrib.postgres.fields import ArrayField, JSONField
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -54,10 +54,7 @@ class Config(models.Model):
     custom_registry_url = models.URLField(
         verbose_name=_("Custom Registry URL"), null=True, blank=True
     )
-    report_endpoint = models.URLField(
-        verbose_name=_("DPI API Endpoint"), null=True, blank=True
-    )
-    specifics = JSONField(
+    specifics = models.JSONField(
         verbose_name=_("Specifics"), blank=True, null=False, default=dict
     )
 

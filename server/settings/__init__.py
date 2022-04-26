@@ -18,9 +18,8 @@ ENV = env("DJANGO_ENV", default="production")
 
 base_settings = [  # pylint: disable=invalid-name
     "components/common.py",
-    "components/sentry.py",
+    # "components/sentry.py",
     "components/caches.py",
-    "components/redis.py",
     # You can even use glob:
     # 'components/*.py'
     # Select the right env:
