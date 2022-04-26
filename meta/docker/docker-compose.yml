@@ -87,8 +87,6 @@ networks:
 secrets:
   %PROJECT%.django.key.secret:
     external: true
-  %PROJECT%.sentry.%DJANGO_ENV%.dsn.secret:
-    external: true
   %PROJECT%.pg.%DJANGO_ENV%.passwd.secret:
     external: true
   %PROJECT%.slack.dsn.secret:

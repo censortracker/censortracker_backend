@@ -10,7 +10,6 @@ x-defaults: &defaults
 x-dj: &dj
   secrets:
     - %PROJECT%.django.key.secret
-    - %PROJECT%.sentry.%DJANGO_ENV%.dsn.secret
     - %PROJECT%.pg.%DJANGO_ENV%.passwd.secret
     - %PROJECT%.slack.dsn.secret
   environment:
@@ -75,8 +74,6 @@ networks:
     attachable: true
 secrets:
   %PROJECT%.django.key.secret:
-    external: true
-  %PROJECT%.sentry.%DJANGO_ENV%.dsn.secret:
     external: true
   %PROJECT%.pg.%DJANGO_ENV%.passwd.secret:
     external: true

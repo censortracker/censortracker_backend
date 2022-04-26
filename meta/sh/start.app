@@ -37,7 +37,7 @@ function db_ok() {
 			db_ok
 		}
 	} else {
-		print "Migrations skipped due to DB conatiner inavailability" >&2
+		print "Migrations skipped due to DB container unavailability" >&2
 	}
 			manage collectstatic --noinput >/dev/null
 		  chown 65534:65534 -R /app/public/static
