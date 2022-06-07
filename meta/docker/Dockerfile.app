@@ -22,6 +22,8 @@ RUN sed -e '/community/{p;s@v[^/]*/@edge/@;s@community@testing@}' -i /etc/apk/re
 		sed \
 		ca-certificates \
 		zsh \
+		make \
+		cmake \
 		python3 \
 		tini \
 		python3-dev \
