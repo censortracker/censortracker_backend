@@ -28,5 +28,6 @@ class Command(BaseCommand):
         configs = {
             "registry": "https://app.censortracker.org/api/config/",
             "proxy": "https://app.censortracker.org/api/proxy-config/",
+            "ignore": "https://app.censortracker.org/api/ignore/",
         }
         self.update_github_emergency_endpoints(configs)
