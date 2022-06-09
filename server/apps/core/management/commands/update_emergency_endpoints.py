@@ -13,19 +13,20 @@ class Command(BaseCommand):
         assert GITHUB_ACCESS_TOKEN, "Github Access Token cannot be None"
 
         github = Github(GITHUB_ACCESS_TOKEN)
-        repo = github.get_repo("roskomsvoboda/censortracker-configs")
-        emergency_endpoints_file_path = "emergency-endpoints.json"
-        emergency_endpoints_file = repo.get_contents(emergency_endpoints_file_path)
+        repo = github.get_repo("roskomsvoboda/ctconf")
+        endpoints_file_path = "endpoints.json"
+        endpoints_file = repo.get_contents(endpoints_file_path)
         content = json.dumps(config, sort_keys=True, ensure_ascii=False, indent=2)
         repo.update_file(
-            path=emergency_endpoints_file_path,
+            path=endpoints_file_path,
             message=f"Updated config: {timezone.now(): %d-%m-%Y %MM:%HH}",
             content=content,
-            sha=emergency_endpoints_file.sha,
+            sha=endpoints_file.sha,
         )
 
     def handle(self, *args, **options):
         configs = {
+            "ignore": "https://app.censortracker.org/api/ignore/",
             "registry": "https://app.censortracker.org/api/config/",
             "proxy": "https://app.censortracker.org/api/proxy-config/",
         }
