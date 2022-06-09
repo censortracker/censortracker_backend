@@ -10,7 +10,7 @@ from server.settings.components.common import GITHUB_ACCESS_TOKEN
 class Command(BaseCommand):
     @staticmethod
     def update_github_emergency_endpoints(config):
-        assert GITHUB_ACCESS_TOKEN, "Github Access Token cannot be None"
+        assert GITHUB_ACCESS_TOKEN, "GITHUB_ACCESS_TOKEN cannot be None"
 
         github = Github(GITHUB_ACCESS_TOKEN)
         repo = github.get_repo("roskomsvoboda/ctconf")
