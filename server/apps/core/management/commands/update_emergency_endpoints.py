@@ -26,8 +26,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         configs = {
+            "ignore": "https://app.censortracker.org/api/ignore/",
             "registry": "https://app.censortracker.org/api/config/",
             "proxy": "https://app.censortracker.org/api/proxy-config/",
-            "ignore": "https://app.censortracker.org/api/ignore/",
         }
         self.update_github_emergency_endpoints(configs)
