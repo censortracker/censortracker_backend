@@ -41,6 +41,17 @@ class ConfigRetrieveAPIView(ClientIPMixin, generics.RetrieveAPIView):
         return get_object_or_404(Config, country__iso_a2_code__iexact=country_code)
 
 
+class ConfigRetrieveAPIView2(ClientIPMixin, generics.RetrieveAPIView):
+    serializer_class = ConfigSerializer
+    permission_classes = [AllowAny]
+    throttle_classes = [ConfigRetrieveRateThrottle]
+
+    def get_object(self):
+        country_code = self.get_client_country_code()
+        raise ValueError(self.request.query_params)
+        return get_object_or_404(Config, country__iso_a2_code__iexact=country_code)
+
+
 class CountryListView(generics.ListAPIView):
     serializer_class = CountrySerializer
     permission_classes = [AllowAny]
