@@ -7,7 +7,7 @@ SECURITY WARNING: don't run with debug turned on in production!
 """
 from server.settings.components.common import BASE_DIR
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
