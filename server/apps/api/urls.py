@@ -7,7 +7,6 @@ from server.apps.api import views
 urlpatterns = [
     path("countries/", views.CountryListView.as_view(), name="country_list"),
     path("config/", views.ConfigRetrieveAPIView.as_view(), name="config_detail"),
-    path("dconfig/", views.ConfigRetrieveAPIView2.as_view(), name="dconfig_detail"),
     path(
         "proxy/update/<str:name>/",
         views.ProxyConfigUpdateAPIView.as_view(),
