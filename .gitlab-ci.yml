@@ -1,0 +1,30 @@
+stages:
+  - deploy
+
+Deploy:
+  image: alpine:latest
+  stage: deploy
+  tags:
+    - docker
+  before_script:
+    - |
+      export DJANGO_ENV="production"
+      export stk="${CI_PROJECT_NAME//./-}"
+      export ENVPREF="${stk//-/_}"
+      export PROJECT="${ENVPREF//_/.}"
+    - mkdir -p dist
+    - cp -r poetry.lock pyproject.toml server manage.py dist
+    # ^ tests
+    - ln -s ../public dist/public
+  script:
+    - apk add tar zstd openssh-client
+    - mkdir -p ~/.ssh
+    - base64 -d "${SSH_KEY}" > ~/.ssh/key
+    - chmod 600 ~/.ssh/key
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\tIdentityFile ~/.ssh/key\n\tUser www-data\n\tPort 55222\n\n" > ~/.ssh/config
+    - for s in $(env|grep "^${ENVPREF}.*_secret="); do var_name="${s%%=*}"; secret_name="${var_name//_/.}"; eval "echo \$${var_name}" | base64 -d | ssh "${CLOUD_DEPLOY_HOST}" setsecret "sct:${secret_name}"; done
+    - env | grep -E '^(PROJECT|DJANGO_ENV)' | ssh "${CLOUD_DEPLOY_HOST}" setenv "name:${stk}"
+    - cd dist; tar -cf- . | zstd --fast | ssh "${CLOUD_DEPLOY_HOST}" deploy "name:${stk}" "sha:${CI_COMMIT_SHORT_SHA}"
+    - echo 'poetry install --no-interaction --no-ansi && manage migrate --noinput && manage collectstatic --noinput && rm poetry.lock pyproject.toml && update-unit' | ssh "${CLOUD_DEPLOY_HOST}" maint "name:${stk}"
+  only:
+    - prod@web/dj/censortracker

@@ -1,0 +1,93 @@
+version: '3.7'
+
+##################
+### WARNING!!! ###
+##################
+### This is NOT a real (ready-to-deploy) compose file!
+### This is a template, that will be preprocessed by CI system before it will become a "real" compose file, that will be deployed.
+### Even some commens here are preprocessor directives (like {dev,prod}-only, and even count of #'s there matters)
+##################
+
+x-defaults: &defaults
+  secrets:
+    - %PROJECT%.pg.%DJANGO_ENV%.passwd.secret
+  environment:
+    PROJECT: %PROJECT%
+    DB_NAME: %PROJECT%
+    DB_USER: %PROJECT%
+    DB_HOST: %STACK%-db
+    DJANGO_ENV: %DJANGO_ENV%
+    DB_PASSWD_SECRET_NAME: pg.%DJANGO_ENV%.passwd
+  networks:
+    default:
+    int:
+  deploy:
+    replicas: 1
+    placement:
+      constraints:
+        - node.labels.dc == NTX
+
+x-app: &app
+  secrets:
+    - %PROJECT%.django.key.secret
+    - %PROJECT%.slack.dsn.secret
+    - %PROJECT%.pg.%DJANGO_ENV%.passwd.secret
+    - %PROJECT%.sentry.%DJANGO_ENV%.dsn.secret
+  environment:
+    PROJECT: %PROJECT%
+    DJANGO_ENV: %DJANGO_ENV%
+    DB_NAME: %PROJECT%
+    DB_USER: %PROJECT%
+    DB_HOST: %STACK%-db
+    REDIS_HOST: %STACK%-redis
+  volumes:
+    - "static:/app/public"
+
+services:
+  %STACK%-app:
+    <<: *defaults
+    <<: *app
+    image: %IMAGE_APP%
+    hostname: %STACK%-app
+    command: start.app
+  %STACK%-db:
+    <<: *defaults
+    hostname: %STACK%-db
+    image: %IMAGE_PGSQL%
+    command: start
+    volumes:
+      - "db:/var/lib/postgresql"
+  %STACK%-rq:
+    <<: *defaults
+    <<: *app
+    image: %IMAGE_APP%
+    hostname: %STACK%-rq
+    command: rq
+  %STACK%-redis:
+     <<: *defaults
+     hostname: %STACK%-redis
+     image: %IMAGE_REDIS%
+     volumes:
+       - "redis-data:/var/lib/redis"
+
+volumes:
+  db:
+  static:
+  redis-data:
+
+networks:
+  default:
+    external: true
+    name: bridge
+    attachable: true
+  int:
+    external: true
+    name: int
+    attachable: true
+secrets:
+  %PROJECT%.django.key.secret:
+    external: true
+  %PROJECT%.pg.%DJANGO_ENV%.passwd.secret:
+    external: true
+  %PROJECT%.slack.dsn.secret:
+    external: true
