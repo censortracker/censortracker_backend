@@ -15,11 +15,6 @@ class ClientIPMixin:
         geo = GeoIP2()
         client_ip = self.get_client_ip()
 
-        custom_country_code = self.request.query_params.get("countryCode")
-
-        if custom_country_code is not None:
-            return custom_country_code
-
         if client_ip is not None:
             country = geo.country(client_ip)
             return country["country_code"]
