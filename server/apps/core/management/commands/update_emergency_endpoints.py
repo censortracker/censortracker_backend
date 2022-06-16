@@ -9,7 +9,7 @@ from server.settings.components.common import GITHUB_ACCESS_TOKEN
 
 class Command(BaseCommand):
     def add_arguments(self, parser):
-        parser.add_argument('--domain', type=str, help='Domain for reserve hostname.')
+        parser.add_argument("--domain", type=str, help="Domain for reserve hostname.")
 
     @staticmethod
     def update_emergency_endpoints(config):
@@ -29,12 +29,14 @@ class Command(BaseCommand):
 
     def handle(self, domain, *args, **options):
         if domain is not None:
-            answer = input(f'Do you want to use {domain} as reserve hostname? (Y/n): ')
+            answer = input(f"Do you want to use {domain} as reserve hostname? (Y/n): ")
             hostname = f"https://app.{domain}"
 
-            if 'y' in answer.lower():
-                self.update_emergency_endpoints({
-                    "ignore": f"{hostname}/api/ignore/",
-                    "registry": f"{hostname}/api/config/",
-                    "proxy": f"{hostname}/api/proxy-config/",
-                })
+            if "y" in answer.lower():
+                self.update_emergency_endpoints(
+                    {
+                        "ignore": f"{hostname}/api/ignore/",
+                        "registry": f"{hostname}/api/config/",
+                        "proxy": f"{hostname}/api/proxy-config/",
+                    }
+                )
