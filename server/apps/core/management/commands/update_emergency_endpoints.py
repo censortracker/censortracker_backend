@@ -8,8 +8,11 @@ from server.settings.components.common import GITHUB_ACCESS_TOKEN
 
 
 class Command(BaseCommand):
+    def add_arguments(self, parser):
+        parser.add_argument('--domain', type=str, help='Domain for reserve hostname.')
+
     @staticmethod
-    def update_github_emergency_endpoints(config):
+    def update_emergency_endpoints(config):
         assert GITHUB_ACCESS_TOKEN, "GITHUB_ACCESS_TOKEN cannot be None"
 
         github = Github(GITHUB_ACCESS_TOKEN)
@@ -24,10 +27,14 @@ class Command(BaseCommand):
             sha=endpoints_file.sha,
         )
 
-    def handle(self, *args, **options):
-        configs = {
-            "ignore": "https://app.censortracker.org/api/ignore/",
-            "registry": "https://app.censortracker.org/api/config/",
-            "proxy": "https://app.censortracker.org/api/proxy-config/",
-        }
-        self.update_github_emergency_endpoints(configs)
+    def handle(self, domain, *args, **options):
+        if domain is not None:
+            answer = input(f'Do you want to use {domain} as reserve hostname? (Y/n): ')
+            hostname = f"https://app.{domain}"
+
+            if 'y' in answer.lower():
+                self.update_emergency_endpoints({
+                    "ignore": f"{hostname}/api/ignore/",
+                    "registry": f"{hostname}/api/config/",
+                    "proxy": f"{hostname}/api/proxy-config/",
+                })
