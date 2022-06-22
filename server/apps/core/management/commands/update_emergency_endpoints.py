@@ -4,6 +4,7 @@ from django.core.management.base import BaseCommand
 from django.utils import timezone
 from github import Github
 
+from server.apps.core.models import Config
 from server.settings.components.common import GITHUB_ACCESS_TOKEN
 
 
@@ -30,13 +31,28 @@ class Command(BaseCommand):
     def handle(self, domain, *args, **options):
         if domain is not None:
             answer = input(f"Do you want to use {domain} as reserve hostname? (Y/n): ")
-            hostname = f"https://app.{domain}"
 
             if "y" in answer.lower():
                 self.update_emergency_endpoints(
                     {
-                        "ignore": f"{hostname}/api/ignore/",
-                        "registry": f"{hostname}/api/config/",
-                        "proxy": f"{hostname}/api/proxy-config/",
+                        "ignore": f"https://app.{domain}/api/ignore/",
+                        "registry": f"https://app.{domain}/api/config/",
+                        "proxy": f"https://app.{domain}api/proxy-config/",
                     }
                 )
+
+                up_yn = input('Do you want to update records in database? (Y/n): ')
+
+                if 'y' in up_yn.lower():
+                    specifics = {
+                        'cooperationRefusedORIUrl':
+                            f'https://registry.{domain}/api/v3/ori/refused/json/',
+                    }
+                    registry_url = f'https://registry.{domain}/api/v3/domains/json/'
+                    custom_registry_url = f'https://registry.censortracker.org/api/v4/dpi/ru/json/'
+
+                    for config in Config.objects.all():
+                        config.registry_url = registry_url
+                        config.specifics = specifics
+                        config.custom_registry_url = custom_registry_url
+                        config.save()
