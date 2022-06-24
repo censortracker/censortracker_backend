@@ -41,15 +41,16 @@ class Command(BaseCommand):
                     }
                 )
 
-                up_yn = input('Do you want to update records in database? (Y/n): ')
+                up_yn = input("Do you want to update records in database? (Y/n): ")
 
-                if 'y' in up_yn.lower():
+                if "y" in up_yn.lower():
                     specifics = {
-                        'cooperationRefusedORIUrl':
-                            f'https://registry.{domain}/api/v3/ori/refused/json/',
+                        "cooperationRefusedORIUrl": f"https://registry.{domain}/api/v3/ori/refused/json/",
                     }
-                    registry_url = f'https://registry.{domain}/api/v3/domains/json/'
-                    custom_registry_url = f'https://registry.censortracker.org/api/v4/dpi/ru/json/'
+                    registry_url = f"https://registry.{domain}/api/v3/domains/json/"
+                    custom_registry_url = (
+                        f"https://registry.censortracker.org/api/v4/dpi/ru/json/"
+                    )
 
                     for config in Config.objects.all():
                         config.registry_url = registry_url

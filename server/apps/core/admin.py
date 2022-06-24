@@ -16,7 +16,17 @@ class CountryAdmin(admin.ModelAdmin):
 
 @admin.register(Config)
 class ConfigAdmin(admin.ModelAdmin):
-    list_display = ("country",)
+    list_display = (
+        "country",
+        "country_code",
+        "registry_url",
+        "custom_registry_url",
+    )
+    ordering = ("registry_url",)
+
+    @admin.display(description="Country Code")
+    def country_code(self, obj):
+        return obj.country.iso_a2_code
 
 
 @admin.register(ProxyConfig)
@@ -35,18 +45,17 @@ class ProxyConfigAdmin(admin.ModelAdmin):
         messages.success(request, "API data for /api/proxy-configs/ updated!")
         super(ProxyConfigAdmin, self).save_model(request, obj, form, change)
 
+    @admin.action(description="Mark selected as active")
     def make_active(self, request, queryset):
         queryset.update(active=True)
         messages.success(request, "Done!")
 
+    @admin.action(description="Mark selected as inactive")
     def make_inactive(self, request, queryset):
         queryset.update(active=False)
         messages.success(request, "Done!")
 
-    make_active.short_description = "Mark selected as active"
-    make_inactive.short_description = "Mark selected as inactive"
-
-    actions = ["make_active", "make_inactive"]
+    actions = [make_active, make_inactive]
 
 
 @admin.register(CountryRegistry)
