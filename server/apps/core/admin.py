@@ -1,3 +1,5 @@
+from django.db import models
+from django_json_widget.widgets import JSONEditorWidget
 from django.contrib import admin, messages
 
 from server.apps.core.models import (
@@ -23,6 +25,11 @@ class ConfigAdmin(admin.ModelAdmin):
         "custom_registry_url",
     )
     ordering = ("registry_url",)
+    search_fields = ("country__name", "country__code")
+
+    formfield_overrides = {
+        models.JSONField: {'widget': JSONEditorWidget(attrs={'rows': 6, 'cols': 90})},
+    }
 
     @admin.display(description="Country Code")
     def country_code(self, obj):

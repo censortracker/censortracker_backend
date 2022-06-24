@@ -223,6 +223,17 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
 
 [[package]]
+name = "django-json-widget"
+version = "1.1.1"
+description = "Django json widget is an alternative widget that makes it easy to edit the jsonfield field of django."
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+future = "*"
+
+[[package]]
 name = "django-redis-cache"
 version = "3.0.1"
 description = "Redis Cache Backend for Django"
@@ -276,6 +287,14 @@ description = "A list-like structure which implements collections.abc.MutableSeq
 category = "main"
 optional = false
 python-versions = ">=3.7"
+
+[[package]]
+name = "future"
+version = "0.18.2"
+description = "Clean single-source support for Python 3 and 2"
+category = "main"
+optional = false
+python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 
 [[package]]
 name = "geoip2"
@@ -585,7 +604,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "fbe695f2cc359bfb850020a42e6488105f7b136f9283c4c27de050daa2d0e586"
+content-hash = "0a53a231a949ca387472272e8ad1ee63f9ea82ad090ecd8f7704f0f7f39ab539"
 
 [metadata.files]
 aiohttp = [
@@ -786,6 +805,9 @@ django-ipware = [
     {file = "django-ipware-4.0.2.tar.gz", hash = "sha256:602a58325a4808bd19197fef2676a0b2da2df40d0ecf21be414b2ff48c72ad05"},
     {file = "django_ipware-4.0.2-py2.py3-none-any.whl", hash = "sha256:878dbb06a87e25550798e9ef3204ed70a200dd8b15e47dcef848cf08244f04c9"},
 ]
+django-json-widget = [
+    {file = "django-json-widget-1.1.1.tar.gz", hash = "sha256:ec948a4c379687f9c854748ba540fdbeb1b1730846ca953f186818521de7e696"},
+]
 django-redis-cache = [
     {file = "django-redis-cache-3.0.1.tar.gz", hash = "sha256:a7fbef101a053d2e430bd3befe6a87e6e730f98e335b516f25f30b17d9fe66e3"},
 ]
@@ -864,6 +886,9 @@ frozenlist = [
     {file = "frozenlist-1.3.0-cp39-cp39-win32.whl", hash = "sha256:01a73627448b1f2145bddb6e6c2259988bb8aee0fb361776ff8604b99616cd08"},
     {file = "frozenlist-1.3.0-cp39-cp39-win_amd64.whl", hash = "sha256:772965f773757a6026dea111a15e6e2678fbd6216180f82a48a40b27de1ee2ab"},
     {file = "frozenlist-1.3.0.tar.gz", hash = "sha256:ce6f2ba0edb7b0c1d8976565298ad2deba6f8064d2bebb6ffce2ca896eb35b0b"},
+]
+future = [
+    {file = "future-0.18.2.tar.gz", hash = "sha256:b1bead90b70cf6ec3f0710ae53a525360fa360d306a86583adc6bf83a4db537d"},
 ]
 geoip2 = [
     {file = "geoip2-4.6.0-py2.py3-none-any.whl", hash = "sha256:745e2d7a665072690056f9566774727da89216c7858793f89804f6945f969714"},

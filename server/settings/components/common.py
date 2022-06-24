@@ -36,6 +36,8 @@ INSTALLED_APPS = (
     # REST API:
     "rest_framework",
     "rest_framework_api_key",
+    # Pretty JSON Field
+    "django_json_widget",
     # Your apps go here:
     "server.apps.core",
     "server.apps.api",

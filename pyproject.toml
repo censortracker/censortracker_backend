@@ -24,6 +24,7 @@ djangorestframework-camel-case = "^1.2.0"
 validators = "^0.18.2"
 djangorestframework-api-key = "^2.2.0"
 PyGithub = "^1.55"
+django-json-widget = "^1.1.1"
 
 [tool.poetry.dev-dependencies]
 isort = "^5.9.3"
