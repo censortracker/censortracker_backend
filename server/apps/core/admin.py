@@ -28,7 +28,7 @@ class ConfigAdmin(admin.ModelAdmin):
     search_fields = ("country__name", "country__code")
 
     formfield_overrides = {
-        models.JSONField: {'widget': JSONEditorWidget(attrs={'rows': 6, 'cols': 90})},
+        models.JSONField: {"widget": JSONEditorWidget(attrs={"rows": 6, "cols": 90})},
     }
 
     @admin.display(description="Country Code")
