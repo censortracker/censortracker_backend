@@ -57,6 +57,7 @@ class Config(models.Model):
     specifics = models.JSONField(
         verbose_name=_("Specifics"), blank=True, null=False, default=dict
     )
+    proxy_url = models.URLField(verbose_name=_("Proxy URL"), null=True, blank=False)
 
     class Meta:
         verbose_name = _("Config")

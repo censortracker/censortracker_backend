@@ -1,6 +1,6 @@
+from django.contrib import admin, messages
 from django.db import models
 from django_json_widget.widgets import JSONEditorWidget
-from django.contrib import admin, messages
 
 from server.apps.core.models import (
     Config,

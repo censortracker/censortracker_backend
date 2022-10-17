@@ -151,3 +151,8 @@ GEOIP_COUNTRY = "GeoLite2-Country.mmdb"
 GEOIP_CITY = "GeoLite2-City.mmdb"
 
 GITHUB_ACCESS_TOKEN = secret("github.access.token", default=None)
+
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
+GOOGLE_CLOUD_STORAGE_BUCKET = "censortracker"
+GOOGLE_CREDENTIALS_PATH = BASE_DIR.joinpath(".google-config.json")
