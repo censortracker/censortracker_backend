@@ -22,7 +22,7 @@ clrzr() {
 	done
 	shift $((OPTIND-1))
 	unset o OPTIND OPTARG OPTERR
-	echo "${echo_opt} ${*} ${ask}";
+	echo "${echo_opt}" "${*}${ask}";
 }
 err() { clrzr -c 31 "${@}"; }
 die() { err "${@}"; exit 1; }

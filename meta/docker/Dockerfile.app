@@ -1,4 +1,4 @@
-FROM alpine:edge
+FROM alpine:latest
 
 ENTRYPOINT ["/sbin/tini"]
 WORKDIR /app
