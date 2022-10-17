@@ -7,8 +7,8 @@ from google.cloud.storage import Client
 from server.apps.api.logic.serializers import ConfigSerializer
 from server.apps.core.models import Config
 
-from server.settings.components.common import BASE_DIR
 from server.settings.components.common import (
+    BASE_DIR,
     GOOGLE_CLOUD_STORAGE_BUCKET,
     GOOGLE_CREDENTIALS_PATH,
 )
