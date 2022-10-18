@@ -13,6 +13,8 @@ x-dj: &dj
     - %PROJECT%.pg.%DJANGO_ENV%.passwd.secret
     - %PROJECT%.slack.dsn.secret
     - %PROJECT%.github.access.token.secret
+    - %PROJECT%.aws.access.key.id.secret
+    - %PROJECT%.aws.secret.access.key.secret
   environment:
     PROJECT: %PROJECT%
     DJANGO_ENV: %DJANGO_ENV%
@@ -82,3 +84,7 @@ secrets:
     external: true
   %PROJECT%.github.access.token.secret:
     external: true
+  %PROJECT%.aws.access.key.id.secret:
+   external: true
+  %PROJECT%.aws.secret.access.key.secret:
+   external: true

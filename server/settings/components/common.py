@@ -154,5 +154,10 @@ GITHUB_ACCESS_TOKEN = secret("github.access.token", default=None)
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
-GOOGLE_CLOUD_STORAGE_BUCKET = "censortracker"
+STORAGE_BUCKET_NAME = "censortracker"
 GOOGLE_CREDENTIALS_PATH = BASE_DIR.joinpath(".google-config.json")
+
+AWS_ACCESS_KEY_ID = secret("aws.access.key.id", default=None)
+AWS_SECRET_ACCESS_KEY = secret("aws.secret.access.key", default=None)
+
+STORAGE_OBJECT_FILENAME = "config.json"
