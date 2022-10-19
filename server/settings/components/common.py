@@ -160,4 +160,5 @@ GOOGLE_CREDENTIALS_PATH = BASE_DIR.joinpath(".google-credentials.json")
 AWS_ACCESS_KEY_ID = secret("aws.access.key.id", default=None)
 AWS_SECRET_ACCESS_KEY = secret("aws.secret.access.key", default=None)
 
+# DO NOT MODIFY THIS FILE NAME.
 STORAGE_OBJECT_FILENAME = "config.json"
