@@ -17,6 +17,15 @@ class ConfigSerializer(serializers.ModelSerializer):
         exclude = ("id", "country")
 
 
+class NewConfigSerializer(serializers.ModelSerializer):
+    country_code = serializers.CharField(source="country.iso_a2_code", read_only=True)
+    country_name = serializers.CharField(source="country.name", read_only=True)
+
+    class Meta:
+        model = Config
+        exclude = ("id", "country")
+
+
 class ProxyConfigSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProxyConfig
