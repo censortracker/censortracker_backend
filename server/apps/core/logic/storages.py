@@ -1,26 +1,19 @@
 import json
-import tempfile
+import typing as t
 
 import boto3
-from django.core.management.base import BaseCommand
 from google.cloud.storage import Client
 
-from server.apps.api.logic.serializers import ConfigSerializer
-from server.apps.core.models import Config
 from server.settings.components.common import (
     AWS_ACCESS_KEY_ID,
     AWS_SECRET_ACCESS_KEY,
-    BASE_DIR,
     GOOGLE_CREDENTIALS_PATH,
     STORAGE_BUCKET_NAME,
     STORAGE_OBJECT_FILENAME,
 )
 
-AWS_CLOUDFRONT_CONFIG_URL = 'https://d204gfm9dw21wi.cloudfront.net/'
-AWS_S3_CONFIG_URL = 'https://censortracker.s3.eu-central-1.amazonaws.com/config.json'
 
-
-def upload_to_gcs(data):
+def update_config_gcs(data: t.Dict[str, t.Any]) -> None:
     """
     Uploads config to Google Cloud Storage.
     """
@@ -34,10 +27,8 @@ def upload_to_gcs(data):
     with blob.open("w", content_type="application/json") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
 
-    return blob.public_url
 
-
-def upload_to_aws(data):
+def update_config_aws(data: t.Dict[str, t.Any]) -> None:
     """
     Uploads config file to Amazon S3 bucket.
     """
@@ -59,13 +50,13 @@ def upload_to_aws(data):
     )
 
 
-class Command(BaseCommand):
+def upload(data) -> None:
+    """
+    Uploads config to all storages.
 
-    def upload_to_storages(self, data):
-        upload_to_gcs(data)
-        upload_to_aws(data)
-
-    def handle(self, *args, **options):
-        config_queryset = Config.objects.all()
-        config_serializer = ConfigSerializer(config_queryset, many=True)
-        self.upload_to_storages(config_serializer.data)
+    Currently supported storages:
+    - Google Cloud Storage
+    - Amazon S3 (with CloudFront)
+    """
+    update_config_gcs(data)
+    update_config_aws(data)
