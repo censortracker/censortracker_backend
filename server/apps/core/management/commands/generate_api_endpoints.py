@@ -39,7 +39,7 @@ def upload_to_gcs(data):
 
 def upload_to_aws(data):
     """
-    Uploads config file to Amazon S3 (with enabled CloudFront)
+    Uploads config file to Amazon S3 bucket.
     """
     s3 = boto3.resource(
         "s3",
@@ -59,13 +59,13 @@ def upload_to_aws(data):
     )
 
 
-def upload_to_storage(data):
-    upload_to_gcs(data)
-    upload_to_aws(data)
-
-
 class Command(BaseCommand):
+
+    def upload_to_storages(self, data):
+        upload_to_gcs(data)
+        upload_to_aws(data)
+
     def handle(self, *args, **options):
         config_queryset = Config.objects.all()
         config_serializer = ConfigSerializer(config_queryset, many=True)
-        upload_to_storage(config_serializer.data)
+        self.upload_to_storages(config_serializer.data)
