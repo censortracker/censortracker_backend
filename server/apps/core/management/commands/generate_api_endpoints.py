@@ -16,7 +16,7 @@ from server.settings.components.common import (
     STORAGE_OBJECT_FILENAME,
 )
 
-AWS_CLOUDFRONT_CONFIG_URL = 'https://dlmimj6bjpjtb.cloudfront.net/'
+AWS_CLOUDFRONT_CONFIG_URL = 'https://d204gfm9dw21wi.cloudfront.net/'
 AWS_S3_CONFIG_URL = 'https://censortracker.s3.eu-central-1.amazonaws.com/config.json'
 
 
