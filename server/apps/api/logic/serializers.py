@@ -9,7 +9,8 @@ class CountrySerializer(serializers.ModelSerializer):
         fields = ("name", "iso_a2_code", "locale_code")
 
 
-class ConfigSerializer(serializers.ModelSerializer):
+# Keep this serializer for backward compatibility with the old API
+class LegacyConfigSerializer(serializers.ModelSerializer):
     country_details = CountrySerializer(source="country", read_only=True)
 
     class Meta:
@@ -17,7 +18,7 @@ class ConfigSerializer(serializers.ModelSerializer):
         exclude = ("id", "country")
 
 
-class NewConfigSerializer(serializers.ModelSerializer):
+class ConfigSerializer(serializers.ModelSerializer):
     country_code = serializers.CharField(source="country.iso_a2_code", read_only=True)
     country_name = serializers.CharField(source="country.name", read_only=True)
 
