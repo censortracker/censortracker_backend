@@ -24,7 +24,7 @@ class Command(BaseCommand):
                     "type": "info|warning|error",
                     "page": "popup|options"
                 },
-                "geoIPService": "https://geo.censortracker.org/",
+                "geoIPServiceURL": "https://geo.censortracker.org/",
             },
             "data": config_serializer.data,
         })
