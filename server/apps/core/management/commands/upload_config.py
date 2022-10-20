@@ -26,7 +26,7 @@ class Command(BaseCommand):
                         "type": "info|warning|error",
                         "page": "popup|options",
                     },
-                    "geoIPServiceURL": "https://geo.censortracker.org/",
+                    "geoIPServiceURL": "https://geo.censortracker.org/get-iso/",
                 },
                 "data": camelize(config_serializer.data),
             }
