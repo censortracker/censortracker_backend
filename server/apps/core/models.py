@@ -58,6 +58,7 @@ class Config(models.Model):
         verbose_name=_("Specifics"), blank=True, null=False, default=dict
     )
     proxy_url = models.URLField(verbose_name=_("Proxy URL"), null=True, blank=False)
+    ignore_url = models.URLField(verbose_name=_("Ignore URL"), null=True, blank=True)
 
     class Meta:
         verbose_name = _("Config")
