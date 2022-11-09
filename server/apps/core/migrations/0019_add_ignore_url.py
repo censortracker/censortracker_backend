@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0018_add_proxy_url_field'),
+        ("core", "0018_add_proxy_url_field"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='config',
-            name='ignore_url',
-            field=models.URLField(blank=True, null=True, verbose_name='Ignore URL'),
+            model_name="config",
+            name="ignore_url",
+            field=models.URLField(blank=True, null=True, verbose_name="Ignore URL"),
         ),
     ]
