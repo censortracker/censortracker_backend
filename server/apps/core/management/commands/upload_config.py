@@ -12,6 +12,12 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         config_queryset = Config.objects.all()
         config_serializer = ConfigSerializer(config_queryset, many=True)
+        config_data = config_serializer.data
+
+        if not config_data:
+            print("No config data found")
+            exit(1)
+
         storages.upload(
             {
                 "meta": {
@@ -25,6 +31,6 @@ class Command(BaseCommand):
                     },
                     "geoIPServiceURL": "https://geo.censortracker.org/get-iso/",
                 },
-                "data": camelize(config_serializer.data),
+                "data": camelize(config_data),
             }
         )
