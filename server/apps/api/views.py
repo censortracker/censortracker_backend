@@ -7,8 +7,8 @@ from rest_framework_api_key.permissions import HasAPIKey
 
 from server.apps.api.logic.mixins import ClientIPMixin
 from server.apps.api.logic.serializers import (
-    LegacyConfigSerializer,
     CountrySerializer,
+    LegacyConfigSerializer,
     ProxyConfigSerializer,
 )
 from server.apps.api.logic.throttling import (
