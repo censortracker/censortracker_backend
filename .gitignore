@@ -201,3 +201,5 @@ tmp/docker-compose.yml
 
 app.py
 db.json
+server/*/*/fixtures/
+.google-credentials.json

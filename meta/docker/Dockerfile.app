@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:edge
 
 ENTRYPOINT ["/sbin/tini"]
 WORKDIR /app
@@ -51,5 +51,6 @@ RUN poetry install --no-interaction --no-ansi
 COPY /meta/sh /bin/
 
 COPY --chown=65534:65534 /manage.py /app/
+COPY --chown=65534:65534 /.google-credentials.json /app/
 COPY --chown=65534:65534 /public /app/public/
 COPY --chown=65534:65534 /server /app/server/

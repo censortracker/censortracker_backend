@@ -150,4 +150,14 @@ GEOIP_PATH = os.path.join(BASE_DIR, "server", "geoip")
 GEOIP_COUNTRY = "GeoLite2-Country.mmdb"
 GEOIP_CITY = "GeoLite2-City.mmdb"
 
-GITHUB_ACCESS_TOKEN = secret("github.access.token", default=None)
+GITHUB_ACCESS_TOKEN = secret("github.access.token")
+
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+
+STORAGE_BUCKET_NAME = "censortracker"
+
+AWS_ACCESS_KEY_ID = secret("aws.access.key.id")
+AWS_SECRET_ACCESS_KEY = secret("aws.secret.access.key")
+
+# DO NOT MODIFY THIS FILE NAME.
+STORAGE_OBJECT_FILENAME = "config.json"

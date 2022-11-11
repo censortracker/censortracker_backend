@@ -18,3 +18,5 @@ ALLOWED_HOSTS = ["*"]
 STATIC_ROOT = BASE_DIR.joinpath("public", "static")
 
 MEDIA_ROOT = BASE_DIR.joinpath("public", "uploads")
+
+GOOGLE_CREDENTIALS_PATH = "/var/www/censortracker/.google-credentials.json"
