@@ -33,6 +33,8 @@ INSTALLED_APPS = (
     # django-admin:
     "django.contrib.admin",
     "django.contrib.admindocs",
+    # CORS:
+    "corsheaders",
     # REST API:
     "rest_framework",
     "rest_framework_api_key",
@@ -48,6 +50,7 @@ MIDDLEWARE = (
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -161,3 +164,5 @@ AWS_SECRET_ACCESS_KEY = secret("aws.secret.access.key")
 
 # DO NOT MODIFY THIS FILE NAME.
 STORAGE_OBJECT_FILENAME = "config.json"
+
+CORS_ALLOW_ALL_ORIGINS = True

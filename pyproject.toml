@@ -26,6 +26,7 @@ PyGithub = "^1.55"
 django-json-widget = "^1.1.1"
 google-cloud-storage = "^2.5.0"
 boto3 = "^1.24.92"
+django-cors-headers = "^3.13.0"
 
 [tool.poetry.dev-dependencies]
 isort = "^5.9.3"
