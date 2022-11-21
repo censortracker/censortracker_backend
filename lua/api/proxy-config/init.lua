@@ -23,9 +23,9 @@ local function fallback(reason)
 	ngx.print(("%s"):format(
 		cjson.encode(
 			{ -- фоллбек
-				server="proxy-fallback.censortracker.org",
+				server="proxy-fallback.roskomsvoboda.org",
 				port="33333",
-				pingHost="proxy-fallback.censortracker.org",
+				pingHost="proxy-fallback.roskomsvoboda.org",
 				pingPort="39263",
 				fallbackReason=reason,
 			}
