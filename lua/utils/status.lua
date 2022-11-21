@@ -52,7 +52,7 @@ local function getList() -- {{{
 	local fd, err = io.open(("%s/proxy/list/index.json"):format(api),"r")
 	if not(fd) then
 		print("Error:",err)
-		notify(("Возникла ошибка при чтении списка проксей. Текст ошибки: ```%s```"):format(err), true)
+		notify(("Возникла ошибка при чтении списка проксей: ```%s```"):format(err), true)
 		os.exit(1)
 	end
 	local ret = fd:read"a*"
@@ -79,9 +79,9 @@ local function setActivity(name, status) -- {{{
 	}
 	local ok, err = pcall(c.perform,c)
 	if not(ok) then
-		notify(("Не получилось выставить статус одному из проксей.\n\nОшибка: ```%s```"):format(err), true)
+		notify(("Не получилось выставить активность для прокси `%s`.\n\nОшибка: ```%s```"):format(name, err), true)
 	elseif c:getinfo(curl.INFO_RESPONSE_CODE) ~= 200 then
-		notify(("Не получилось выставить статус одному из проксей.\n\nОтвет сервера: ```%s```"):format(buf), true)
+		notify(("Не получилось выставить активность для прокси `%s`.\n\nОтвет сервера: ```%s```"):format(name, buf), true)
 	end
 end -- }}}
 
