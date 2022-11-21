@@ -24,9 +24,9 @@ local function fallback(reason)
 		cjson.encode(
 			{ -- фоллбек
 				server="proxy-fallback.censortracker.org",
-				port="56789",
+				port="33333",
 				pingHost="proxy-fallback.censortracker.org",
-				pingPort="45678",
+				pingPort="39263",
 				fallbackReason=reason,
 			}
 		)
