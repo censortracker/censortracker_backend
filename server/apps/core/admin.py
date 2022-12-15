@@ -19,6 +19,7 @@ class CountryAdmin(admin.ModelAdmin):
 @admin.register(Config)
 class ConfigAdmin(admin.ModelAdmin):
     list_display = (
+        "pk",
         "country",
         "country_code",
         "registry_url",
