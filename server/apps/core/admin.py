@@ -25,6 +25,7 @@ class ConfigAdmin(admin.ModelAdmin):
         "registry_url",
         "custom_registry_url",
     )
+    list_per_page = 400
     ordering = ("registry_url",)
     search_fields = ("country__name", "country__code")
 
