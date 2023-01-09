@@ -2,6 +2,7 @@ from django.contrib import admin, messages
 from django.db import models
 from django_json_widget.widgets import JSONEditorWidget
 
+from server.apps.core.logic import actions
 from server.apps.core.models import (
     Config,
     Country,
@@ -51,8 +52,9 @@ class ProxyConfigAdmin(admin.ModelAdmin):
     )
 
     def save_model(self, request, obj, form, change):
-        messages.success(request, "API data for /api/proxy-configs/ updated!")
         super(ProxyConfigAdmin, self).save_model(request, obj, form, change)
+        actions.update_api_proxy_configs()
+        messages.success(request, "API data for /api/proxy-configs/ updated!")
 
     @admin.action(description="Mark selected as active")
     def make_active(self, request, queryset):
@@ -80,5 +82,6 @@ class IgnoreAdmin(admin.ModelAdmin):
     )
 
     def save_model(self, request, obj, form, change):
-        messages.success(request, "API data for /api/ignore/ updated!")
         super(IgnoreAdmin, self).save_model(request, obj, form, change)
+        actions.update_api_ignore()
+        messages.success(request, "API data for /api/ignore/ updated!")
