@@ -47,4 +47,4 @@ class CountryListView(generics.ListAPIView):
 class ProxyConfigListView(generics.ListAPIView):
     serializer_class = ProxyConfigSerializer
     permission_classes = [AllowAny]
-    queryset = ProxyConfig.objects.all()
+    queryset = ProxyConfig.objects.order_by("-weight", '-name')
