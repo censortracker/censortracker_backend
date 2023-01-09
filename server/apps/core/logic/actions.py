@@ -1,6 +1,8 @@
 import json
 import os
 
+from djangorestframework_camel_case.util import camelize
+
 from server.apps.api.logic.serializers import ProxyConfigSerializer
 from server.apps.core.models import Ignore, ProxyConfig
 from server.settings.components.common import BASE_DIR
@@ -23,16 +25,7 @@ def create_api_endpoint(*, scope, data) -> None:
 def update_api_proxy_configs() -> None:
     queryset = ProxyConfig.objects.all()
     serializer = ProxyConfigSerializer(queryset, many=True)
-
-    data = []
-    for item in serializer.data:
-        item["pingHost"] = item["ping_host"]
-        item["pingPort"] = item["ping_port"]
-
-        del item["ping_host"]
-        del item["ping_port"]
-        data.append(item)
-
+    data = camelize(serializer.data)
     create_api_endpoint(
         scope=(
             "proxy",

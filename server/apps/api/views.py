@@ -11,10 +11,6 @@ from server.apps.api.logic.serializers import (
     LegacyConfigSerializer,
     ProxyConfigSerializer,
 )
-from server.apps.api.logic.throttling import (
-    ConfigRetrieveRateThrottle,
-    CountryListRateThrottle,
-)
 from server.apps.core.models import Config, Country, ProxyConfig
 
 
@@ -34,7 +30,6 @@ class ProxyConfigUpdateAPIView(generics.UpdateAPIView):
 class ConfigRetrieveAPIView(ClientIPMixin, generics.RetrieveAPIView):
     serializer_class = LegacyConfigSerializer
     permission_classes = [AllowAny]
-    throttle_classes = [ConfigRetrieveRateThrottle]
 
     def get_object(self):
         country_code = self.kwargs.get("country_code")
@@ -46,5 +41,4 @@ class ConfigRetrieveAPIView(ClientIPMixin, generics.RetrieveAPIView):
 class CountryListView(generics.ListAPIView):
     serializer_class = CountrySerializer
     permission_classes = [AllowAny]
-    throttle_classes = [CountryListRateThrottle]
     queryset = Country.objects.filter(active=True)
