@@ -22,6 +22,11 @@ urlpatterns = [
         views.ProxyConfigCreateAPIView.as_view(),
         name="proxy_create",
     ),
+    path(
+        "proxy-list/",
+        views.ProxyConfigListView.as_view(),
+        name="proxy_list",
+    ),
 ]
 
 app_name = "api"

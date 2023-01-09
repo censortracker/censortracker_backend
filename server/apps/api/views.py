@@ -42,3 +42,9 @@ class CountryListView(generics.ListAPIView):
     serializer_class = CountrySerializer
     permission_classes = [AllowAny]
     queryset = Country.objects.filter(active=True)
+
+
+class ProxyConfigListView(generics.ListAPIView):
+    serializer_class = ProxyConfigSerializer
+    permission_classes = [AllowAny]
+    queryset = ProxyConfig.objects.all()
