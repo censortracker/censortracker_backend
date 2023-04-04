@@ -203,3 +203,4 @@ app.py
 db.json
 server/*/*/fixtures/
 .google-credentials.json
+local.py
