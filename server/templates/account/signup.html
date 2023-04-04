@@ -5,40 +5,35 @@
 
 {% block head_title %}{% trans "Sign In" %}{% endblock %}
 
-{% block sidebar %}
-  {% include 'core/include/default_sidebar.html' %}
-{% endblock %}
-
 {% block main %}
   <main class="max-h-screen overflow-auto">
     <div class="min-h-screen bg-gradient-to-r from-yellow-100 to-pink-200 py-6 flex flex-col justify-center sm:py-12">
-      <div class="relative py-3 sm:max-w-xl sm:mx-auto">
-        <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+      <div class="relative py-3 sm:max-w-xl sm:mx-auto w-full">
+        <div class="relative px-6 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
           <form class="max-w-md mx-auto login" id="signup_form" method="POST" action="{% url 'account_signup' %}">
             {% csrf_token %}
             <div>
-              <h1 class="text-2xl font-semibold">{% trans "Sign Up" %}</h1>
+              <h1 class="text-2xl font-semibold">
+                {% trans "Sign Up" %}</h1>
             </div>
             <div class="divide-y divide-gray-200">
               <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
                 <div class="relative">
-                  <input id="id_email"
-                         required
+                  <input required
                          type="email"
                          name="email"
                          placeholder="{% trans 'Email' %}"
                     {% if form.email.value %}
                          value="{{ form.email.value }}"
                     {% endif %}
-                         class="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"/>
+                         class="mt-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"/>
                   {% if form.email.errors %}
                     <span class="text-sm text-red-600">{{ form.email.errors.0|escape }}</span>
                   {% endif %}
                 </div>
 
                 <div class="relative mt-4">
-                  <input id="id_password1"
-                         type="password"
+                  <input type="password"
                          name="password1"
                          placeholder="{% trans 'Password' %}"
                          autocomplete="new-password"
@@ -46,15 +41,14 @@
                     {% if form.password1.value %}
                          value="{{ form.password1.value }}"
                     {% endif %}
-                         class="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"/>
+                         class="mt-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"/>
                   {% if form.password1.errors %}
                     <span class="text-sm text-red-600">{{ form.password1.errors.0|escape }}</span>
                   {% endif %}
                 </div>
 
                 <div class="relative mt-4">
-                  <input id="id_password2"
-                         type="password"
+                  <input type="password"
                          name="password2"
                          autocomplete="new-password"
                          placeholder="{% trans 'Password (again)' %}"
@@ -62,10 +56,17 @@
                     {% if form.password2.value %}
                          value="{{ form.password2.value }}"
                     {% endif %}
-                         class="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"/>
+                         class="mt-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"/>
                   {% if form.password2.errors %}
                     <span class="text-sm text-red-600">{{ form.password2.errors.0|escape }}</span>
                   {% endif %}
+                </div>
+
+                <div class="flex items-center justify-between">
+                  <a href="{% url 'account_login' %}"
+                     class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">
+                    {% trans 'Already have an account?' %}
+                  </a>
                 </div>
 
 
