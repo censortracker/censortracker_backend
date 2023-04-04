@@ -1,0 +1,55 @@
+{% load i18n %}
+
+<head>
+  <meta charset="UTF-8">
+</head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+
+<table style="font-size:1px;line-height: normal;width: 100%; background-color:#fff">
+  <tbody>
+  <tr>
+    <td align="center" bgcolor="#ffffff" style="color: #1D1D1B; font-family: 'Inter', sans-serif;">
+      <table
+        style="margin:0 auto;min-width:320px; max-width:640px; background-color:#FAFAFA; border: 1px solid #F4F4F4; border-radius: 10px;"
+        width="100%">
+        <tbody>
+        <tr>
+          <td align="center" style="background-color: #FFEDBF; border-radius:10px 10px 0 0">
+            <table style="max-width: 640px; width: 100%; min-width:320px">
+              <tbody>
+              <tr>
+                <td align="left" style="padding: 45px 50px">
+                  <div style="font-weight: 900; font-size: 53px; line-height: 62px">
+                    {% block title %}{% endblock %}
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <table style="max-width: 640px; width: 100%; min-width:320px">
+              <tbody>
+              <tr>
+                <td align="left" style="padding: 50px 50px; font-weight: 400; font-size: 20px; line-height: 32px">
+                  {% block content %}
+                  {% endblock %}
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+        <tr style="height:30px">
+          <td></td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+  </tbody>
+</table>

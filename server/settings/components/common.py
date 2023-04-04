@@ -12,12 +12,12 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 
-from server.settings.components import BASE_DIR, env, secret
+from server.settings.components import BASE_DIR, config
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
-SECRET_KEY = secret("django.key")
+SECRET_KEY = config("DJANGO_SECRET_KEY")
 
 # Application definition:
 
@@ -32,17 +32,22 @@ INSTALLED_APPS = (
     "django.contrib.gis.geoip2",
     # django-admin:
     "django.contrib.admin",
-    "django.contrib.admindocs",
+    # Authentication
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
     # CORS:
     "corsheaders",
     # REST API:
     "rest_framework",
+    "rest_framework.authtoken",
     "rest_framework_api_key",
     # Pretty JSON Field
     "django_json_widget",
     # Your apps go here:
-    "server.apps.core",
     "server.apps.api",
+    "server.apps.core",
+    "server.apps.users",
 )
 
 MIDDLEWARE = (
@@ -70,15 +75,45 @@ DATABASES = {
         # Choices are: postgresql, mysql, sqlite3, oracle
         "ENGINE": "django.db.backends.postgresql",
         # Database name or filepath if using 'sqlite3':
-        "NAME": env("DB_NAME"),
+        "NAME": config("DB_NAME"),
         # You don't need these settings if using 'sqlite3':
-        "USER": env("DB_USER"),
-        "PASSWORD": secret("pg.%s.passwd" % env("DJANGO_ENV")),
-        "HOST": env("DB_HOST"),
-        "PORT": env("DB_PORT", default=5432, cast=int),
-        "CONN_MAX_AGE": env("CONN_MAX_AGE", cast=int, default=60),
+        "USER": config("DB_USER"),
+        "PASSWORD": config("DB_PASSWORD"),
+        "HOST": config("DB_HOST"),
+        "PORT": config("DB_PORT", default=5432, cast=int),
+        "CONN_MAX_AGE": config("CONN_MAX_AGE", cast=int, default=60),
     },
 }
+
+EMAIL_PORT = 587
+EMAIL_HOST = "smtp.eu1.unione.io"
+EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = "no-reply@vpnpay.io"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+
+# Password validation
+# https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    },
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
@@ -104,12 +139,10 @@ TEMPLATES = [
         "APP_DIRS": True,
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            # Contains plain text templates, like `robots.txt`:
             BASE_DIR.joinpath("server", "templates"),
         ],
         "OPTIONS": {
             "context_processors": [
-                # default template context processors
                 "django.contrib.auth.context_processors.auth",
                 "django.template.context_processors.debug",
                 "django.contrib.messages.context_processors.messages",
@@ -128,10 +161,15 @@ STATICFILES_FINDERS = (
 
 STATICFILES_DIRS = [
     BASE_DIR.joinpath("server", "static"),
+    BASE_DIR.joinpath("server", "apps", "core", "static"),
 ]
 
 MEDIA_URL = "/uploads/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "public", "uploads")
+
+AUTH_USER_MODEL = "users.User"
+
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
@@ -147,22 +185,31 @@ REST_FRAMEWORK = {
     "DEFAULT_THROTTLE_RATES": {"anon": "150/day"},
 }
 
-SLACK_WEBHOOK = secret("slack.dsn", default="")
-
 GEOIP_PATH = os.path.join(BASE_DIR, "server", "geoip")
 GEOIP_COUNTRY = "GeoLite2-Country.mmdb"
 GEOIP_CITY = "GeoLite2-City.mmdb"
 
-GITHUB_ACCESS_TOKEN = secret("github.access.token")
-
-DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
+GITHUB_ACCESS_TOKEN = config("GITHUB_ACCESS_TOKEN")
+AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
 
 STORAGE_BUCKET_NAME = "censortracker"
-
-AWS_ACCESS_KEY_ID = secret("aws.access.key.id")
-AWS_SECRET_ACCESS_KEY = secret("aws.secret.access.key")
-
-# DO NOT MODIFY THIS FILE NAME.
 STORAGE_OBJECT_FILENAME = "config.json"
 
+# Allauth settings
+LOGIN_REDIRECT_URL = "/"
+ACCOUNT_SIGNUP_REDIRECT_URL = "/"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_LOGOUT_ON_GET = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
+
+# CORS
 CORS_ALLOW_ALL_ORIGINS = True
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")

@@ -1,0 +1,67 @@
+{% load i18n %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+  <title>{% block head_title %}VPNPay{% endblock %}</title>
+  <meta property="og:title" content="VPNPay" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://lantern.vpnpay.io/" />
+  <meta property="og:description" content="{% trans 'Service to pay for VPN using cards issued by Russian banks.' %}" />
+  <meta name="description" content="{% trans 'Service to pay for VPN using cards issued by Russian banks.' %}">
+  <meta name="keywords" content="{% trans 'vpn, lantern, russian card, pay, freekassa, payments, mir, sbp, crypto, bitcoin, yoomoney, qiwi, visa' %}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'core/css/tailwind.min.css' %}">
+  <link rel="stylesheet" href="{% static 'core/css/flowbite.min.css' %}">
+  <link rel="stylesheet" href="{% static 'core/css/style.css' %}">
+  <link rel="icon" type="image/x-icon" href="{% static 'favicon/favicon.ico' %}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+  <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
+  <link rel="mask-icon" href="{% static 'favicon/safari-pinned-tab.svg' %}" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+  {% block css_styles %}{% endblock %}
+</head>
+
+<body class="relative bg-gradient-to-r from-yellow-100 to-pink-200 overflow-hidden max-h-screen">
+<nav class="bg-white border-gray-200 px-6 sm:px-4 py-2.5 rounded">
+  <div class="flex flex-wrap items-center justify-between mx-auto ml-5 max-w-5xl">
+    <a href="" class="flex">
+      <img src="{% static 'core/images/logo-beta.svg' %}" width="130"/>
+    </a>
+    <div class="flex items-center md:order-2">
+      <form action="" method="POST">
+        {% csrf_token %}
+        {% get_available_languages as LANGUAGES %}
+        {% get_language_info_list for LANGUAGES as languages %}
+        {% for language in languages %}
+          <button type="submit" name="language" value="{{ language.code }}"
+                  class="inline-flex items-center justify-center px-4 py-2 text-sm text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100">
+            {{ language.name_local }}
+          </button>
+        {% endfor %}
+      </form>
+    </div>
+    <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+         id="mobile-menu-language-select">
+      <ul
+        class="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white">
+      </ul>
+    </div>
+  </div>
+</nav>
+
+{% block main %}
+{% endblock %}
+
+{% block js_scripts %}
+{% endblock %}
+</body>
+

@@ -17,10 +17,13 @@ from django.contrib import admin
 from django.urls import include, path, re_path
 
 from server.apps.api import urls as api_urls
+from server.apps.core import urls as core_urls
 
 urlpatterns = [
     path("wormhole/", admin.site.urls),
+    path("", include(core_urls, namespace="core")),
     path("api/", include(api_urls, namespace="api")),
+    path("accounts/", include("allauth.urls")),
 ]
 
 if settings.DEBUG:  # pragma: no cover

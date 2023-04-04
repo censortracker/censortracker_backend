@@ -1,0 +1,89 @@
+{% extends "core/base/base.html" %}
+
+{% load i18n %}
+{% load account %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block sidebar %}
+  {% include 'core/include/default_sidebar.html' %}
+{% endblock %}
+
+{% block main %}
+  <main class="max-h-screen overflow-auto">
+    <div class="min-h-screen bg-gradient-to-r from-yellow-100 to-pink-200 py-6 flex flex-col justify-center sm:py-12">
+      <div class="relative py-3 sm:max-w-xl sm:mx-auto">
+        <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+          <form class="max-w-md mx-auto login" id="signup_form" method="POST" action="{% url 'account_signup' %}">
+            {% csrf_token %}
+            <div>
+              <h1 class="text-2xl font-semibold">{% trans "Sign Up" %}</h1>
+            </div>
+            <div class="divide-y divide-gray-200">
+              <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+                <div class="relative">
+                  <input id="id_email"
+                         required
+                         type="email"
+                         name="email"
+                         placeholder="{% trans 'Email' %}"
+                    {% if form.email.value %}
+                         value="{{ form.email.value }}"
+                    {% endif %}
+                         class="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"/>
+                  {% if form.email.errors %}
+                    <span class="text-sm text-red-600">{{ form.email.errors.0|escape }}</span>
+                  {% endif %}
+                </div>
+
+                <div class="relative mt-4">
+                  <input id="id_password1"
+                         type="password"
+                         name="password1"
+                         placeholder="{% trans 'Password' %}"
+                         autocomplete="new-password"
+                         required
+                    {% if form.password1.value %}
+                         value="{{ form.password1.value }}"
+                    {% endif %}
+                         class="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"/>
+                  {% if form.password1.errors %}
+                    <span class="text-sm text-red-600">{{ form.password1.errors.0|escape }}</span>
+                  {% endif %}
+                </div>
+
+                <div class="relative mt-4">
+                  <input id="id_password2"
+                         type="password"
+                         name="password2"
+                         autocomplete="new-password"
+                         placeholder="{% trans 'Password (again)' %}"
+                         required
+                    {% if form.password2.value %}
+                         value="{{ form.password2.value }}"
+                    {% endif %}
+                         class="peer h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"/>
+                  {% if form.password2.errors %}
+                    <span class="text-sm text-red-600">{{ form.password2.errors.0|escape }}</span>
+                  {% endif %}
+                </div>
+
+
+                <div class="relative">
+                  <button class="bg-gray-800 text-white rounded-md px-5 py-1" type="submit">
+                    {% trans 'Sign Up' %}
+                  </button>
+                </div>
+
+                {% if redirect_field_value %}
+                  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                {% endif %}
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+{% endblock %}

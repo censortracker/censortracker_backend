@@ -1,0 +1,2 @@
+{% load i18n %}
+{% autoescape off %}{% trans "Account Already Exists" %}{% endautoescape %}

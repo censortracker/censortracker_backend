@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from django.urls import path  # noqa
+from django.urls import path
 
-urlpatterns = []
+from .views import IndexTemplate
 
-app_name = "api"
+urlpatterns = [path("", IndexTemplate.as_view(), name="index")]
+
+app_name = "core"

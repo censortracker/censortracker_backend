@@ -1,3 +1,5 @@
-# -*- coding: utf-8 -*-
+from django.views import generic
 
-from rest_framework import generics  # noqa
+
+class IndexTemplate(generic.TemplateView):
+    template_name = "core/index.html"
