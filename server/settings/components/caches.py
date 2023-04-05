@@ -6,12 +6,12 @@ Caching settings module
 
 from server.settings.components import config
 
-REDIS_HOST = config("REDIS_HOST")
+REDIS_URL = config("REDIS_URL")
 
 CACHES = {
     "default": {
         "BACKEND": "redis_cache.RedisCache",
-        "LOCATION": f"{REDIS_HOST}:6379",
+        "LOCATION": REDIS_URL,
         "OPTIONS": {
             "DB": 1,
             "PARSER_CLASS": "redis.connection.HiredisParser",
@@ -24,7 +24,7 @@ CACHES = {
     },
     "api": {
         "BACKEND": "redis_cache.RedisCache",
-        "LOCATION": f"{REDIS_HOST}:6379",
+        "LOCATION": REDIS_URL,
         "OPTIONS": {
             "DB": 1,
             "PARSER_CLASS": "redis.connection.HiredisParser",

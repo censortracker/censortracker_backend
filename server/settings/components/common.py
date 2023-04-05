@@ -86,11 +86,11 @@ DATABASES = {
 }
 
 EMAIL_PORT = 587
-EMAIL_HOST = "smtp.eu1.unione.io"
+EMAIL_HOST = config("EMAIL_HOST")
 EMAIL_HOST_USER = config("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = "no-reply@vpnpay.io"
+DEFAULT_FROM_EMAIL = "no-reply@censortracker.org"
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 AUTHENTICATION_BACKENDS = [
@@ -161,7 +161,6 @@ STATICFILES_FINDERS = (
 
 STATICFILES_DIRS = [
     BASE_DIR.joinpath("server", "static"),
-    BASE_DIR.joinpath("server", "apps", "core", "static"),
 ]
 
 MEDIA_URL = "/uploads/"
@@ -175,6 +174,9 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework_api_key.permissions.HasAPIKey",
     ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "server.apps.users.authentication.TokenAuthentication",
+    ],
     "DEFAULT_RENDERER_CLASSES": (
         "djangorestframework_camel_case.render.CamelCaseJSONRenderer",
     ),
@@ -182,7 +184,9 @@ REST_FRAMEWORK = {
         "djangorestframework_camel_case.parser.CamelCaseJSONParser",
     ),
     "DEFAULT_THROTTLE_CLASSES": ["rest_framework.throttling.AnonRateThrottle"],
-    "DEFAULT_THROTTLE_RATES": {"anon": "150/day"},
+    "DEFAULT_THROTTLE_RATES": {
+        "anon": "150/day",
+    },
 }
 
 GEOIP_PATH = os.path.join(BASE_DIR, "server", "geoip")

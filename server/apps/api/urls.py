@@ -27,6 +27,7 @@ urlpatterns = [
         views.ProxyConfigListView.as_view(),
         name="proxy_list",
     ),
+    path("authenticate/", views.UserAPIView.as_view(), name="authenticate"),
 ]
 
 app_name = "api"

@@ -5,6 +5,7 @@ from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+from rest_framework.authtoken.models import Token
 
 from .managers import UserManager
 
@@ -41,3 +42,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = "email"
+
+    def get_auth_token(self):
+        try:
+            token = Token.objects.get(user=self)
+        except Token.DoesNotExist:
+            token = Token.objects.create(user=self)
+        return token
