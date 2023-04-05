@@ -6,13 +6,13 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, user-scalable=no">
-  <title>{% block head_title %}VPNPay{% endblock %}</title>
-  <meta property="og:title" content="VPNPay" />
+  <title>Censor Tracker</title>
+  <meta property="og:title" content="Censor Tracker" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://lantern.vpnpay.io/" />
-  <meta property="og:description" content="{% trans 'Service to pay for VPN using cards issued by Russian banks.' %}" />
-  <meta name="description" content="{% trans 'Service to pay for VPN using cards issued by Russian banks.' %}">
-  <meta name="keywords" content="{% trans 'vpn, lantern, russian card, pay, freekassa, payments, mir, sbp, crypto, bitcoin, yoomoney, qiwi, visa' %}" />
+  <meta property="og:description" content="" />
+  <meta name="description" content="">
+  <meta name="keywords" content="" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -37,7 +37,7 @@
       <img src="https://censortracker.org/static/img/quokka_nav.svg" width="35"/>
     </a>
     <div class="flex items-center md:order-2">
-      <form action="" method="POST">
+      <form action="{% url "set_language" %}" method="POST">
         {% csrf_token %}
         {% get_available_languages as LANGUAGES %}
         {% get_language_info_list for LANGUAGES as languages %}

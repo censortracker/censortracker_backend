@@ -170,35 +170,9 @@ AUTH_USER_MODEL = "users.User"
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
-REST_FRAMEWORK = {
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework_api_key.permissions.HasAPIKey",
-    ],
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        "server.apps.users.authentication.TokenAuthentication",
-    ],
-    "DEFAULT_RENDERER_CLASSES": (
-        "djangorestframework_camel_case.render.CamelCaseJSONRenderer",
-    ),
-    "DEFAULT_PARSER_CLASSES": (
-        "djangorestframework_camel_case.parser.CamelCaseJSONParser",
-    ),
-    "DEFAULT_THROTTLE_CLASSES": ["rest_framework.throttling.AnonRateThrottle"],
-    "DEFAULT_THROTTLE_RATES": {
-        "anon": "150/day",
-    },
-}
-
 GEOIP_PATH = os.path.join(BASE_DIR, "server", "geoip")
 GEOIP_COUNTRY = "GeoLite2-Country.mmdb"
 GEOIP_CITY = "GeoLite2-City.mmdb"
-
-GITHUB_ACCESS_TOKEN = config("GITHUB_ACCESS_TOKEN")
-AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
-
-STORAGE_BUCKET_NAME = "censortracker"
-STORAGE_OBJECT_FILENAME = "config.json"
 
 # Allauth settings
 LOGIN_REDIRECT_URL = "/"
@@ -216,4 +190,34 @@ ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
 # CORS
 CORS_ALLOW_ALL_ORIGINS = True
 
+# Security
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+# Django Rest Framework
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework_api_key.permissions.HasAPIKey",
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "server.apps.users.authentication.BearerTokenAuthentication",
+    ],
+    "DEFAULT_RENDERER_CLASSES": (
+        "djangorestframework_camel_case.render.CamelCaseJSONRenderer",
+    ),
+    "DEFAULT_PARSER_CLASSES": (
+        "djangorestframework_camel_case.parser.CamelCaseJSONParser",
+    ),
+    "DEFAULT_THROTTLE_CLASSES": ["rest_framework.throttling.AnonRateThrottle"],
+    "DEFAULT_THROTTLE_RATES": {
+        "anon": "150/day",
+    },
+}
+
+# AWS S3 and GCS.
+STORAGE_BUCKET_NAME = "censortracker"
+STORAGE_OBJECT_FILENAME = "config.json"
+
+# Third-party APIs
+GITHUB_ACCESS_TOKEN = config("GITHUB_ACCESS_TOKEN")
+AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
