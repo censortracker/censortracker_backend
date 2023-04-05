@@ -1,0 +1,414 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-04-05 09:43+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: server/apps/core/models.py:12 server/apps/core/models.py:152
+msgid "Name"
+msgstr "Название"
+
+#: server/apps/core/models.py:19
+msgid "Country code"
+msgstr "Код страны"
+
+#: server/apps/core/models.py:26
+msgid "Alpha 2"
+msgstr ""
+
+#: server/apps/core/models.py:30
+msgid "Alpha 3"
+msgstr ""
+
+#: server/apps/core/models.py:32
+msgid "Locale code"
+msgstr "Код локали"
+
+#: server/apps/core/models.py:34 server/apps/core/models.py:110
+msgid "Active"
+msgstr "Активный"
+
+#: server/apps/core/models.py:37
+msgid "Country"
+msgstr "Страна"
+
+#: server/apps/core/models.py:38
+msgid "Countries"
+msgstr "Страны"
+
+#: server/apps/core/models.py:52
+msgid "Registry URL"
+msgstr "URL реестра"
+
+#: server/apps/core/models.py:55
+msgid "Custom Registry URL"
+msgstr "Кастомный URL реестра"
+
+#: server/apps/core/models.py:58
+msgid "Specifics"
+msgstr "Специальные атрибуты"
+
+#: server/apps/core/models.py:60
+msgid "Proxy URL"
+msgstr ""
+
+#: server/apps/core/models.py:61
+msgid "Ignore URL"
+msgstr ""
+
+#: server/apps/core/models.py:64
+msgid "Config"
+msgstr "Конфиг"
+
+#: server/apps/core/models.py:65
+msgid "Configs"
+msgstr "Конфиги"
+
+#: server/apps/core/models.py:73
+msgid "Config name"
+msgstr "Название конфига"
+
+#: server/apps/core/models.py:80
+msgid "Proxy server"
+msgstr ""
+
+#: server/apps/core/models.py:87
+msgid "Proxy port"
+msgstr ""
+
+#: server/apps/core/models.py:90
+msgid "Proxy ping host"
+msgstr ""
+
+#: server/apps/core/models.py:96
+msgid "Proxy ping port"
+msgstr ""
+
+#: server/apps/core/models.py:103
+msgid "Weight"
+msgstr "Вес"
+
+#: server/apps/core/models.py:120
+msgid "Proxy config"
+msgstr ""
+
+#: server/apps/core/models.py:121
+msgid "Proxy Configs"
+msgstr ""
+
+#: server/apps/core/models.py:140
+msgid "Country Registry"
+msgstr ""
+
+#: server/apps/core/models.py:141
+msgid "Country Registries"
+msgstr ""
+
+#: server/apps/core/models.py:164 server/apps/core/models.py:165
+msgid "Ignore"
+msgstr ""
+
+#: server/apps/core/templates/core/index.html:20
+msgid "Auth Token"
+msgstr ""
+
+#: server/apps/core/templates/core/index.html:27
+msgid "Activate it on the website, a copy has been sent to your mail"
+msgstr ""
+
+#: server/apps/users/models.py:22
+msgid "staff status"
+msgstr ""
+
+#: server/apps/users/models.py:24
+msgid "Designates whether the user can log into this admin site."
+msgstr ""
+
+#: server/apps/users/models.py:27
+msgid "active"
+msgstr ""
+
+#: server/apps/users/models.py:30
+msgid ""
+"Designates whether this user should be treated as active. Unselect this "
+"instead of deleting accounts."
+msgstr ""
+
+#: server/apps/users/models.py:36
+msgid "date joined"
+msgstr ""
+
+#: server/templates/account/email/account_already_exists_message.html:6
+msgid "Account Already Exist"
+msgstr ""
+
+#: server/templates/account/email/account_already_exists_message.html:11
+msgid ""
+"You are receiving this e-mail because you or someone else tried to signup "
+"for an account using e-mail address:"
+msgstr ""
+
+#: server/templates/account/email/account_already_exists_message.html:16
+msgid ""
+"However, an account using that e-mail address already exists. In case you "
+"have forgotten about this, please use the password forgotten procedure to "
+"recover your account:"
+msgstr ""
+
+#: server/templates/account/email/account_already_exists_subject.txt:2
+msgid "Account Already Exists"
+msgstr ""
+
+#: server/templates/account/email/email_confirmation_message.html:5
+msgid "Confirm an email address"
+msgstr ""
+
+#: server/templates/account/email/email_confirmation_message.html:9
+#, python-format
+msgid "Hello from %(site_name)s!"
+msgstr ""
+
+#: server/templates/account/email/email_confirmation_message.html:12
+msgid ""
+"You're receiving this e-mail because someone has given your e-mail address "
+"to register an account on our website."
+msgstr ""
+
+#: server/templates/account/email/email_confirmation_message.html:15
+msgid "To confirm this is correct, go to:"
+msgstr ""
+
+#: server/templates/account/email/email_confirmation_subject.txt:2
+msgid "Please Confirm Your E-mail Address"
+msgstr ""
+
+#: server/templates/account/email/password_reset_key_message.html:5
+#: server/templates/account/password_change.html:6
+#: server/templates/account/password_reset.html:6
+#: server/templates/account/password_reset.html:15
+#: server/templates/account/password_reset_done.html:6
+#: server/templates/account/password_reset_done.html:17
+#: server/templates/account/password_reset_from_key.html:6
+msgid "Password Reset"
+msgstr ""
+
+#: server/templates/account/email/password_reset_key_message.html:9
+msgid ""
+"You're receiving this e-mail because you or someone else has requested a "
+"password for your user account."
+msgstr ""
+
+#: server/templates/account/email/password_reset_key_message.html:12
+msgid "It can be safely ignored if you did not request a password reset."
+msgstr ""
+
+#: server/templates/account/email/password_reset_key_message.html:15
+msgid "Click the link below to reset your password:"
+msgstr ""
+
+#: server/templates/account/email/password_reset_key_subject.txt:2
+#: server/templates/account/email/unknown_account_subject.txt:2
+msgid "Password Reset E-mail"
+msgstr ""
+
+#: server/templates/account/email/unknown_account_message.html:5
+msgid "Account does not exist"
+msgstr ""
+
+#: server/templates/account/email/unknown_account_message.html:9
+msgid ""
+"You are receiving this e-mail because you or someone else has requested a "
+"password for your user account."
+msgstr ""
+
+#: server/templates/account/email/unknown_account_message.html:10
+msgid ""
+"However, we do not have any record of a user with email {{ email }} in our "
+"database."
+msgstr ""
+
+#: server/templates/account/email/unknown_account_message.html:13
+msgid ""
+"This mail can be safely ignored if you did not request a password reset."
+msgstr ""
+
+#: server/templates/account/email/unknown_account_message.html:16
+msgid "If it was you, you can sign up for an account using the link below."
+msgstr ""
+
+#: server/templates/account/email_confirm.html:7
+#: server/templates/account/email_confirm.html:24
+msgid "Confirm E-mail Address"
+msgstr ""
+
+#: server/templates/account/email_confirm.html:30
+#, python-format
+msgid "Please confirm that <b>%(email)s</b> is your e-mail address."
+msgstr ""
+
+#: server/templates/account/email_confirm.html:39
+msgid "Confirm"
+msgstr ""
+
+#: server/templates/account/email_confirm.html:44
+#, python-format
+msgid ""
+"This e-mail confirmation link expired or is invalid. Please\n"
+"                      <a href=\"%(email_url)s\">issue a new e-mail "
+"confirmation request</a>."
+msgstr ""
+
+#: server/templates/account/login.html:6 server/templates/account/login.html:16
+#: server/templates/account/login.html:59
+#: server/templates/account/signup.html:6
+msgid "Sign In"
+msgstr ""
+
+#: server/templates/account/login.html:23
+#: server/templates/account/password_reset.html:25
+#: server/templates/account/signup.html:25
+msgid "Email"
+msgstr ""
+
+#: server/templates/account/login.html:26
+msgid "Your email"
+msgstr ""
+
+#: server/templates/account/login.html:34
+#: server/templates/account/signup.html:38
+msgid "Password"
+msgstr ""
+
+#: server/templates/account/login.html:36
+msgid "Your password"
+msgstr ""
+
+#: server/templates/account/login.html:53
+msgid "Forgot Password?"
+msgstr ""
+
+#: server/templates/account/password_change.html:16
+#: server/templates/account/password_change.html:62
+#: server/templates/account/password_reset_from_key.html:15
+#: server/templates/account/password_reset_from_key.html:27
+#: server/templates/account/password_reset_from_key.html:53
+msgid "Change Password"
+msgstr ""
+
+#: server/templates/account/password_change.html:24
+msgid "Current Password"
+msgstr ""
+
+#: server/templates/account/password_change.html:37
+#: server/templates/account/password_reset_from_key.html:35
+msgid "New Password"
+msgstr ""
+
+#: server/templates/account/password_change.html:52
+#: server/templates/account/password_reset_from_key.html:46
+msgid "New Password (again)"
+msgstr ""
+
+#: server/templates/account/password_reset.html:18
+msgid ""
+"Enter your e-mail address below, and we'll send you an e-mail allowing you "
+"to reset it."
+msgstr ""
+
+#: server/templates/account/password_reset.html:30
+msgid "Reset My Password"
+msgstr ""
+
+#: server/templates/account/password_reset_done.html:20
+msgid ""
+"We have e-mailed you. If you have not received it please check your spam\n"
+"                    folder. Otherwise, contact us if you do not receive it "
+"in a few minutes."
+msgstr ""
+
+#: server/templates/account/password_reset_from_key.html:19
+#, python-format
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.\n"
+"                  Please request a <a href=\"%(passwd_reset_url)s\">new "
+"password reset</a>."
+msgstr ""
+
+#: server/templates/account/password_reset_from_key_done.html:6
+#: server/templates/account/password_reset_from_key_done.html:17
+msgid "Change Reset"
+msgstr ""
+
+#: server/templates/account/password_reset_from_key_done.html:20
+msgid "Your password is now changed."
+msgstr ""
+
+#: server/templates/account/signup.html:17
+#: server/templates/account/signup.html:75
+msgid "Sign Up"
+msgstr ""
+
+#: server/templates/account/signup.html:54
+msgid "Password (again)"
+msgstr ""
+
+#: server/templates/account/signup.html:68
+msgid "Already have an account?"
+msgstr ""
+
+#: server/templates/account/verification_sent.html:6
+#: server/templates/account/verification_sent.html:17
+#: server/templates/account/verified_email_required.html:7
+#: server/templates/account/verified_email_required.html:19
+msgid "Verify Your E-mail Address"
+msgstr ""
+
+#: server/templates/account/verification_sent.html:20
+msgid ""
+"We have sent an e-mail to you for verification. Follow the link provided to "
+"finalize the signup process. If you do not see the verification e-mail in "
+"your main inbox, check your spam folder. Please contact us if you do not "
+"receive the verification e-mail within a few minutes."
+msgstr ""
+
+#: server/templates/account/verified_email_required.html:22
+msgid ""
+"This part of the site requires us to verify that you are who you claim to "
+"be. For\n"
+"                    this purpose, we require that you verify ownership of "
+"your e-mail address. "
+msgstr ""
+
+#: server/templates/account/verified_email_required.html:25
+msgid ""
+"We have sent an e-mail to you for verification. Please click on the link "
+"inside\n"
+"                    that e-mail. If you do not see the verification e-mail "
+"in your main inbox, check your spam folder.\n"
+"                    Otherwise, contact us if you do not receive it within a "
+"few minutes."
+msgstr ""
+
+#: server/templates/account/verified_email_required.html:28
+#, python-format
+msgid ""
+"<strong>Note:</strong> you can still\n"
+"                    <a href=\"%(email_url)s\">change your e-mail address</a>."
+msgstr ""
