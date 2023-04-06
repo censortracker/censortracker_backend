@@ -1,7 +1,7 @@
 import os
 from pathlib import Path, PurePath
 
-BASE_DIR = Path(__file__).parent.parent.parent.parent
+BASE_DIR = Path(__file__).parent.parent.parent.parent.resolve()
 
 
 def err(msg, fatal=True):
@@ -45,7 +45,7 @@ def _load_file(file_name, fatal=True):
     """
     Loader for .env files
     """
-    file_path = PurePath("%s/%s" % (BASE_DIR.parent, file_name))
+    file_path = PurePath("%s/%s" % (BASE_DIR.parent.parent, file_name))
     if os.path.isfile(file_path):
         data = {}
         with open(file_path, "r", encoding='UTF-8') as envfile:
