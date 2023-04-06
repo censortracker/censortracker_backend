@@ -14,14 +14,23 @@ files serving technique in development.
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.conf.urls.i18n import i18n_patterns
 from django.urls import include, path, re_path
 
 from server.apps.api import urls as api_urls
+from server.apps.core import urls as core_urls
 
 urlpatterns = [
     path("wormhole/", admin.site.urls),
     path("api/", include(api_urls, namespace="api")),
+    path("i18n/", include("django.conf.urls.i18n")),
 ]
+
+urlpatterns += i18n_patterns(
+    path("accounts/", include("allauth.urls")),
+    path("", include(core_urls, namespace="core")),
+)
+
 
 if settings.DEBUG:  # pragma: no cover
     import debug_toolbar

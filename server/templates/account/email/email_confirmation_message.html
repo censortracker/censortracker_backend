@@ -1,0 +1,22 @@
+{% extends "account/email/email_layout.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans 'Confirm an email address' %}{% endblock %}
+
+{% block content %}
+  <div style="margin-bottom: 15px">
+    {% blocktrans with site_name=current_site.name %}Hello from {{ site_name }}!{% endblocktrans %}
+  </div>
+  <div style="margin-bottom: 15px">
+    {% trans "You're receiving this e-mail because someone has given your e-mail address to register an account on our website." %}
+  </div>
+  <div style="margin-bottom: 15px">
+    {% trans 'To confirm this is correct, go to:' %}
+  </div>
+  <div style="font-weight: 700; margin-bottom: 20px">
+    <a href="{{ activate_url }}" target="_blank">
+      {{ activate_url }}
+    </a>
+  </div>
+{% endblock %}

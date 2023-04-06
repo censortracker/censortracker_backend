@@ -1,0 +1,23 @@
+{% extends "account/email/email_layout.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans 'Account does not exist' %}{% endblock %}
+
+{% block content %}
+  <div style="margin-bottom: 15px">
+    {% trans 'You are receiving this e-mail because you or someone else has requested a password for your user account.' %}
+    {% trans 'However, we do not have any record of a user with email {{ email }} in our database.' %}
+  </div>
+  <div style="margin-bottom: 15px">
+    {% trans 'This mail can be safely ignored if you did not request a password reset.' %}
+  </div>
+  <div style="margin-bottom: 15px">
+    {% trans 'If it was you, you can sign up for an account using the link below.' %}
+  </div>
+  <div style="font-weight: 700; margin-bottom: 20px">
+    <a href="{{ signup_url }}" target="_blank">
+      {{ signup_url }}
+    </a>
+  </div>
+{% endblock %}

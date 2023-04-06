@@ -1,0 +1,73 @@
+{% extends "core/base/base.html" %}
+
+{% load i18n %}
+{% load account %}
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block main %}
+  <main class="max-h-screen overflow-auto">
+    <div class="min-h-screen bg-gradient-to-r from-yellow-100 to-pink-200 py-6 flex flex-col justify-center sm:py-12">
+      <div class="relative py-3 sm:max-w-xl sm:mx-auto w-full">
+        <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+          <form class="max-w-md mx-auto login" method="POST" action="{% url 'account_login' %}">
+            {% csrf_token %}
+            <div>
+              <h1 class="text-2xl font-semibold">{% trans "Sign In" %}</h1>
+            </div>
+            <div class="divide-y divide-gray-200">
+              <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+
+                <div class="relative">
+                  <label for="small-input" class="text-sm font-bold mt-6">
+                    {% trans 'Email' %}
+                  </label>
+                  <input type="email"
+                         placeholder="{% trans 'Your email' %}"
+                         name="login"
+                         required
+                         class="mt-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                </div>
+
+                <div class="relative mt-4">
+                  <label for="small-input" class="text-sm font-bold mt-6">
+                    {% trans 'Password' %}
+                  </label>
+                  <input placeholder="{% trans 'Your password' %}"
+                         type="password"
+                         name="password"
+                         required
+                         class="mt-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                </div>
+                {% if form.non_field_errors %}
+                  <div class="pt-3">
+                      <span class="text-sm text-red-600 py-2">
+                        {{ form.non_field_errors|escape }}
+                      </span>
+                  </div>
+                {% endif %}
+
+                <div class="flex items-center justify-between">
+                  <a href="{% url 'account_reset_password' %}"
+                     class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">
+                    {% trans 'Forgot Password?' %}
+                  </a>
+                </div>
+
+                <div class="relative">
+                  <button class="bg-gray-800 text-white rounded-md px-5 py-1" type="submit">
+                    {% trans 'Sign In' %}
+                  </button>
+                </div>
+
+                {% if redirect_field_value %}
+                  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                {% endif %}
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+{% endblock %}

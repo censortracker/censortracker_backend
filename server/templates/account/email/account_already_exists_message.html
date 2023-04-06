@@ -1,0 +1,23 @@
+{% extends "account/email/email_layout.html" %}
+
+{% load i18n %}
+
+{% block title %}
+  {% trans 'Account Already Exist' %}
+{% endblock %}
+
+{% block content %}
+  <div style="margin-bottom: 15px">
+    {% trans 'You are receiving this e-mail because you or someone else tried to signup for an account using e-mail address:' %}
+    <br>
+    {{ email }}
+  </div>
+  <div style="margin-bottom: 15px">
+    {% blocktrans %}However, an account using that e-mail address already exists. In case you have forgotten about this, please use the password forgotten procedure to recover your account:{% endblocktrans %}
+  </div>
+  <div style="font-weight: 700; margin-bottom: 20px">
+    <a href="{{ activate_url }}" target="_blank">
+      {{ password_reset_url }}
+    </a>
+  </div>
+{% endblock %}

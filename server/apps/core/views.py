@@ -1,3 +1,6 @@
-# -*- coding: utf-8 -*-
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import generic
 
-from rest_framework import generics  # noqa
+
+class IndexTemplate(LoginRequiredMixin, generic.TemplateView):
+    template_name = "core/index.html"

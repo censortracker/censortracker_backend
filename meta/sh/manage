@@ -1,2 +1,0 @@
-#!/bin/zsh -f
-cd /app; python3 ./manage.py $*

@@ -1,0 +1,29 @@
+{% extends "core/base/base.html" %}
+
+{% load i18n %}
+{% load account %}
+
+{% block head_title %}{% trans "Verify Your E-mail Address" %}{% endblock %}
+
+{% block main %}
+  <main class="pt-16 max-h-screen overflow-auto">
+    <div class="px-2 py-6">
+      <div class="max-w-2xl mx-auto">
+        <div class="bg-white shadow-2xl rounded-3xl p-8 mb-5">
+          <div class="grid grid-cols-1 gap-x-20">
+            <div class="bg-white">
+              <div class="relative mx-auto max-w-screen-xl px-4 py-5">
+                <div>
+                  <h1 class="text-2xl font-bold lg:text-3xl">{% trans "Verify Your E-mail Address" %}</h1>
+                </div>
+                <div class="mt-3">
+                  <p>{% blocktrans %}We have sent an e-mail to you for verification. Follow the link provided to finalize the signup process. If you do not see the verification e-mail in your main inbox, check your spam folder. Please contact us if you do not receive the verification e-mail within a few minutes.{% endblocktrans %}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+{% endblock %}

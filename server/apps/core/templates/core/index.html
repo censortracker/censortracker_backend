@@ -1,0 +1,42 @@
+{% extends "core/base/base.html" %}
+
+{% load i18n %}
+{% load static %}
+
+{% block main %}
+  <main class="pt-5 max-h-screen overflow-auto px-2 py-6">
+    <div class="px-2 py-6">
+      <div class="max-w-5xl mx-auto">
+        <div class="bg-white shadow-xl rounded-3xl p-8 mb-5">
+          <div class="relative mx-auto max-w-screen-xl px-2 py-0">
+            <div class="container mt-3 justify-center rounded-lg bg-white px-2 py-5">
+              <div class="mx-auto p-10">
+                  <div
+                    class="my-10 rounded-3xl bg-gradient-to-r from-yellow-100 to-green-100 border border-transparent border-solid">
+                    <div
+                      class="px-4 py-6 sm:p-6 rounded-3xl max-w-full h-full bg-gradient-to-r from-yellow-50 to-green-50">
+                      <div class="text-center text-lg font-normal leading-6 mb-5 select-none"
+                           id="activationCodeTitle">
+                        {% trans 'Auth Token' %}
+                      </div>
+                      <div class="text-center font-bold text-2xl sm:text-3xl mb-5 select-all cursor-pointer"
+                           id="copyCode">
+                        {{ user.get_auth_token }}
+                      </div>
+                      <div class="text-center text-sm font-normal leading-6 text-gray-500 select-none">
+                        {% trans "Activate it on the website, a copy has been sent to your mail" %}
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+{% endblock %}
+
+{% block js_scripts %}
+{% endblock %}
+
