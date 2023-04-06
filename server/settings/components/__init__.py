@@ -1,4 +1,5 @@
-from pathlib import Path
+import os
+from pathlib import Path, PurePath
 
 from decouple import AutoConfig
 
@@ -7,20 +8,6 @@ BASE_DIR = Path(__file__).parent.parent.parent.parent
 # Loading `.env` files
 # See docs: https://gitlab.com/mkleehammer/autoconfig
 config = AutoConfig(search_path=BASE_DIR.joinpath("config"))
-
-# -*- coding: utf-8 -*-
-
-"""
-Settings module
-"""
-
-import os
-from pathlib import PurePath
-
-# Build paths inside the project like this: BASE_DIR.joinpath('some')
-# `pathlib` is better than writing:
-# BASE_DIR = dirname(dirname(dirname(dirname(__file__))))
-BASE_DIR = PurePath(__file__).parent.parent.parent.parent
 
 
 def err(msg, fatal=True):
