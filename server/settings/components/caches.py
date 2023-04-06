@@ -4,9 +4,9 @@
 Caching settings module
 """
 
-from server.settings.components import config
+from server.settings.components import env
 
-REDIS_URL = config("REDIS_URL")
+REDIS_URL = env("REDIS_URL")
 
 CACHES = {
     "default": {

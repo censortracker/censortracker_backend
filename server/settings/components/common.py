@@ -12,12 +12,12 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 
-from server.settings.components import BASE_DIR, config
+from server.settings.components import BASE_DIR, env
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
-SECRET_KEY = config("DJANGO_SECRET_KEY")
+SECRET_KEY = env("DJANGO_SECRET_KEY")
 
 # Application definition:
 
@@ -75,20 +75,20 @@ DATABASES = {
         # Choices are: postgresql, mysql, sqlite3, oracle
         "ENGINE": "django.db.backends.postgresql",
         # Database name or filepath if using 'sqlite3':
-        "NAME": config("DB_NAME"),
+        "NAME": env("DB_NAME"),
         # You don't need these settings if using 'sqlite3':
-        "USER": config("DB_USER"),
-        "PASSWORD": config("DB_PASSWORD"),
-        "HOST": config("DB_HOST"),
-        "PORT": config("DB_PORT", default=5432, cast=int),
-        "CONN_MAX_AGE": config("CONN_MAX_AGE", cast=int, default=60),
+        "USER": env("DB_USER"),
+        "PASSWORD": env("DB_PASSWORD"),
+        "HOST": env("DB_HOST"),
+        "PORT": env("DB_PORT", cast=int, default=5432),
+        "CONN_MAX_AGE": env("CONN_MAX_AGE", cast=int, default=60),
     },
 }
 
-EMAIL_PORT = 587
-EMAIL_HOST = config("EMAIL_HOST")
-EMAIL_HOST_USER = config("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = env("EMAIL_PORT", cast=int, default=587)
+EMAIL_HOST = env("EMAIL_HOST")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = "no-reply@censortracker.org"
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
@@ -218,6 +218,6 @@ STORAGE_BUCKET_NAME = "censortracker"
 STORAGE_OBJECT_FILENAME = "config.json"
 
 # Third-party APIs
-GITHUB_ACCESS_TOKEN = config("GITHUB_ACCESS_TOKEN")
-AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
+GITHUB_ACCESS_TOKEN = env("GITHUB_ACCESS_TOKEN")
+AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")

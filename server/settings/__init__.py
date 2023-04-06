@@ -9,15 +9,12 @@ https://github.com/sobolevn/django-split-settings
 To change settings file:
 `DJANGO_ENV=production python manage.py runserver`
 """
-from os import environ
 
 from split_settings.tools import include, optional
 
-from server.settings.components import config
+from server.settings.components import env
 
-environ.setdefault("DJANGO_ENV", "development")
-
-_ENV = environ["DJANGO_ENV"]
+_ENV = env("DJANGO_ENV", cast=str, default="development")
 
 base_settings = [  # pylint: disable=invalid-name
     "components/common.py",
