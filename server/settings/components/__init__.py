@@ -28,7 +28,7 @@ else:
     err(
         "Can't distinguish whether we deploying on dev's machine or server. " +
         "Please, create .env file either in %s or %s" %
-        (env_path, env_path.parent.parent),
+        (localdev_env_path, server_env_path),
         True
     )
 
