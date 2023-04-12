@@ -12,9 +12,9 @@ To change settings file:
 
 from split_settings.tools import include, optional
 
-from server.settings.components import env
+from server.settings.components import config
 
-_ENV = env("DJANGO_ENV", cast=str, default="development")
+_ENV = config("DJANGO_ENV", cast=str, default="development")
 
 base_settings = [  # pylint: disable=invalid-name
     "components/common.py",
