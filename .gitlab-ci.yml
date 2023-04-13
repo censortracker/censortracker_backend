@@ -15,7 +15,7 @@ Deploy:
       if [[ "${CI_COMMIT_REF_NAME}" == "prod" ]]; then
         export DJANGO_ENV="production"
       else
-        export DEV="dev-"
+        export DEV="${CI_COMMIT_REF_NAME}-"
         export DJANGO_ENV="development"
       fi
       export stk="${DEV}${CI_PROJECT_NAME//./-}"
@@ -40,3 +40,5 @@ Deploy:
   only:
     - prod@web/dj/censortracker
     - dev@web/dj/censortracker
+    - dropmigrations@web/dj/censortracker
+    # tmp
