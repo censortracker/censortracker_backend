@@ -19,7 +19,7 @@ from server.apps.core.models import Config, Country, ProxyConfig
 class UserAPIView(APIView):
     permission_classes = (IsAuthenticated,)
 
-    def get(self, request):
+    def post(self, request):
         return Response(
             {
                 "email": request.user.email,
