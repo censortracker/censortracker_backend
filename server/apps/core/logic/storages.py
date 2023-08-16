@@ -51,5 +51,5 @@ def upload(data) -> None:
     - Google Cloud Storage
     - Amazon S3 (with CloudFront)
     """
-    update_config_gcs(data)
+    # update_config_gcs(data)
     update_config_aws(data)
