@@ -2,23 +2,9 @@ import json
 import typing as t
 
 import boto3
+from github import Github
 from django.conf import settings
-from google.cloud.storage import Client
-
-
-def update_config_gcs(data: t.Dict[str, t.Any]) -> None:
-    """
-    Uploads config to Google Cloud Storage.
-    """
-    client = Client.from_service_account_json(
-        json_credentials_path=settings.GOOGLE_CREDENTIALS_PATH,
-    )
-    bucket = client.get_bucket(settings.STORAGE_BUCKET_NAME)
-    blob = bucket.blob(settings.STORAGE_OBJECT_FILENAME)
-    blob.cache_control = "no-cache, no-store, must-revalidate"
-
-    with blob.open("w", content_type="application/json") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
+from django.utils import timezone
 
 
 def update_config_aws(data: t.Dict[str, t.Any]) -> None:
@@ -43,6 +29,19 @@ def update_config_aws(data: t.Dict[str, t.Any]) -> None:
     )
 
 
+def update_config_github(data: t.Dict[str, t.Any]) -> None:
+    github = Github(settings.GITHUB_ACCESS_TOKEN)
+    repo = github.get_repo("roskomsvoboda/ctconf")
+    endpoints_file = repo.get_contents(settings.STORAGE_OBJECT_FILENAME)
+    content = json.dumps(data, sort_keys=True, ensure_ascii=False, indent=2)
+    repo.update_file(
+        path=settings.STORAGE_OBJECT_FILENAME,
+        message=f"Updated config: {timezone.now(): %d-%m-%Y %MM:%HH}",
+        content=content,
+        sha=endpoints_file.sha,
+    )
+
+
 def upload(data) -> None:
     """
     Uploads config to all storages.
@@ -51,5 +50,5 @@ def upload(data) -> None:
     - Google Cloud Storage
     - Amazon S3 (with CloudFront)
     """
-    # update_config_gcs(data)
     update_config_aws(data)
+    # update_config_github(data)
