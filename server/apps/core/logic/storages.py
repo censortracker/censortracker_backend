@@ -2,9 +2,9 @@ import json
 import typing as t
 
 import boto3
+from github import Github
 from django.conf import settings
 from django.utils import timezone
-from github import Github
 
 
 def update_config_aws(data: t.Dict[str, t.Any]) -> None:
