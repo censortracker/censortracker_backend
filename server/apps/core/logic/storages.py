@@ -31,7 +31,7 @@ def update_config_aws(data: t.Dict[str, t.Any]) -> None:
 
 def update_config_github(data: t.Dict[str, t.Any]) -> None:
     github = Github(settings.GITHUB_ACCESS_TOKEN)
-    repo = github.get_repo("roskomsvoboda/ctconf")
+    repo = github.get_repo(settings.GITHUB_CONFIG_REPOSITORY)
     endpoints_file = repo.get_contents(settings.STORAGE_OBJECT_FILENAME)
     content = json.dumps(data, sort_keys=True, ensure_ascii=False, indent=2)
     repo.update_file(
@@ -51,4 +51,4 @@ def upload(data) -> None:
     - Amazon S3 (with CloudFront)
     """
     update_config_aws(data)
-    # update_config_github(data)
+    update_config_github(data)
