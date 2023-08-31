@@ -153,9 +153,6 @@ GEOIP_PATH = os.path.join(BASE_DIR, "server", "geoip")
 GEOIP_COUNTRY = "GeoLite2-Country.mmdb"
 GEOIP_CITY = "GeoLite2-City.mmdb"
 
-GITHUB_ACCESS_TOKEN = secret("github.access.token")
-GITHUB_CONFIG_REPOSITORY = "roskomsvoboda/ctconf"
-
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 STORAGE_BUCKET_NAME = "censortracker"
@@ -165,5 +162,8 @@ AWS_SECRET_ACCESS_KEY = secret("aws.secret.access.key")
 
 # DO NOT MODIFY THIS FILE NAME.
 STORAGE_OBJECT_FILENAME = "config.json"
+
+GITHUB_ACCESS_TOKEN = secret("github.access.token")
+GITHUB_CONFIG_REPOSITORY = "roskomsvoboda/ctconf"
 
 CORS_ALLOW_ALL_ORIGINS = True
